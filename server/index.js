@@ -1,26 +1,22 @@
+// all the imports and assignments
 var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
- 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
- 
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
-};
- 
 var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
+app.use(bodyParser.json())
+//
+// introductory ping results
+app.get('/', function (req, res) {
+  res.send("You're pinging the CMS Brain!.");
+});
+// 
+// notify where we surfin 8-)
+app.listen(5000, function () {
+  console.log('Surfing at 5000!');
+});
+// 
+// small card controllers here
+const routerx = require('./routes/')
+app.use('/api', routerx)
