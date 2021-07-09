@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: Agenor-Regular;
+        font-weight: 400;
+        src: url(../fonts/Agenor-Regular.ttf);
+    }
+
+    @font-face {
+        font-family: Agenor-Bold;
+        font-weight: 900;
+        src: url(../fonts/Agenor-Bold.ttf);
+    }
+
+    @font-face {
+        font-family: Agenor-Black;
+        font-weight: 700;
+        src: url(../fonts/Agenor-Black.ttf);
+    }
+}
+
+.banner {
+    background: url("../images/geometric-banner.png") top right no-repeat;
+    @apply bg-primary bg-contain;
+}
+
+.form-label {
+    @apply text-gray-500 block mb-2
+}
+
+.form-input {
+    @apply w-full p-4 border-gray-400 border rounded hover:border-primary focus:border-primary
+}
