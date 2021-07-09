@@ -8,7 +8,7 @@ services:
     deploy:
         resources:
             limits:
-                memory: "1g"
+                memory: "0.5g"
     volumes:
       - esdata1:/usr/share/elasticsearch/data:rw
     ports:
@@ -30,7 +30,7 @@ services:
     deploy:
       resources:
           limits:
-              memory: "1g"
+              memory: "0.5g"
     restart: unless-stopped
 volumes:
     esdata1:

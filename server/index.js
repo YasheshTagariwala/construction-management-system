@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 //
 // introductory ping results
 app.get('/', function (req, res) {
-  res.send("You're pinging the CMS Brain!.");
+  res.send("You're pinging the c360 brain!");
 });
 // 
 // notify where we surfin 8-)
