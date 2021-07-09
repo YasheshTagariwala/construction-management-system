@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import poster from '../assets/images/macbook.png';
+import poster from '../../assets/images/macbook.png';
 
 const carousals: any = [
     {
@@ -25,7 +25,7 @@ const carousals: any = [
     }
 ]
 
-function Login() {
+function Login(props: any) {
     const [formFields, setFormFields] = useState({
         remember_me: true,
         email: '',
