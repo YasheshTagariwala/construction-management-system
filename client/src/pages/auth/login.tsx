@@ -32,6 +32,7 @@ function Login(props: any) {
         password: ''
     });
     const [slideIndex, setSlideIndex] = useState(0);
+    const test = () => {console.log("23")}
     return (
         <div className="w-full flex-col">
             <div className="flex flex-row">
@@ -79,7 +80,8 @@ function Login(props: any) {
                                 </div>
                             </div>
                             <button type="submit"
-                                    className="button bg-primary border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200">SIGN
+                                    className="button bg-primary outline-none border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200"
+                                    onClick={()=>test()}>SIGN
                                 IN
                             </button>
                         </div>
