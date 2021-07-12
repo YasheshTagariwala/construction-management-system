@@ -1,31 +1,6 @@
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://elasticsearch-inlots:9200' })
 
-searchArticle = async (req, res) => {
-
-  await client.search({
-    index: 'inspection-test',
-    body: {
-      query: {
-        "multi_match": {
-          "query": req.params.text,
-          "fields": [
-            "article", "slugged_article", "topics", "link"
-          ],
-          "fuzziness": "AUTO",
-          "prefix_length": 2
-        }
-      }
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  })
-}
-
 createInspection = async (req, res) => {
 
   await client.index({
@@ -36,40 +11,7 @@ createInspection = async (req, res) => {
       "created_at": req.params.created_at,
       "finished_at": req.params.finished_at,
       "type": req.params.type,
-      "sessions": [
-        {
-          "name": req.params.session.name,
-          "assigned_to": req.params.session.assigned_to,
-          "created_at": req.params.session.created_at,
-          "finished_at": req.params.session.finished_at,
-          "type": req.params.session.type,
-          "checklist": req.params.session.checklist,
-          "images": req.params.session.images,
-          "start_end": req.params.session.start_end,
-          "notes": req.params.session.notes,
-          "signature": req.params.session.signature,
-        }
-      ]
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
-
-}
-
-finishInspection = async (req, res) => {
-
-  await client.search({
-    index: 'inspection-test',
-    body: {
-      query: {
-
-      }
+      "sessions": []
     }
   }, (err, data) => {
     if (err) {
@@ -84,33 +26,19 @@ finishInspection = async (req, res) => {
 
 createInspectionSession = async (req, res) => {
 
-  await client.search({
+  await client.update({
     index: 'inspection-test',
-    body: {
-      query: {
-
+    "query": {
+      "match": {
+        "id": req.params.id
       }
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
-
-}
-
-updateInspectionSession = async (req, res) => {
-
-  await client.search({
-    index: 'inspection-test',
-    body: {
-      query: {
-
-      }
-    }
+    },
+    "script" : {
+      "inline": "ctx._source.sessions += [params.session]"
+   },
+   "params": {
+     "session": req.params.new_session
+   }
   }, (err, data) => {
     if (err) {
       return res.status(400).json({ success: false, error: err })
@@ -166,7 +94,29 @@ viewInspectorsInspections = async (req, res) => {
 
 }
 
+updateInspection = async (req, res) => {
+
+  await client.update({
+    index: 'inspection-test',
+    id: req.params.id,
+    body: {
+      doc: req.params.updated_details
+    }
+  }, (err, data) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err })
+    }
+    const pureData = data.body.hits.hits.map(hit => hit._source)
+    return res.status(200).json({ success: true, data: pureData })
+  }
+  )
+
+}
 
 module.exports = {
-  searchArticle
+  createInspection, 
+  createInspectionSession,
+  viewContractorsInspections,
+  viewInspectorsInspections,
+  updateInspection
 }
