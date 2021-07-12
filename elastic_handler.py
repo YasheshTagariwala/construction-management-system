@@ -6,7 +6,7 @@
 # initiates
 from elasticsearch import Elasticsearch
 from datetime import datetime
-INDEX_NAME = 'c360-test-index-1'
+INDEX_NAME = 'c360-test-index-4'
 es = Elasticsearch()
 # 
 # utility initates
@@ -66,6 +66,33 @@ inspection_document_skeleton = {
         }
     ]
 }
+
+inspection_document_skeleton = {
+    "name": "",
+    "created_by": "",
+    "created_at": "",
+    "finished_at": "",
+    "type": [0,0],
+    "sessions": [
+        {
+            "name": "",
+            "assigned_to": "",
+            "created_at": "",
+            "finished_at": "",
+            "type": "local/remote",
+            "checklist": [
+                {
+                    "checkpoint_1": ["list", "of", "issues"],
+                    "checkpoint_2": ["list", "of", "issues"],
+                }
+            ],
+            "images": ["path", "to", "all", "images"],
+            "start_end": [0, 0],
+            "notes": ["yes", "this", "was really", "good"],
+            "signature": "path_to_sign_image"
+        }
+    ]
+}
 # 
 # 
 # lets create some initializers for random sampling and filling up our index :)
@@ -80,15 +107,19 @@ signatures = [''.join([random.choice(a_z) for i in range(30)]) for i in range(0,
 # 
 # create fake documents
 # like harshad mehta did 
-for i in range(0, 10000):
+for i in range(0, 100):
     new_document = inspection_document_skeleton
     new_document['name'] = random.choice(names)
+    new_document['created_by'] = random.choice(names)
     new_document['type'] = random.choice(types)
     session_skeleton = new_document['sessions'][0]
-    for i in range(random.choice([i for i in range(0, 10)])):
+    new_document['sessions'] = []
+    for i in range(random.choice([i for i in range(1, 10)])):
         new_session = session_skeleton
         new_session['type'] = random.choice(["remote", "local"])
         new_session['checklist'] = []
+        new_session['name'] = random.choice(names)
+        new_session['assigned_to'] = random.choice(names)
         for j in range(random.choice([i for i in range(0, 10)])):
             new_session['checklist'] += [{
                 str(random.choice(checkpoints)): [str(random.choice(issues)) for i in range(random.choice([i for i in range(0, 20)]))]
@@ -97,5 +128,6 @@ for i in range(0, 10000):
         new_session["start_end"] = (random.choice([0,1,2,3,4]), random.choice([0,1,2,3,4]))
         new_session["notes"] = random.choice(notes)
         new_session["signature"] = random.choice(signatures)
+        new_document['sessions'] += [new_session]
     print(insert_document(new_document))
 

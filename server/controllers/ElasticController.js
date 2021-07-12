@@ -112,7 +112,9 @@ viewContractorsInspections = async (req, res) => {
     index: 'inspection-test',
     body: {
       query: {
-        
+        "term": {
+          "created_by": req.params.text
+        }
       }
     }
   }, (err, data) => {
@@ -132,7 +134,9 @@ viewInspectorsInspections = async (req, res) => {
     index: 'inspection-test',
     body: {
       query: {
-        
+        "term": {
+          "sessions.assigned_to": req.params.text
+        }
       }
     }
   }, (err, data) => {
