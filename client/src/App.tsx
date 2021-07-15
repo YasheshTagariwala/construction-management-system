@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from 'react';
+import React, {Suspense} from 'react';
 // import Header from "./layouts/header";
 // import Footer from "./layouts/footer";
 // import Login from "./pages/login";
@@ -9,6 +9,7 @@ import {
     Redirect
 } from 'react-router-dom';
 import Loader from "./components/loader";
+import {connect} from "react-redux";
 
 const ViewAuth = React.lazy(() =>
     import(/* webpackChunkName: "views-auth" */ './pages/auth')
@@ -17,9 +18,12 @@ const ViewError = React.lazy(() =>
     import(/* webpackChunkName: "views-error" */ './pages/error')
 );
 
+interface Props {
+    loginUser: any
+}
 
-function App() {
-    const [loginUser, setLoginUser] = useState(null);
+function App(props: Props) {
+    const {loginUser} = props;
 
     const getRedirectPath = (loginUser: any) => {
         if (loginUser) {
@@ -66,4 +70,10 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = ({authUser}: { authUser: any }) => {
+    const {user: loginUser} = authUser;
+    return {loginUser};
+};
+const mapActionsToProps = {};
+
+export default connect(mapStateToProps, mapActionsToProps)(App);

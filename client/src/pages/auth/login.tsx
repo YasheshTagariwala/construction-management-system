@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import poster from '../../assets/images/macbook.png';
+import {loginUser} from "../../redux/auth/actions";
+import {connect} from "react-redux";
 
 const carousals: any = [
     {
@@ -32,11 +34,13 @@ function Login(props: any) {
         password: ''
     });
     const [slideIndex, setSlideIndex] = useState(0);
-    const test = () => {console.log("23")}
+    const test = () => {
+        console.log("23")
+    }
     return (
         <div className="w-full flex-col">
             <div className="flex flex-row">
-                <div className="w-full lg:w-2/5 bg-white lg:h-screen grid justify-items-center">
+                <div className="w-full lg:w-2/5 bg-white lg:h-screen grid justify-items-center bg-[#000]">
                     <div className="w-3/4 self-center">
                         <h1 className="mb-6 uppercase text-5xl tracking-wide font-agenor-regular font-sans">LogIn</h1>
                         <div className="login-form">
@@ -81,7 +85,7 @@ function Login(props: any) {
                             </div>
                             <button type="submit"
                                     className="button bg-primary outline-none border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200"
-                                    onClick={()=>test()}>SIGN
+                                    onClick={() => test()}>SIGN
                                 IN
                             </button>
                         </div>
@@ -129,4 +133,14 @@ function Login(props: any) {
     )
 }
 
-export default Login
+const mapStateToProps = ({authUser}: { authUser: any }) => {
+    const {user, loading, error} = authUser
+    return {user, loading, error}
+}
+
+const mapActionsToProps = {loginUser}
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(Login)

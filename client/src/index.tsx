@@ -2,15 +2,19 @@ import React, {Suspense, StrictMode, lazy} from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/main.css';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from "react-redux";
+import {configureStore} from "./redux/store";
 
 const App = lazy(() => import(/* webpackChunkName: "App" */'./App' ));
 
 ReactDOM.render(
-    <StrictMode>
-        <Suspense fallback={<div className="loading"/>}>
-            <App/>
-        </Suspense>
-    </StrictMode>,
+    <Provider store={configureStore({})}>
+        <StrictMode>
+            <Suspense fallback={<div className="loading"/>}>
+                <App/>
+            </Suspense>
+        </StrictMode>
+    </Provider>,
     document.getElementById('root')
 );
 
