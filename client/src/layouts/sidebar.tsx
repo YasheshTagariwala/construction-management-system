@@ -45,9 +45,9 @@ function SideBar(props: any) {
                             className={`relative right-0 w-full mt-2 origin-top-right rounded-md ${open ? 'block' : 'hidden'}`}>
                             <div className="bg-primary-lightest rounded-md">
                                 <Link className="inline-flex px-4 py-3 items-center w-full font-light transition-colors opacity-60 duration-150 hover:opacity-100"
-                                      to="/">Inspection</Link>
+                                      to="/inspector/inspection">Inspection</Link>
                                 <Link className="inline-flex px-4 py-3 items-center w-full font-light transition-colors opacity-60 duration-150 hover:opacity-100"
-                                      to="/">Add Inspection</Link>
+                                      to="/inspector/inspection/add">Add Inspection</Link>
                             </div>
                         </div>
                     </div>
