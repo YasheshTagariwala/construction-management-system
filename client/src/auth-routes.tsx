@@ -4,13 +4,14 @@ import {Redirect, Route} from "react-router-dom";
 interface Props {
     component: any,
     authUser: any,
-    role: any
+    role: any,
+    path: string
 }
 
-const AuthRoute: FC<Props> = ({component: Component, authUser, role, ...rest}) => {
+const AuthRoute: FC<Props> = ({component: Component, authUser, role, path}) => {
     return (
         <Route
-            {...rest}
+            path={path}
             render={props =>
                 authUser ? (
                     role.includes(authUser.role) ? <Component {...props} /> : <Redirect
@@ -31,3 +32,5 @@ const AuthRoute: FC<Props> = ({component: Component, authUser, role, ...rest}) =
         />
     );
 };
+
+export default AuthRoute

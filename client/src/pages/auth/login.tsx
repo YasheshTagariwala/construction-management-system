@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {Field, Form as FormikForm, Formik} from 'formik'
 import {loginSchema} from '../../schemas/validation-schemas'
 import ToasterService from "../../services/toaster-service";
+import {Link} from 'react-router-dom';
 
 const carousals: any = [
     {
@@ -54,10 +55,10 @@ function Login(props: any) {
 
     return (
         <div className="w-full flex-col">
-            <div className="flex flex-row">
-                <div className="w-full lg:w-2/5 bg-white lg:h-screen grid justify-items-center">
+            <div className="flex flex-wrap">
+                <div className="w-full lg:w-1/2 xl:w-2/5 lg:h-screen h-auto pt-20 pb-20 grid justify-items-center">
                     <div className="w-3/4 self-center">
-                        <h1 className="mb-6 uppercase text-5xl tracking-wide font-agenor-regular font-sans">LogIn</h1>
+                        <h1 className="uppercase text-4xl tracking-wide font-agenor-bold font-sans mb-6 sm:text-6xl">LogIn</h1>
                         <Formik initialValues={formFields}
                                 validationSchema={loginSchema}
                                 onSubmit={onUserLogin}>
@@ -66,21 +67,21 @@ function Login(props: any) {
                                     <div className="login-form">
                                         <div className="form-panel">
                                             <label className="form-label">Email ID</label>
-                                            <Field className="form-input" type="email" name="email"/>
+                                            <Field className="form-input" placeholder="Email address" type="email" name="email"/>
                                             {errors.email && touched.email && (
                                                 <div
                                                     className="block text-red-800">{errors.email}</div>)}
                                         </div>
                                         <div className="form-panel mt-4">
                                             <label className="form-label">Password</label>
-                                            <Field className="form-input" type="password" name="password"/>
+                                            <Field className="form-input" placeholder="8+ character" type="password" name="password"/>
                                             {errors.password && touched.password && (
                                                 <div
                                                     className="block text-red-800">{errors.password}</div>)}
                                         </div>
 
-                                        <div className="flex flex-row mt-2">
-                                            <div className="lg:w-1/2">
+                                        <div className="flex flex-wrap">
+                                            <div className="sm:w-1/2 w-full mt-3">
                                                 <label className="inline-flex items-center">
                                                     <Field className="form-checkbox" type="checkbox"
                                                            name="remember_me"/>
@@ -90,12 +91,12 @@ function Login(props: any) {
                                                     <span className="ml-2">Remember Me</span>
                                                 </label>
                                             </div>
-                                            <div className="lg:w-1/2 ml-2">
-                                                <a href="!#" className="text-primary float-right">Forget Password ?</a>
+                                            <div className="sm:w-1/2 w-full mt-3">
+                                                <Link to="/" className="main-text-color float-right">Forget Password ?</Link>
                                             </div>
                                         </div>
                                         <button type="submit" disabled={props.loading}
-                                                className="button bg-primary outline-none border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200">SIGN
+                                                className="button blue-btn">SIGN
                                             IN
                                         </button>
                                     </div>
@@ -104,7 +105,7 @@ function Login(props: any) {
                         </Formik>
                     </div>
                 </div>
-                <div className="banner w-full lg:w-3/5 lg:h-screen grid">
+                <div className="banner w-full lg:w-1/2 xl:w-3/5 lg:h-screen h-auto pt-40 grid">
                     <div className="relative self-end">
                         <div className="relative w-full overflow-hidden text-center">
                             {carousals.map((carousal: any, index: number) => {
@@ -116,11 +117,11 @@ function Login(props: any) {
                                             className="opacity-0 absolute m-auto text-white input-checked:static input-checked:opacity-100 transition-opacity ease-out duration-700">
                                             <img src={carousal.image} alt="Poster"
                                                  className="block max-w-full m-auto w-5/7"/>
-                                            <div className="bg-primary h-64 pt-12">
-                                                <h2 className="text-3xl font-agenor-regular font-sans tracking-wide">
+                                            <div className="bg-primary h-72 sm:h-64 pt-12">
+                                                <h2 className="text-2xl sm:text-3xl font-agenor-regular font-sans tracking-wide">
                                                     {carousal.title}
                                                 </h2>
-                                                <p className="text-sm tracking-wide font-light mt-2.5 w-5/7 m-auto">
+                                                <p className="text-xs sm:text-sm tracking-wide font-light mt-2.5 w-5/7 m-auto">
                                                     {carousal.message}
                                                 </p>
                                             </div>
