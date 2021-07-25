@@ -13,7 +13,7 @@ export function* watchLoginUser() {
 }
 
 const loginWithEmailPasswordAsync = async (email: string, password: string) => {
-    return await ApiService.callPost('/auth/login', {email, password});
+    return await ApiService.callPost('/auth/login', {email, password}, {'Skip-Headers': true});
 };
 
 function* loginWithEmailPassword({payload}: Parameters): any {

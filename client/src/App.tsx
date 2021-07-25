@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import Loader from "./components/loader";
 import {connect} from "react-redux";
+import ToasterService from "./services/toaster-service";
 
 const ViewAuth = React.lazy(() =>
     import(/* webpackChunkName: "views-auth" */ './pages/auth')
@@ -17,6 +18,8 @@ const ViewAuth = React.lazy(() =>
 const ViewError = React.lazy(() =>
     import(/* webpackChunkName: "views-error" */ './pages/error')
 );
+
+ToasterService.Configure();
 
 interface Props {
     loginUser: any

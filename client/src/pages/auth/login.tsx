@@ -1,7 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import poster from '../../assets/images/macbook.png';
 import {loginUser} from "../../redux/auth/actions";
 import {connect} from "react-redux";
+import {Field, Form as FormikForm, Formik} from 'formik'
+import {loginSchema} from '../../schemas/validation-schemas'
+import ToasterService from "../../services/toaster-service";
 
 const carousals: any = [
     {
@@ -28,70 +31,80 @@ const carousals: any = [
 ]
 
 function Login(props: any) {
-    const [formFields, setFormFields] = useState({
+    const [formFields] = useState({
         remember_me: true,
         email: '',
         password: ''
     });
     const [slideIndex, setSlideIndex] = useState(0);
-    const test = () => {
-        console.log("23")
+    const onUserLogin = (values: any) => {
+        if (!props.loading) {
+            props.loginUser(values, props.history)
+        }
     }
+
+    useEffect(() => {
+        console.log('456' ,props.error)
+        if (props.error) {
+            ToasterService.Toast(props.error, 'error')
+        }
+        if (props.success) {
+            ToasterService.Toast(props.success, 'error')
+        }
+    }, [props.error, props.success])
+
     return (
         <div className="w-full flex-col">
             <div className="flex flex-row">
-                <div className="w-full lg:w-2/5 bg-white lg:h-screen grid justify-items-center bg-[#000]">
+                <div className="w-full lg:w-2/5 bg-white lg:h-screen grid justify-items-center">
                     <div className="w-3/4 self-center">
                         <h1 className="mb-6 uppercase text-5xl tracking-wide font-agenor-regular font-sans">LogIn</h1>
-                        <div className="login-form">
-                            <div className="form-panel">
-                                <label className="form-label">Email ID</label>
-                                <input
-                                    className="form-input"
-                                    name="email"
-                                    value={formFields.email}
-                                    onChange={(e) => setFormFields({
-                                        ...formFields,
-                                        email: e.target.value
-                                    })}
-                                    type="email" placeholder="Email Address"/>
-                            </div>
-                            <div className="form-panel mt-4">
-                                <label className="form-label">Password</label>
-                                <input
-                                    className="form-input"
-                                    name="password"
-                                    value={formFields.password}
-                                    onChange={(e) => setFormFields({
-                                        ...formFields,
-                                        password: e.target.value
-                                    })}
-                                    type="password" placeholder="Email Address"/>
-                            </div>
+                        <Formik initialValues={formFields}
+                                validationSchema={loginSchema}
+                                onSubmit={onUserLogin}>
+                            {({errors, touched}) => (
+                                <FormikForm>
+                                    <div className="login-form">
+                                        <div className="form-panel">
+                                            <label className="form-label">Email ID</label>
+                                            <Field className="form-input" type="email" name="email"/>
+                                            {errors.email && touched.email && (
+                                                <div
+                                                    className="block text-red-800">{errors.email}</div>)}
+                                        </div>
+                                        <div className="form-panel mt-4">
+                                            <label className="form-label">Password</label>
+                                            <Field className="form-input" type="password" name="password"/>
+                                            {errors.password && touched.password && (
+                                                <div
+                                                    className="block text-red-800">{errors.password}</div>)}
+                                        </div>
 
-                            <div className="flex flex-row mt-2">
-                                <div className="lg:w-1/2">
-                                    <label className="inline-flex items-center">
-                                        <input className="form-checkbox" type="checkbox" onChange={() => setFormFields({
-                                            ...formFields,
-                                            remember_me: !formFields.remember_me
-                                        })} checked={formFields.remember_me}/>
-                                        <span className="ml-2">Remember Me</span>
-                                    </label>
-                                </div>
-                                <div className="lg:w-1/2 ml-2">
-                                    <a href="!#" className="text-primary float-right">Forget Password ?</a>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="button bg-primary outline-none border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200"
-                                    onClick={() => test()}>SIGN
-                                IN
-                            </button>
-                        </div>
+                                        <div className="flex flex-row mt-2">
+                                            <div className="lg:w-1/2">
+                                                <label className="inline-flex items-center">
+                                                    <Field className="form-checkbox" type="checkbox"
+                                                           name="remember_me"/>
+                                                    {errors.remember_me && touched.remember_me && (
+                                                        <div
+                                                            className="block text-red-800">{errors.remember_me}</div>)}
+                                                    <span className="ml-2">Remember Me</span>
+                                                </label>
+                                            </div>
+                                            <div className="lg:w-1/2 ml-2">
+                                                <a href="!#" className="text-primary float-right">Forget Password ?</a>
+                                            </div>
+                                        </div>
+                                        <button type="submit" disabled={props.loading}
+                                                className="button bg-primary outline-none border-primary float-right mt-5 px-14 py-4 rounded-full border text-sm text-white hover:bg-white hover:text-primary transition duration-200">SIGN
+                                            IN
+                                        </button>
+                                    </div>
+                                </FormikForm>
+                            )}
+                        </Formik>
                     </div>
                 </div>
-
                 <div className="banner w-full lg:w-3/5 lg:h-screen grid">
                     <div className="relative self-end">
                         <div className="relative w-full overflow-hidden text-center">
