@@ -33,7 +33,6 @@ function App(props: Props) {
     const {loginUser} = props;
 
     const getRedirectPath = (loginUser: any) => {
-        console.log('/' + loginUser.role);
         if (loginUser) {
             return '/' + loginUser.role;
         }
