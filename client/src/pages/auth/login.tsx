@@ -44,7 +44,6 @@ function Login(props: any) {
     }
 
     useEffect(() => {
-        console.log('456' ,props.error)
         if (props.error) {
             ToasterService.Toast(props.error, 'error')
         }

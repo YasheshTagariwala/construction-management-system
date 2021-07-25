@@ -1,122 +1,170 @@
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://elasticsearch-inlots:9200' })
+const {Client} = require('@elastic/elasticsearch')
+const client = new Client({node: 'http://elasticsearch-inlots:9200'})
+const jwt = require('jwt-simple');
+const {jwtSecret, jwtExpirationInterval} = require('../config');
+const {DateTime} = require('luxon');
 
 createInspection = async (req, res) => {
 
-  await client.index({
-    index: 'inspection-test',
-    body: {
-      "name": req.params.name,
-      "created_by": req.params.created_by,
-      "created_at": req.params.created_at,
-      "finished_at": req.params.finished_at,
-      "type": req.params.type,
-      "sessions": []
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
+    await client.index({
+            index: 'inspection-test',
+            body: {
+                "name": req.params.name,
+                "created_by": req.params.created_by,
+                "created_at": req.params.created_at,
+                "finished_at": req.params.finished_at,
+                "type": req.params.type,
+                "sessions": []
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
+        }
+    )
 
 }
 
 createInspectionSession = async (req, res) => {
 
-  await client.update({
-    index: 'inspection-test',
-    "query": {
-      "match": {
-        "id": req.params.id
-      }
-    },
-    "script" : {
-      "inline": "ctx._source.sessions += [params.session]"
-   },
-   "params": {
-     "session": req.params.new_session
-   }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
+    await client.update({
+            index: 'inspection-test',
+            "query": {
+                "match": {
+                    "id": req.params.id
+                }
+            },
+            "script": {
+                "inline": "ctx._source.sessions += [params.session]"
+            },
+            "params": {
+                "session": req.params.new_session
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
+        }
+    )
 
 }
 
 viewContractorsInspections = async (req, res) => {
 
-  await client.search({
-    index: 'inspection-test',
-    body: {
-      query: {
-        "term": {
-          "created_by": req.params.text
+    await client.search({
+            index: 'inspection-test',
+            body: {
+                query: {
+                    "term": {
+                        "created_by": req.params.text
+                    }
+                }
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
         }
-      }
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
+    )
 
 }
 
 viewInspectorsInspections = async (req, res) => {
 
-  await client.search({
-    index: 'inspection-test',
-    body: {
-      query: {
-        "term": {
-          "sessions.assigned_to": req.params.text
+    await client.search({
+            index: 'inspection-test',
+            body: {
+                query: {
+                    "term": {
+                        "sessions.assigned_to": req.params.text
+                    }
+                }
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
         }
-      }
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
+    )
 
 }
 
 updateInspection = async (req, res) => {
 
-  await client.update({
-    index: 'inspection-test',
-    id: req.params.id,
-    body: {
-      doc: req.params.updated_details
-    }
-  }, (err, data) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    const pureData = data.body.hits.hits.map(hit => hit._source)
-    return res.status(200).json({ success: true, data: pureData })
-  }
-  )
+    await client.update({
+            index: 'inspection-test',
+            id: req.params.id,
+            body: {
+                doc: req.params.updated_details
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
+        }
+    )
 
 }
 
+loginUser = async (req, res) => {
+    try {
+        let inspectorEmail = "inspector@c360.com"
+        let contractorEmail = "contractor@c360.com"
+        let {email, password} = req.body
+        if (email && password) {
+            let user = null;
+            const date = DateTime.local();
+            const payload = {
+                _id: this._id,
+                exp: +new Date(date.plus({minutes: jwtExpirationInterval}).toSeconds()),
+                iat: +new Date(date.toSeconds()),
+            };
+
+            let token = jwt.encode(payload, jwtSecret);
+            if (email === inspectorEmail && password === 'admin@123') {
+                user = {
+                    role: 'inspector',
+                    userName: 'inspector',
+                    token,
+                    email: inspectorEmail
+                }
+            }
+            if (email === contractorEmail && password === 'admin@123') {
+                user = {
+                    role: 'contractor',
+                    userName: 'contractor',
+                    token,
+                    email: inspectorEmail
+                }
+            }
+            if (user) {
+                return res.status(200).json({success: true, data: user})
+            } else {
+                return res.status(400).json({success: false, message: 'User not found'})
+            }
+        } else {
+            return res.status(400).json({success: false, message: 'User not found'})
+        }
+    } catch (e) {
+        return res.status(400).json({success: false, message: e})
+    }
+}
+
 module.exports = {
-  createInspection, 
-  createInspectionSession,
-  viewContractorsInspections,
-  viewInspectorsInspections,
-  updateInspection
+    createInspection,
+    createInspectionSession,
+    viewContractorsInspections,
+    viewInspectorsInspections,
+    updateInspection,
+    loginUser
 }

@@ -1,5 +1,5 @@
 export const setSessionCookie = (session: any) => {
-    localStorage.setItem('construction', session);
+    localStorage.setItem('construction', JSON.stringify(session));
 }
 
 export const getSessionCookie = () => {
@@ -8,5 +8,5 @@ export const getSessionCookie = () => {
     if (!sessionCookie) {
         return null
     }
-    return sessionCookie;
+    return JSON.parse(sessionCookie);
 }

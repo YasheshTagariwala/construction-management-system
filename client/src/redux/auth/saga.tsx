@@ -23,8 +23,9 @@ function* loginWithEmailPassword({payload}: Parameters): any {
         const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
         setSessionCookie(loginUser.data);
         yield put(loginUserSuccess(loginUser.data));
-        history.push('/');
+        history.push('/' + loginUser.data.role);
     } catch (error) {
+        console.log(error.response);
         let err = error.response ? error.response.data.message : error.message
         yield put(loginUserError(err));
     }

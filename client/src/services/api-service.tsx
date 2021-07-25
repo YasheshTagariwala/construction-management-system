@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use((response) => {
                 },
                 accessToken: ""
             };
-            setSessionCookie(JSON.stringify(session));
+            setSessionCookie(session);
             window.location.href = `${process.env.REACT_APP_BASE_URL}`
         }
     }
