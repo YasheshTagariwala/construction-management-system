@@ -1,10 +1,12 @@
 import React from "react";
 import {Link} from 'react-router-dom';
+import Loader from "../../components/loader";
 
 function Dashboard(props: any) {
 
     return (
         <main className="h-full pb-16 overflow-y-auto">
+            {props.loading && <Loader/>}
             <div className="container px-6 mt-10 mx-auto grid">
                 <Link
                     className="flex items-center justify-between p-4 mb-8 text-sm text-purple-100 bg-primary rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"

@@ -6,6 +6,7 @@ import {Field, Form as FormikForm, Formik} from 'formik'
 import {loginSchema} from '../../schemas/validation-schemas'
 import ToasterService from "../../services/toaster-service";
 import {Link} from 'react-router-dom';
+import Loader from "../../components/loader";
 
 const carousals: any = [
     {
@@ -55,6 +56,7 @@ function Login(props: any) {
 
     return (
         <div className="w-full flex-col">
+            {props.loading && <Loader/>}
             <div className="flex flex-wrap">
                 <div className="w-full lg:w-1/2 xl:w-2/5 lg:h-screen h-auto pt-20 pb-20 grid justify-items-center">
                     <div className="w-3/4 self-center">
@@ -129,7 +131,7 @@ function Login(props: any) {
                                     </React.Fragment>
                                 )
                             })}
-                            <ol className="list-none m-0 p-0 absolute bottom-10 left-0 right-0 text-center z-10">
+                            <ol className="list-none m-0 p-0 absolute bottom-10 left-0 right-0 text-center z-9">
                                 {carousals.map((carousal: any, index: number) => (
                                     <li key={index} className="inline-block my-0 mx-1.5"
                                         onClick={() => setSlideIndex(index)}>

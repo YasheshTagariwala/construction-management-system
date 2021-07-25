@@ -25,7 +25,6 @@ function* loginWithEmailPassword({payload}: Parameters): any {
         yield put(loginUserSuccess(loginUser.data));
         history.push('/' + loginUser.data.role);
     } catch (error) {
-        console.log(error.response);
         let err = error.response ? error.response.data.message : error.message
         yield put(loginUserError(err));
     }

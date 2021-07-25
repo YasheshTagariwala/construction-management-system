@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom';
+import {logoutUser} from "../redux/auth/actions";
+import {connect} from "react-redux";
 
 function Header(props: any) {
     const [notifyDropdown, setNotifyDropdown] = useState(false);
@@ -102,7 +104,8 @@ function Header(props: any) {
                                     </svg>
                                     <span>Settings</span>
                                 </Link>
-                                <Link to="/" className="flex items-center px-4 py-2 hover:bg-gray-100 -mx-2">
+                                <Link to="/" onClick={() => props.logoutUser(props.history)}
+                                      className="flex items-center px-4 py-2 hover:bg-gray-100 -mx-2">
                                     <svg className="w-4 h-4 mr-3" aria-hidden="true" fill="none"
                                          strokeLinecap="round"
                                          strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"
@@ -121,4 +124,11 @@ function Header(props: any) {
     )
 }
 
-export default Header;
+const mapStateToProps = () => {
+};
+const mapActionsToProps = {logoutUser}
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(Header)
