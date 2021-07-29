@@ -32,12 +32,12 @@ const Inspection = (props: any) => {
                             render={props => <Dashboard {...props} />}
                         />
                         <Route
-                            path={`${props.match.url}/inspection`}
-                            render={props => <InspectionList {...props} />}
-                        />
-                        <Route
                             path={`${props.match.url}/inspection/add`}
                             render={props => <InspectionForm {...props} />}
+                        />
+                        <Route
+                            path={`${props.match.url}/inspection`}
+                            render={props => <InspectionList {...props} />}
                         />
                         <Redirect to="/error"/>
                     </Switch>

@@ -1,9 +1,11 @@
-import React from "react";
-import {Link} from 'react-router-dom';
+import React, {useState} from "react";
 import Loader from "../../components/loader";
+import {Link} from "react-router-dom";
 
-function Dashboard(props: any) {
-
+function InspectionList(props: any) {
+    const dummyList = Array.from({length:10},(x, i) => (i + 1)).map(x => ({opened: false}))
+    const [inspectionList, setInspectionList] = useState(dummyList);
+    const [openIndex, setOpenIndex] = useState(-1);
 
 
     return (
@@ -29,8 +31,8 @@ function Dashboard(props: any) {
                                 </select>
                             </div>
                             <div className="inspection-list">
-                                {Array.from({length:10},(x, i) => (i + 1)).map(item =>
-                                    <div className="cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg">
+                                {inspectionList.map((item, inx) =>
+                                    <div key={`itm-${inx}`} className="cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg">
                                         <div
                                             className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">06/01/2020
                                         </div>
@@ -51,8 +53,10 @@ function Dashboard(props: any) {
                                                 <p className="text-gray-400 text-xs uppercase">Inspector</p>
                                             </div>
                                         </div>
-                                        <div x-data="{ inspectionactiondropdown: false }" className="relative m-1">
-                                            <button /*@click="inspectionactiondropdown = !inspectionactiondropdown"*/
+                                        <div className={`relative m-1 test-test-${item.opened}`}>
+                                            <button onClick={() => {
+                                                setOpenIndex(openIndex === inx ? -1 : inx)
+                                            }}
                                                 className="relative bg-primary-lightest p-3 align-middle rounded-md opacity-50 duration-75 hover:opacity-100 focus:opacity-100">
                                                 <svg className=" h-5 w-5 text-white" fill="currentColor"
                                                      xmlns="http://www.w3.org/2000/svg " viewBox="0 0 24 24 ">
@@ -60,20 +64,22 @@ function Dashboard(props: any) {
                                                 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z "/>
                                                 </svg>
                                             </button>
-                                            <div x-show="inspectionactiondropdown " /*@click="inspectionactiondropdown = false "*/
-                                                 className="fixed inset-0 h-full w-full z-10 "></div>
+                                            {openIndex === inx &&
+                                            <div onClick={() => {
+                                                setOpenIndex(-1)
+                                            }} className="fixed inset-0 h-full w-full z-10 "/>}
 
-                                            <div x-show="inspectionactiondropdown "
-                                                 className="absolute right-0 bg-white rounded-md shadow-lg overflow-hidden z-20 w-28 ">
+                                            {openIndex === inx &&
+                                            <div className="absolute right-0 bg-white rounded-md shadow-lg overflow-hidden z-20 w-28 ">
                                                 <div className="text-gray-600 text-sm font-normal ">
-                                                    <a href="# " className="block p-2 hover:bg-gray-100 ">
+                                                    <Link to="/inspector/inspection/add" className="block p-2 hover:bg-gray-100 ">
                                                         Edit
-                                                    </a>
+                                                    </Link>
                                                     <a href="# " className="block p-2 hover:bg-gray-100 ">
                                                         Delete
                                                     </a>
                                                 </div>
-                                            </div>
+                                            </div>}
                                         </div>
                                     </div>
                                 )}
@@ -83,8 +89,8 @@ function Dashboard(props: any) {
                                     <div
                                         className="h-12 w-12 mr-3 flex justify-center items-center rounded-full border border-gray-300 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
+                                             viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
+                                             strokeLinecap="round" strokeLinejoin="round"
                                              className="feather feather-chevron-left w-6 h-6">
                                             <polyline points="15 18 9 12 15 6"></polyline>
                                         </svg>
@@ -100,8 +106,8 @@ function Dashboard(props: any) {
                                     <div
                                         className="h-12 w-12 ml-3 flex justify-center items-center rounded-full border border-gray-300 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
+                                             viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
+                                             strokeLinecap="round" strokeLinejoin="round"
                                              className="feather feather-chevron-right w-6 h-6">
                                             <polyline points="9 18 15 12 9 6"></polyline>
                                         </svg>
@@ -117,4 +123,4 @@ function Dashboard(props: any) {
     )
 }
 
-export default Dashboard
+export default InspectionList
