@@ -1,0 +1,83 @@
+[
+  {
+    "type": "Structure",
+    "value": [
+      {
+        "subtype": "Plastering",
+        "checklist": [
+          "Check for completeness of all hidden jobs like piping, conduiting, etc.",
+          "Check for grading of sand, Mix proportion.",
+          "Sample preparation for finish and its approval.",
+          "Hacking and cleaning the surface, removing loose particles, wetting the surface.",
+          "Checking of plaster thickness, plumb & even surface.",
+          "Check for grooves, openings, rounding off the corners, hollowness in plaster.",
+          "Checking for use of waterproofing compound , mix proportion(as applicable)."
+        ]
+      },
+      {
+        "subtype": "Concrete (RCC)",
+        "checklist": [
+          "Check for concrete slump as IS requirement.",
+          "Check for grade of concrete as per GFC drawing.",
+          "Check for levels and top finishes.",
+          "Check for material quality as per IS standards.",
+          "Check for presence of required dimensions of cubes for curing.",
+          "Check for formwork and dimensions are as per drawing.",
+          "Check for reinforcement as per GFC drawing and alignment.",
+          "Check for appropriate concrete mix and proportion of ingredients."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Services",
+    "value": [
+      {
+        "subtype": "San. Fixtures-PHE",
+        "checklist": [
+          "Check for material inspection and make.",
+          "Check completeness of finishing works w.r.t. line, WC level & position.",
+          "Check for leakage.",
+          "Check for pressure testing if applicable.",
+          "Check proper fixing of the sanitary fittings to give aesthetic appeal.",
+          "Check for dye test if applicable.",
+          "Check for mounting height as per GFC drawing."
+        ]
+      },
+      {
+        "subtype": "Electrical",
+        "checklist": [
+          "Check for location of fan junction box and light points as per GDC drawing.",
+          "Check for cleanliness once the conduiting work is over.",
+          "Check for if the Shaft is provided for Maintenance.",
+          "Check the mounting heights of DBs and switches are as per standards.",
+          "Check for separate circuits for lighting and power connections.",
+          "Check the makelist list of specified materials for junction boxes, lights, switches.",
+          "Check for different circuits for various purposes such as TV, refrigerator, internet connection etc.",
+          "Check if the location of distribution board and switches is as per approved GFC drawing.",
+          "Ensure correctness of lighting wire size and no. of wires as per the drawing in each conduit portion.",
+          "Ensure conduits are properly tied to reinforcement bars to prevent floating during concrete."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Finishes",
+    "value": [
+      {
+        "subtype": "Tile",
+        "checklist": [
+          "Check whether relevant drawings are available.",
+          "Check whether the quality, tile pattern and design as per the client requirement.",
+          "Check the border tile.",
+          "Check for corner beading.",
+          "Check for spacer / paper joint.",
+          "Check for tile drop.",
+          "Check for tile grout.",
+          "Check if the tile is soaked before laying.",
+          "Check for slope."
+        ]
+      }
+    ]
+  }
+]
