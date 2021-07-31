@@ -6,6 +6,7 @@ function InspectionList(props: any) {
     const dummyList = Array.from({length:10},(x, i) => (i + 1)).map(x => ({opened: false}))
     const [inspectionList, setInspectionList] = useState(dummyList);
     const [openIndex, setOpenIndex] = useState(-1);
+    const [openDetailIndex, setOpenDetailIndex] = useState(-1);
 
 
     return (
@@ -32,19 +33,19 @@ function InspectionList(props: any) {
                             </div>
                             <div className="inspection-list">
                                 {inspectionList.map((item, inx) =>
-                                    <div key={`itm-${inx}`} className="cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg">
-                                        <div
+                                    <div key={`itm-${inx}`} className={`${openDetailIndex === inx && 'open-inspection'} cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg`}>
+                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}}
                                             className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">06/01/2020
                                         </div>
-                                        <div className="p-2 m-1 w-52">
+                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 w-52">
                                             <h6 className="text-primary text-sm">Wadilala society, Surat</h6>
                                             <p className="text-red-600 text-xs uppercase">Unfinished</p>
                                         </div>
-                                        <div className="p-2 m-1 w-52">
+                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 w-52">
                                             <h6 className="text-black text-sm">Wadilala society</h6>
                                             <p className="text-gray-400 text-xs uppercase">Project</p>
                                         </div>
-                                        <div className="p-2 m-1 flex w-40">
+                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 flex w-40">
                                             <img className="h-10 w-10 border border-gray-400 rounded-full object-cover mr-2"
                                                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
                                                  alt="avatar"/>
@@ -115,6 +116,181 @@ function InspectionList(props: any) {
                                 </div>
                             </div>
                         </div>
+
+
+                        {openDetailIndex >= 0 &&
+                        <div className="w-full lg:w-2/5 px-3 mb-5">
+                            <div className="bg-gray-200 border border-gray-300 p-3 sm:p-4 lg:p-5 rounded-md">
+                                <div className="flex flex-wrap items-top">
+                                    <div className="lg:w-1/12">
+                                        <svg className="w-5 h-5 xl:w-7 xl:h-7 text-black" aria-hidden="true" fill="none"
+                                             strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                        </svg>
+                                    </div>
+                                    <div className="lg:w-11/12">
+                                        <div className="flex flex-wrap justify-between">
+                                            <h5 className="text-primary text-lg font-medium tracking-wide">Wadilala
+                                                Society, Surat</h5>
+                                            <div className="flex items-center">
+                                                <svg className="w-4 h-4 text-black mr-1"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                     viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/>
+                                                </svg>
+                                                <p className="text-gray-500 text-sm">06/01/2020</p>
+                                            </div>
+                                        </div>
+                                        <p className="my-2 text-sm text-gray-500">Lorem ipsum dolor sit amet
+                                            consectetur, adipisicing elit. Aliquam nobis tempore, consequatur alias
+                                            corrupti ab, culpa odit voluptas ipsa perspiciatis in ipsam explicabo? Nisi
+                                            incidunt saepe modi ut alias est?</p>
+                                        <ul className="flex flex-wrap">
+                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                        </ul>
+                                        <div className="mt-2 flex flex-wrap justify-start">
+                                            <div className="mr-3 my-1">
+                                                <p className="uppercase text-xs text-black mb-1">project</p>
+                                                <h6 className="bg-primary-lightest text-white p-2 rounded-md text-sm">Wadilala
+                                                    Society</h6>
+                                            </div>
+                                            <div className="my-1">
+                                                <p className="uppercase text-xs text-black mb-1">member</p>
+                                                <div className="flex items-center overflow-hidden">
+                                                    <img
+                                                        className="inline-block h-9 w-9 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
+                                                        alt=""/>
+                                                    <img
+                                                        className="-ml-2 inline-block h-9 w-9 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
+                                                        alt=""/>
+                                                    <img
+                                                        className="-ml-2 inline-block h-9 w-9 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
+                                                        alt=""/>
+                                                </div>
+                                            </div>
+                                            <div className="ml-auto my-1">
+                                                <p className="uppercase text-xs text-black mb-1">status</p>
+                                                <select
+                                                    className="form-select-icon w-28 p-2 text-sm bg-transparent border border-primary rounded-md">
+                                                    <option value="">Unfinished</option>
+                                                    <option>Finished</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap items-center mt-8">
+                                    <div className="w-1/12">
+                                        <img
+                                            className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                            alt=""/>
+                                    </div>
+                                    <div className="w-11/12">
+                                        <textarea
+                                            className="h-11 py-3 px-2 rounded-md border border-gray-300 text-sm overflow-hidden break-words w-full"
+                                            aria-label="Write a comment" placeholder="Write a comment…"/>
+                                    </div>
+                                </div>
+                                <div className="h-96 overflow-auto">
+                                    <div className="flex flex-wrap items-top mt-2">
+                                        <div className="w-1/12">
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt=""/>
+                                        </div>
+                                        <div className="w-11/12">
+                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
+                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
+                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
+                                                    PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap items-top mt-2">
+                                        <div className="w-1/12">
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt=""/>
+                                        </div>
+                                        <div className="w-11/12">
+                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
+                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
+                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
+                                                    PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap items-top mt-2">
+                                        <div className="w-1/12">
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt=""/>
+                                        </div>
+                                        <div className="w-11/12">
+                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
+                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
+                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
+                                                    PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap items-top mt-2">
+                                        <div className="w-1/12">
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt=""/>
+                                        </div>
+                                        <div className="w-11/12">
+                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
+                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
+                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
+                                                    PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap items-top mt-2">
+                                        <div className="w-1/12">
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt=""/>
+                                        </div>
+                                        <div className="w-11/12">
+                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
+                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
+                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
+                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
+                                                    PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
 
                     </div>
                 </div>
