@@ -7,6 +7,7 @@
 from elasticsearch import Elasticsearch
 from datetime import datetime
 INDEX_NAME = 'c360-test-index-4'
+# INDEX_NAME = 'inspection-test'
 es = Elasticsearch()
 # 
 # utility initates
@@ -44,7 +45,8 @@ def delete_document(id):
 # we'll be using the following document structure for inspections
 # (STORED IN """inspection-index-PROJECT_NAME-BUILDER_NAME-other-properties""")
 inspection_document_skeleton = {
-    "name": 0,
+    "project_name": "",
+    "sub_project_name": "",
     "date_time": datetime.now(),
     "type": [0, 1],
     "status": {
@@ -69,6 +71,7 @@ inspection_document_skeleton = {
 
 inspection_document_skeleton = {
     "name": "",
+    "sub_project":[],
     "created_by": "",
     "created_at": "",
     "finished_at": "",

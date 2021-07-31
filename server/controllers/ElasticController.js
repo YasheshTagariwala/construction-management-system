@@ -1,5 +1,5 @@
 const {Client} = require('@elastic/elasticsearch')
-const client = new Client({node: 'http://elasticsearch-inlots:9200'})
+const client = new Client({node: 'http://localhost:9200'})
 const jwt = require('jwt-simple');
 const {jwtSecret, jwtExpirationInterval} = require('../config');
 const {DateTime} = require('luxon');
@@ -77,16 +77,19 @@ viewContractorsInspections = async (req, res) => {
 
 viewInspectorsInspections = async (req, res) => {
 
+    // console.log("123 : "+req.body.text)
+
     await client.search({
             index: 'inspection-test',
             body: {
                 query: {
                     "term": {
-                        "sessions.assigned_to": req.params.text
+                        "sessions.assigned_to": req.body.text
                     }
                 }
             }
         }, (err, data) => {
+            console.log(data)
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
@@ -125,7 +128,7 @@ loginUser = async (req, res) => {
             let user = null;
             const date = DateTime.local();
             const payload = {
-                _id: this._id,
+                id: email === 'inspector@c360.com' ? 'inspector' : 'contractor',
                 exp: +new Date(date.plus({minutes: jwtExpirationInterval}).toSeconds()),
                 iat: +new Date(date.toSeconds()),
             };
