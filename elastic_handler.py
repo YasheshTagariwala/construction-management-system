@@ -6,8 +6,8 @@
 # initiates
 from elasticsearch import Elasticsearch
 from datetime import datetime
-INDEX_NAME = 'c360-test-index-4'
-# INDEX_NAME = 'inspection-test'
+# INDEX_NAME = 'c360-test-index-4'
+INDEX_NAME = 'inspection-test'
 es = Elasticsearch()
 # 
 # utility initates

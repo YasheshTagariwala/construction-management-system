@@ -89,7 +89,6 @@ viewInspectorsInspections = async (req, res) => {
                 }
             }
         }, (err, data) => {
-            console.log(data)
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }

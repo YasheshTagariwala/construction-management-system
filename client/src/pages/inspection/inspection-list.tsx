@@ -1,13 +1,41 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Loader from "../../components/loader";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {inspectionList} from "../../redux/inspection/actions";
+import ToasterService from "../../services/toaster-service";
+import {Inspection} from "../../models/inspection";
+import moment from "moment"
 
 function InspectionList(props: any) {
-    const dummyList = Array.from({length:10},(x, i) => (i + 1)).map(x => ({opened: false}))
-    const [inspectionList, setInspectionList] = useState(dummyList);
+    const {inspectionList: getInspectionList} = props;
+    const [inspectionList, setInspectionList] = useState<Inspection[]>([]);
     const [openIndex, setOpenIndex] = useState(-1);
     const [openDetailIndex, setOpenDetailIndex] = useState(-1);
 
+    useEffect(() => {
+        getInspectionList({text: 'bcrok'})
+    }, [getInspectionList])
+
+    useEffect(() => {
+        setInspectionList(props.inspections)
+    }, [props.inspections])
+
+    useEffect(() => {
+        if (props.error) {
+            ToasterService.Toast(props.error, 'error')
+        }
+        if (props.success) {
+            ToasterService.Toast(props.success, 'error')
+        }
+    }, [props.error, props.success])
+
+    function getFormattedDate(date: string) {
+        if (date) {
+            return moment(date).format('DD/MM/YYYY');
+        }
+        return moment().format('DD/MM/YYYY');
+    }
 
     return (
         <main className="h-full pb-16 overflow-y-auto">
@@ -33,32 +61,42 @@ function InspectionList(props: any) {
                             </div>
                             <div className="inspection-list">
                                 {inspectionList.map((item, inx) =>
-                                    <div key={`itm-${inx}`} className={`${openDetailIndex === inx && 'open-inspection'} cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg`}>
-                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}}
-                                            className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">06/01/2020
+                                    <div key={`itm-${inx}`}
+                                         className={`${openDetailIndex === inx && 'open-inspection'} cursor-pointer flex flex-wrap px-2 my-3 rounded-md justify-between items-center bg-gray-100 font-normal border border-gray-200 hover:shadow-lg`}>
+                                        <div onClick={() => {
+                                            setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
+                                        }}
+                                             className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">{getFormattedDate(item.created_at)}
                                         </div>
-                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 w-52">
-                                            <h6 className="text-primary text-sm">Wadilala society, Surat</h6>
-                                            <p className="text-red-600 text-xs uppercase">Unfinished</p>
+                                        <div onClick={() => {
+                                            setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
+                                        }} className="p-2 m-1 w-52">
+                                            <h6 className="text-primary text-sm">{item.name}</h6>
+                                            <p className={`${item.finished_at ? 'text-green-600' : 'text-red-600'} text-xs uppercase`}>{item.finished_at ? 'Finished' : 'Unfinished'}</p>
                                         </div>
-                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 w-52">
-                                            <h6 className="text-black text-sm">Wadilala society</h6>
+                                        <div onClick={() => {
+                                            setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
+                                        }} className="p-2 m-1 w-52">
+                                            <h6 className="text-black text-sm">{item.sessions[item.sessions.length - 1].name}</h6>
                                             <p className="text-gray-400 text-xs uppercase">Project</p>
                                         </div>
-                                        <div onClick={() => {setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)}} className="p-2 m-1 flex w-40">
-                                            <img className="h-10 w-10 border border-gray-400 rounded-full object-cover mr-2"
-                                                 src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                 alt="avatar"/>
+                                        <div onClick={() => {
+                                            setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
+                                        }} className="p-2 m-1 flex w-40">
+                                            <img
+                                                className="h-10 w-10 border border-gray-400 rounded-full object-cover mr-2"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
+                                                alt="avatar"/>
                                             <div>
-                                                <h6 className="text-black text-sm">Sunil Mittal</h6>
-                                                <p className="text-gray-400 text-xs uppercase">Inspector</p>
+                                                <h6 className="text-black text-sm">{item.sessions[item.sessions.length - 1].assigned_to}</h6>
+                                                <p className="text-gray-400 text-xs uppercase">{props.user.role}</p>
                                             </div>
                                         </div>
-                                        <div className={`relative m-1 test-test-${item.opened}`}>
+                                        <div className={`relative m-1`}>
                                             <button onClick={() => {
                                                 setOpenIndex(openIndex === inx ? -1 : inx)
                                             }}
-                                                className="relative bg-primary-lightest p-3 align-middle rounded-md opacity-50 duration-75 hover:opacity-100 focus:opacity-100">
+                                                    className="relative bg-primary-lightest p-3 align-middle rounded-md opacity-50 duration-75 hover:opacity-100 focus:opacity-100">
                                                 <svg className=" h-5 w-5 text-white" fill="currentColor"
                                                      xmlns="http://www.w3.org/2000/svg " viewBox="0 0 24 24 ">
                                                     <path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3
@@ -71,9 +109,11 @@ function InspectionList(props: any) {
                                             }} className="fixed inset-0 h-full w-full z-10 "/>}
 
                                             {openIndex === inx &&
-                                            <div className="absolute right-0 bg-white rounded-md shadow-lg overflow-hidden z-20 w-28 ">
+                                            <div
+                                                className="absolute right-0 bg-white rounded-md shadow-lg overflow-hidden z-20 w-28 ">
                                                 <div className="text-gray-600 text-sm font-normal ">
-                                                    <Link to="/inspector/inspection/add" className="block p-2 hover:bg-gray-100 ">
+                                                    <Link to="/inspector/inspection/add"
+                                                          className="block p-2 hover:bg-gray-100 ">
                                                         Edit
                                                     </Link>
                                                     <a href="# " className="block p-2 hover:bg-gray-100 ">
@@ -85,7 +125,7 @@ function InspectionList(props: any) {
                                     </div>
                                 )}
                             </div>
-                            <div className="flex flex-col items-center my-10">
+                            <div className="flex flex-col items-center my-10 hidden">
                                 <div className="flex text-gray-700">
                                     <div
                                         className="h-12 w-12 mr-3 flex justify-center items-center rounded-full border border-gray-300 cursor-pointer">
@@ -93,7 +133,7 @@ function InspectionList(props: any) {
                                              viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
                                              strokeLinecap="round" strokeLinejoin="round"
                                              className="feather feather-chevron-left w-6 h-6">
-                                            <polyline points="15 18 9 12 15 6"></polyline>
+                                            <polyline points="15 18 9 12 15 6"/>
                                         </svg>
                                     </div>
                                     <div className="flex h-12 font-medium rounded-full">
@@ -110,7 +150,7 @@ function InspectionList(props: any) {
                                              viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
                                              strokeLinecap="round" strokeLinejoin="round"
                                              className="feather feather-chevron-right w-6 h-6">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                            <polyline points="9 18 15 12 9 6"/>
                                         </svg>
                                     </div>
                                 </div>
@@ -118,7 +158,7 @@ function InspectionList(props: any) {
                         </div>
 
 
-                        {openDetailIndex >= 0 &&
+                        {(openDetailIndex >= 0 && inspectionList.length > 0) &&
                         <div className="w-full lg:w-2/5 px-3 mb-5">
                             <div className="bg-gray-200 border border-gray-300 p-3 sm:p-4 lg:p-5 rounded-md">
                                 <div className="flex flex-wrap items-top">
@@ -132,8 +172,7 @@ function InspectionList(props: any) {
                                     </div>
                                     <div className="lg:w-11/12">
                                         <div className="flex flex-wrap justify-between">
-                                            <h5 className="text-primary text-lg font-medium tracking-wide">Wadilala
-                                                Society, Surat</h5>
+                                            <h5 className="text-primary text-lg font-medium tracking-wide">{inspectionList[openDetailIndex].name}</h5>
                                             <div className="flex items-center">
                                                 <svg className="w-4 h-4 text-black mr-1"
                                                      xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -141,15 +180,13 @@ function InspectionList(props: any) {
                                                     <path
                                                         d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/>
                                                 </svg>
-                                                <p className="text-gray-500 text-sm">06/01/2020</p>
+                                                <p className="text-gray-500 text-sm">{getFormattedDate(inspectionList[openDetailIndex].created_at)}</p>
                                             </div>
                                         </div>
-                                        <p className="my-2 text-sm text-gray-500">Lorem ipsum dolor sit amet
-                                            consectetur, adipisicing elit. Aliquam nobis tempore, consequatur alias
-                                            corrupti ab, culpa odit voluptas ipsa perspiciatis in ipsam explicabo? Nisi
-                                            incidunt saepe modi ut alias est?</p>
-                                        <ul className="flex flex-wrap">
-                                            <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
+                                        <p className="my-2 text-sm text-gray-500 truncate">
+                                            {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].notes}
+                                        </p>
+                                        <ul className="flex flex-wrap hidden">
                                             <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
                                             <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
                                             <li className="p-2 m-1 bg-gray-300 flex text-sm rounded-md">lorem</li>
@@ -158,10 +195,11 @@ function InspectionList(props: any) {
                                         <div className="mt-2 flex flex-wrap justify-start">
                                             <div className="mr-3 my-1">
                                                 <p className="uppercase text-xs text-black mb-1">project</p>
-                                                <h6 className="bg-primary-lightest text-white p-2 rounded-md text-sm">Wadilala
-                                                    Society</h6>
+                                                <h6 className="bg-primary-lightest text-white p-2 rounded-md text-sm">{
+                                                    inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].name
+                                                }</h6>
                                             </div>
-                                            <div className="my-1">
+                                            <div className="my-1 hidden">
                                                 <p className="uppercase text-xs text-black mb-1">member</p>
                                                 <div className="flex items-center overflow-hidden">
                                                     <img
@@ -299,4 +337,15 @@ function InspectionList(props: any) {
     )
 }
 
-export default InspectionList
+const mapStateToProps = ({inspectionsReducer, authUser}: { inspectionsReducer: any, authUser: any }) => {
+    const {inspections, loading, error, success} = inspectionsReducer
+    const {user} = authUser
+    return {inspections, loading, error, user, success}
+}
+
+const mapActionsToProps = {inspectionList}
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(InspectionList)

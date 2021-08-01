@@ -149,8 +149,8 @@ function Login(props: any) {
 }
 
 const mapStateToProps = ({authUser}: { authUser: any }) => {
-    const {user, loading, error} = authUser
-    return {user, loading, error}
+    const {user, loading, error, success} = authUser
+    return {user, loading, error, success}
 }
 
 const mapActionsToProps = {loginUser}

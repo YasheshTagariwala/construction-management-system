@@ -124,11 +124,9 @@ function Header(props: any) {
     )
 }
 
-const mapStateToProps = () => {
-};
 const mapActionsToProps = {logoutUser}
 
 export default connect(
-    mapStateToProps,
+    null,
     mapActionsToProps
 )(Header)
