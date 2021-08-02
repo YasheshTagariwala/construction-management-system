@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
 
 function SideBar(props: any) {
     const [open, setOpen] = useState(false);
@@ -57,4 +58,14 @@ function SideBar(props: any) {
     )
 }
 
-export default SideBar;
+const mapStateToProps = ({authUser}: {authUser: any}) => {
+    const {user} = authUser;
+    return {user}
+}
+
+function PassedProps(propToPass: any) {
+    const {sideBarOpen} = propToPass
+    return {sideBarOpen}
+}
+
+export default connect(mapStateToProps, null, PassedProps)(SideBar);

@@ -1,4 +1,10 @@
-import {INSPECTION_LIST, INSPECTION_LIST_ERROR, INSPECTION_LIST_SUCCESS} from "../actions";
+import {
+    INSPECTION_ADD, INSPECTION_ADD_ERROR,
+    INSPECTION_ADD_SUCCESS,
+    INSPECTION_LIST,
+    INSPECTION_LIST_ERROR,
+    INSPECTION_LIST_SUCCESS
+} from "../actions";
 
 const INIT_STATE = {
     inspections: [],
@@ -16,6 +22,12 @@ const inspectionReducer = (state = INIT_STATE, action: any) => {
             return {...state, loading: false, inspections: action.payload, error: '', success: ''};
         case INSPECTION_LIST_ERROR:
             return {...state, loading: false, inspections: [], error: action.payload.message, success: ''};
+        case INSPECTION_ADD:
+            return {...state, loading: true, error: '', success: ''};
+        case INSPECTION_ADD_SUCCESS:
+            return {...state, loading: false, error: '', success: ''};
+        case INSPECTION_ADD_ERROR:
+            return {...state, loading: false, error: action.payload.message, success: ''};
         default:
             return {...state};
     }

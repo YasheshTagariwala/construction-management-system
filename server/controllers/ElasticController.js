@@ -9,19 +9,19 @@ createInspection = async (req, res) => {
     await client.index({
             index: 'inspection-test',
             body: {
-                "name": req.params.name,
-                "created_by": req.params.created_by,
-                "created_at": req.params.created_at,
-                "finished_at": req.params.finished_at,
-                "type": req.params.type,
-                "sessions": []
+                "name": req.body.name,
+                "created_by": req.body.created_by,
+                "created_at": req.body.created_at,
+                "finished_at": req.body.finished_at,
+                "type": req.body.type,
+                "sessions": req.body.sessions
             }
         }, (err, data) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => hit._source)
-            return res.status(200).json({success: true, data: pureData})
+            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true})
         }
     )
 

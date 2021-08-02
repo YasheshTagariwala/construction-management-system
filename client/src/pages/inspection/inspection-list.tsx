@@ -14,7 +14,7 @@ function InspectionList(props: any) {
     const [openDetailIndex, setOpenDetailIndex] = useState(-1);
 
     useEffect(() => {
-        getInspectionList({text: 'bcrok'})
+        getInspectionList({text: 'ogemp'})
     }, [getInspectionList])
 
     useEffect(() => {

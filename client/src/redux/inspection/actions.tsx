@@ -1,4 +1,5 @@
 import {
+    INSPECTION_ADD, INSPECTION_ADD_ERROR, INSPECTION_ADD_SUCCESS,
     INSPECTION_LIST, INSPECTION_LIST_ERROR,
     INSPECTION_LIST_SUCCESS,
 } from "../actions";
@@ -18,3 +19,15 @@ export const inspectionListError = (message: string) => ({
     payload: {message}
 });
 
+export const inspectionAdd = (body: any, history: any) => ({
+    type: INSPECTION_ADD,
+    payload: {body, history}
+})
+
+export const inspectionAddSuccess = () => ({
+    type: INSPECTION_ADD_SUCCESS
+});
+export const inspectionAddError = (message: string) => ({
+    type: INSPECTION_ADD_ERROR,
+    payload: {message}
+});
