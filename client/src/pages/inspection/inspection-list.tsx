@@ -183,7 +183,7 @@ function InspectionList(props: any) {
                                                 <p className="text-gray-500 text-sm">{getFormattedDate(inspectionList[openDetailIndex].created_at)}</p>
                                             </div>
                                         </div>
-                                        <p className="my-2 text-sm text-gray-500 truncate">
+                                        <p className="my-2 text-sm text-gray-500 truncate break-all">
                                             {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].notes}
                                         </p>
                                         <ul className="flex flex-wrap hidden">
