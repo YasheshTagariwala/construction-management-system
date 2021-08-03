@@ -22,7 +22,7 @@ const Inspection = (props: any) => {
             <div className="flex h-screen bg-gray-50">
                 <div onClick={() => setSideBarOpen(!sideBarOpen)}
                      className={`${sideBarOpen ? 'block' : 'hidden'} fixed z-20 inset-0 bg-white opacity-50 transition-opacity lg:hidden block`}/>
-                <SideBar sideBarOpen={sideBarOpen}/>
+                <SideBar sideBarOpen={sideBarOpen} user={props.authUser}/>
                 <div className="flex flex-col flex-1">
                     <Header setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen}/>
                     <Switch>

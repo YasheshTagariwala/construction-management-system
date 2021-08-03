@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom';
-import {connect} from "react-redux";
 
 function SideBar(props: any) {
     const [open, setOpen] = useState(false);
@@ -46,9 +45,9 @@ function SideBar(props: any) {
                             className={`relative right-0 w-full mt-2 origin-top-right rounded-md ${open ? 'block' : 'hidden'}`}>
                             <div className="bg-primary-lightest rounded-md">
                                 <Link className="inline-flex px-4 py-3 items-center w-full font-light transition-colors opacity-60 duration-150 hover:opacity-100"
-                                      to="/inspector/inspection">Inspection</Link>
+                                      to={`/${props.user?.role}/inspection`}>Inspection</Link>
                                 <Link className="inline-flex px-4 py-3 items-center w-full font-light transition-colors opacity-60 duration-150 hover:opacity-100"
-                                      to="/inspector/inspection/add">Add Inspection</Link>
+                                      to={`/${props.user?.role}/inspection/add`}>Add Inspection</Link>
                             </div>
                         </div>
                     </div>
@@ -58,14 +57,4 @@ function SideBar(props: any) {
     )
 }
 
-const mapStateToProps = ({authUser}: {authUser: any}) => {
-    const {user} = authUser;
-    return {user}
-}
-
-function PassedProps(propToPass: any) {
-    const {sideBarOpen} = propToPass
-    return {sideBarOpen}
-}
-
-export default connect(mapStateToProps, null, PassedProps)(SideBar);
+export default SideBar;

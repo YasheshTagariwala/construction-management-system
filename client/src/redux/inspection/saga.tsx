@@ -37,10 +37,9 @@ const getInspectionAddAsync = async (body: any) => {
 function* getInspectionAdd({payload}: Parameters): any {
     const {history} = payload;
     try {
-        const inspectionAdd = yield call(getInspectionAddAsync, payload.body);
+        yield call(getInspectionAddAsync, payload.body);
         yield put(inspectionAddSuccess());
         history.push('/inspector');
-
     } catch (error) {
         let err = error.response ? error.response.data.message : error.message
         yield put(inspectionAddError(err));
