@@ -1,6 +1,6 @@
 export interface Inspection {
     name: string;
-    sub_project: any;
+    sub_project?: any;
     created_by: string;
     created_at: string;
     finished_at: string;
@@ -14,9 +14,14 @@ export interface Session {
     created_at: string;
     finished_at: string;
     type: string;
-    checklist: any
+    checklist: CheckList[]
     images: string;
     start_end: any;
     notes: string;
     signature: string;
+}
+
+export interface CheckList {
+    item: string;
+    checked?: boolean;
 }

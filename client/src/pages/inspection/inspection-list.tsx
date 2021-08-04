@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {inspectionList} from "../../redux/inspection/actions";
 import ToasterService from "../../services/toaster-service";
 import {Inspection} from "../../models/inspection";
-import moment from "moment"
+import moment from "moment";
 
 function InspectionList(props: any) {
     const {inspectionList: getInspectionList} = props;
@@ -184,7 +184,7 @@ function InspectionList(props: any) {
                                                 <p className="text-gray-500 text-sm">{getFormattedDate(inspectionList[openDetailIndex].created_at)}</p>
                                             </div>
                                         </div>
-                                        <p className="my-2 text-sm text-gray-500 truncate break-all">
+                                        <p className="my-2 text-sm text-gray-500 break-all">
                                             {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].notes}
                                         </p>
                                         <ul className="flex flex-wrap hidden">
@@ -224,6 +224,36 @@ function InspectionList(props: any) {
                                                     <option value="">Unfinished</option>
                                                     <option>Finished</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div className="mt-2 flex flex-wrap justify-start">
+                                            <div className="my-1 w-full">
+                                                <p className="uppercase text-xs text-black mb-1">Check list</p>
+
+                                                {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk, inx) =>
+                                                    (<label key={`chk-${inx}`}
+                                                        className="custom-label flex w-full mt-2 p cursor-pointer p-2 border bg-gray-300 hover:border-primary rounded-md">
+                                                        <div
+                                                            className="bg-white rounded-md w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                                            <input onChange={() => {chk.checked = !chk.checked}} type="checkbox" className="hidden" value={chk.item} defaultChecked={chk.checked}/>
+                                                            <svg
+                                                                className="opacity-0 invisible w-4 h-4 text-primary pointer-events-none"
+                                                                viewBox="0 0 172 172">
+                                                                <g fill="none" strokeWidth="none"
+                                                                   strokeMiterlimit="10" fontFamily="none"
+                                                                   fontWeight="none" fontSize="none"
+                                                                   textAnchor="none" style={{mixBlendMode: 'normal'}}>
+                                                                    <path d="M0 172V0h172v172z"/>
+                                                                    <path
+                                                                        d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z"
+                                                                        fill="currentColor" strokeWidth="1"/>
+                                                                </g>
+                                                            </svg>
+                                                        </div>
+                                                        <span
+                                                            className="select-none break-all normal-case">{chk.item}</span>
+                                                    </label>))
+                                                }
                                             </div>
                                         </div>
                                     </div>

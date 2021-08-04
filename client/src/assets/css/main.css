@@ -59,3 +59,7 @@
 .open-inspection h6 {
     @apply text-white
 }
+
+.custom-label input:checked + svg {
+    @apply opacity-100 visible !important;
+}
