@@ -13,6 +13,7 @@ function InspectionList(props: any) {
     const [inspectionList, setInspectionList] = useState<Inspection[]>([]);
     const [openIndex, setOpenIndex] = useState(-1);
     const [openDetailIndex, setOpenDetailIndex] = useState(-1);
+    const [modalVisibility, setModalVisibility] = useState(false);
 
     useEffect(() => {
         // getInspectionList({text: 'ogemp'})
@@ -36,9 +37,7 @@ function InspectionList(props: any) {
     const onInspectionUpdate = (values: any) => {
         if (!props.loading) {
             props.inspectionUpdate({
-                updated_details : [
-
-                ]
+                updated_details: []
             }, props.history)
         }
     }
@@ -240,142 +239,72 @@ function InspectionList(props: any) {
                                         </div>
                                         <div className="mt-2 flex flex-wrap justify-start">
                                             <div className="my-1 w-full">
-                                                <p className="uppercase text-xs text-black mb-1">Check list</p>
+                                                <p className="uppercase text-xs text-black mb-1">images</p>
+                                                <div className="flex items-center overflow-auto pb-1">
 
-                                                {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk, inx) =>
-                                                    (<label key={`chk-${inx}`}
-                                                            className="custom-label flex w-full mt-2 p cursor-pointer p-2 border bg-gray-300 hover:border-primary rounded-md">
-                                                        <div
-                                                            className="bg-white rounded-md w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                                            <input onChange={() => {
-                                                                chk.checked = !chk.checked
-                                                            }} type="checkbox" className="hidden" value={chk.item}
-                                                                   defaultChecked={chk.checked}/>
-                                                            <svg
-                                                                className="opacity-0 invisible w-4 h-4 text-primary pointer-events-none"
-                                                                viewBox="0 0 172 172">
-                                                                <g fill="none" strokeWidth="none"
-                                                                   strokeMiterlimit="10" fontFamily="none"
-                                                                   fontWeight="none" fontSize="none"
-                                                                   textAnchor="none" style={{mixBlendMode: 'normal'}}>
-                                                                    <path d="M0 172V0h172v172z"/>
-                                                                    <path
-                                                                        d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z"
-                                                                        fill="currentColor" strokeWidth="1"/>
-                                                                </g>
-                                                            </svg>
+                                                    {/* I know this is "BAD CODE" */}
+                                                    {[1, 1, 1, 1, 1, 1, 1, 1].map((x, i) => (
+                                                        <img key={`img-${i}`}
+                                                            className="inline-block h-24 mr-2 rounded-md border border-gray-400 object-cover object-center"
+                                                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
+                                                            alt=""/>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="mt-2 flex flex-wrap justify-start">
+                                            <div className="my-1 w-full">
+                                                <p className="uppercase text-xs text-black mb-1">Check list</p>
+                                                {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk, chkInx) => (
+                                                    <div key={`chk-${chkInx}`} className="p-2 mb-2 border bg-gray-300 hover:border-primary rounded-md">
+                                                        <div className="flex flex-wrap">
+                                                            <div className="flex flex-wrap w-full justify-between">
+                                                                <label className="custom-label flex cursor-pointer w-11/12">
+                                                                    <div
+                                                                        className="bg-white rounded-md w-6 h-6 p-1 flex justify-center items-center mr-2">
+                                                                        <input type="checkbox" className="hidden" onChange={() => {
+                                                                            chk.checked = !chk.checked;
+                                                                        }} defaultChecked={chk.checked}/>
+                                                                        <svg
+                                                                            className="opacity-0 invisible w-4 h-4 text-primary pointer-events-none"
+                                                                            viewBox="0 0 172 172">
+                                                                            <g fill="none" strokeWidth="none"
+                                                                               strokeMiterlimit="10" fontFamily="none"
+                                                                               fontWeight="none" fontSize="none"
+                                                                               textAnchor="none"
+                                                                               style={{mixBlendMode: 'normal'}}>
+                                                                                <path d="M0 172V0h172v172z"/>
+                                                                                <path
+                                                                                    d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z"
+                                                                                    fill="currentColor"
+                                                                                    strokeWidth="1"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <span className="select-none break-all normal-case">{chk.item}</span>
+                                                                </label>
+                                                                <div className="w-1/12 text-right">
+                                                                    <button type={'button'}
+                                                                            onClick={() => {setModalVisibility(true)}}
+                                                                            className="p-1 bg-gray-500 rounded-md ml-auto">
+                                                                        <svg className="w-4 h-4 text-white"
+                                                                             xmlns="http://www.w3.org/2000/svg"
+                                                                             fill="currentColor" viewBox="0 0 24 24">
+                                                                            <path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/>
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <span
-                                                            className="select-none break-all normal-case">{chk.item}</span>
-                                                    </label>))
-                                                }
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <button type="button"
-                                                    className="button blue-btn"
-                                                    onClick={onInspectionUpdate}>
-                                                Update
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-wrap items-center mt-8">
-                                    <div className="w-1/12">
-                                        <img
-                                            className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                            alt=""/>
-                                    </div>
-                                    <div className="w-11/12">
-                                        <textarea
-                                            className="h-11 py-3 px-2 rounded-md border border-gray-300 text-sm overflow-hidden break-words w-full"
-                                            aria-label="Write a comment" placeholder="Write a comment…"/>
-                                    </div>
-                                </div>
-                                <div className="h-96 overflow-auto">
-                                    <div className="flex flex-wrap items-top mt-2">
-                                        <div className="w-1/12">
-                                            <img
-                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                alt=""/>
-                                        </div>
-                                        <div className="w-11/12">
-                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
-                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
-                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
-                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
-                                                    PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-top mt-2">
-                                        <div className="w-1/12">
-                                            <img
-                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                alt=""/>
-                                        </div>
-                                        <div className="w-11/12">
-                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
-                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
-                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
-                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
-                                                    PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-top mt-2">
-                                        <div className="w-1/12">
-                                            <img
-                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                alt=""/>
-                                        </div>
-                                        <div className="w-11/12">
-                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
-                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
-                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
-                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
-                                                    PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-top mt-2">
-                                        <div className="w-1/12">
-                                            <img
-                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                alt=""/>
-                                        </div>
-                                        <div className="w-11/12">
-                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
-                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
-                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
-                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
-                                                    PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-top mt-2">
-                                        <div className="w-1/12">
-                                            <img
-                                                className="inline-block h-10 w-10 rounded-full text-white border-2 border-gray-200 object-cover object-center"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80"
-                                                alt=""/>
-                                        </div>
-                                        <div className="w-11/12">
-                                            <div className="p-3 rounded-md bg-gray-300 text-gray-500 text-sm">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi
-                                                inventore nihil at est itaque laboriosam nostrum explicabo animi modi,
-                                                sed aut, quis maiores earum nulla quibusdam quisquam rerum quo quia?
-                                                <p className="text-xs text-gray-400 text-right">Jan 24, 2020 at 5:54
-                                                    PM</p>
+                                                        <ul className="mt-2">
+                                                            {(chk.issues || []).map((issue, issueInx) => (
+                                                                <li key={`issu-${issueInx}`} className="break-all font-light text-gray-800 text-sm border-t border-gray-500 p-1">Lorem,
+                                                                    {issue}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))};
                                             </div>
                                         </div>
                                     </div>
@@ -386,6 +315,32 @@ function InspectionList(props: any) {
                     </div>
                 </div>
             </div>
+            {/*<Modal
+                isOpen={modalVisibility}
+                onRequestClose={() => {
+                    setModalVisibility(false)
+                }}
+                contentLabel="Example Modal">
+                <div className="fixed text-gray-500 flex items-center justify-center overflow-auto z-50 bg-black bg-opacity-40 left-0 right-0 top-0 bottom-0">
+                    <div className="bg-white rounded-xl shadow-2xl p-6 sm:w-10/12 mx-10">
+                    <div className="flex flex-wrap justify-between w-full">
+                        <span className="font-bold text-left block text-2xl text-primary mb-3">Add Issues </span>
+                        <button className="w-8 h-8 bg-primary rounded-full">
+                        <svg className="w-4 h-4 text-white m-auto" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg>
+                    </button>
+                </div>
+                <form className="add-issue mt-3">
+                    <div className="form-panel">
+                        <textarea className="form-input" rows={2} name="" required placeholder="write here" aria-label="Write here" aria-required="true"/>
+                    </div>
+                    <button type="submit" className="button blue-btn">
+                        submit
+                    </button>
+                </form>
+            </div>
+
+        </div>
+            </Modal>*/}
         </main>
     )
 }

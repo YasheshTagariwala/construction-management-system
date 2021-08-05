@@ -24,4 +24,5 @@ export interface Session {
 export interface CheckList {
     item: string;
     checked?: boolean;
+    issues?: string[]
 }
