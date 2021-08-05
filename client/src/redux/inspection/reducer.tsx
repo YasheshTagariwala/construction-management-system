@@ -3,7 +3,10 @@ import {
     INSPECTION_ADD_SUCCESS,
     INSPECTION_LIST,
     INSPECTION_LIST_ERROR,
-    INSPECTION_LIST_SUCCESS
+    INSPECTION_LIST_SUCCESS,
+    INSPECTION_UPDATE,
+    INSPECTION_UPDATE_ERROR,
+    INSPECTION_UPDATE_SUCCESS
 } from "../actions";
 
 const INIT_STATE = {
@@ -27,6 +30,12 @@ const inspectionReducer = (state = INIT_STATE, action: any) => {
         case INSPECTION_ADD_SUCCESS:
             return {...state, loading: false, error: '', success: ''};
         case INSPECTION_ADD_ERROR:
+            return {...state, loading: false, error: action.payload.message, success: ''};
+        case INSPECTION_UPDATE:
+            return {...state, loading: true, error: '', success: ''};
+        case INSPECTION_UPDATE_SUCCESS:
+            return {...state, loading: false, error: '', success: ''};
+        case INSPECTION_UPDATE_ERROR:
             return {...state, loading: false, error: action.payload.message, success: ''};
         default:
             return {...state};

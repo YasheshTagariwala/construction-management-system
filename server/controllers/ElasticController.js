@@ -60,7 +60,7 @@ viewContractorsInspections = async (req, res) => {
             body: {
                 query: {
                     "term": {
-                        "created_by": req.params.text
+                        "created_by": req.body.text
                     }
                 }
             }
@@ -83,7 +83,7 @@ viewInspectorsInspections = async (req, res) => {
             index: 'inspection-test',
             body: {
                 query: {
-                    "term": {
+                    term: {
                         "sessions.assigned_to": req.body.text
                     }
                 }
@@ -101,11 +101,11 @@ viewInspectorsInspections = async (req, res) => {
 
 updateInspection = async (req, res) => {
 
-    await client.update({
+    /*await client.update({
             index: 'inspection-test',
-            id: req.params.id,
+            id: req.body.id,
             body: {
-                doc: req.params.updated_details
+                doc: req.body.updated_details
             }
         }, (err, data) => {
             if (err) {
@@ -113,6 +113,28 @@ updateInspection = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => hit._source)
             return res.status(200).json({success: true, data: pureData})
+        }
+    )*/
+
+    await client.updateByQuery({
+            index: 'inspection-test',
+            body: {
+                script: {
+                    inline: 'ctx._source.sessions[0].checklist.checked = "true"',
+                    lang: 'painless'
+                },
+                query: {
+                    term: {
+                        "sessions[0].checklist.item": "Check for grading of sand, Mix proportion."
+                    }
+                }
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true})
         }
     )
 

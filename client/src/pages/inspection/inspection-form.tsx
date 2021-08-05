@@ -27,14 +27,13 @@ function InspectionForm(props: any) {
                 type: [],
                 sessions: [
                     {
-                        name: "",
+                        name: moment().format('DD/MM/YYYY HH:mm A'),
                         type: "OnField/Remote",
                         created_at: moment().format('DD/MM/YYYY'),
                         finished_at: "",
                         assigned_to: 'inspector',
-                        checklist: [
-                            {checklist}
-                        ]
+                        checklist,
+                        notes: values.InspectionDescription
                     }
                 ]
             }, props.history)
@@ -56,23 +55,23 @@ function InspectionForm(props: any) {
         "Concrete (RCC)"
     ];
     const StructurePlasteringChecklist = [
-        {item: "Check for completeness of all hidden jobs like piping, conduiting, etc."},
-        {item: "Check for grading of sand, Mix proportion."},
-        {item: "Sample preparation for finish and its approval."},
-        {item: "Hacking and cleaning the surface, removing loose particles, wetting the surface."},
-        {item: "Checking of plaster thickness, plumb & even surface."},
-        {item: "Check for grooves, openings, rounding off the corners, hollowness in plaster."},
-        {item: "Checking for use of waterproofing compound , mix proportion(as applicable)."}
+        {item: "Check for completeness of all hidden jobs like piping, conduiting, etc.", checked: false},
+        {item: "Check for grading of sand, Mix proportion.", checked: false},
+        {item: "Sample preparation for finish and its approval.", checked: false},
+        {item: "Hacking and cleaning the surface, removing loose particles, wetting the surface.", checked: false},
+        {item: "Checking of plaster thickness, plumb & even surface.", checked: false},
+        {item: "Check for grooves, openings, rounding off the corners, hollowness in plaster.", checked: false},
+        {item: "Checking for use of waterproofing compound , mix proportion(as applicable).", checked: false}
     ]
     const StructureConcreteChecklist = [
-        {item: "Check for concrete slump as IS requirement."},
-        {item: "Check for grade of concrete as per GFC drawing."},
-        {item: "Check for levels and top finishes."},
-        {item: "Check for material quality as per IS standards."},
-        {item: "Check for presence of required dimensions of cubes for curing."},
-        {item: "Check for formwork and dimensions are as per drawing."},
-        {item: "Check for reinforcement as per GFC drawing and alignment."},
-        {item: "Check for appropriate concrete mix and proportion of ingredients."}
+        {item: "Check for concrete slump as IS requirement.", checked: false},
+        {item: "Check for grade of concrete as per GFC drawing.", checked: false},
+        {item: "Check for levels and top finishes.", checked: false},
+        {item: "Check for material quality as per IS standards.", checked: false},
+        {item: "Check for presence of required dimensions of cubes for curing.", checked: false},
+        {item: "Check for formwork and dimensions are as per drawing.", checked: false},
+        {item: "Check for reinforcement as per GFC drawing and alignment.", checked: false},
+        {item: "Check for appropriate concrete mix and proportion of ingredients.", checked: false}
     ]
 
     const ServicesSubTypes = [
@@ -80,40 +79,52 @@ function InspectionForm(props: any) {
         "Electrical"
     ];
     const ServicesSanFixturesChecklist = [
-        {item: "Check for material inspection and make."},
-        {item: "Check completeness of finishing works w.r.t. line, WC level & position."},
-        {item: "Check for leakage."},
-        {item: "Check for pressure testing if applicable."},
-        {item: "Check proper fixing of the sanitary fittings to give aesthetic appeal."},
-        {item: "Check for dye test if applicable."},
-        {item: "Check for mounting height as per GFC drawing."}
+        {item: "Check for material inspection and make.", checked: false},
+        {item: "Check completeness of finishing works w.r.t. line, WC level & position.", checked: false},
+        {item: "Check for leakage.", checked: false},
+        {item: "Check for pressure testing if applicable.", checked: false},
+        {item: "Check proper fixing of the sanitary fittings to give aesthetic appeal.", checked: false},
+        {item: "Check for dye test if applicable.", checked: false},
+        {item: "Check for mounting height as per GFC drawing.", checked: false}
     ];
     const ServicesElectricalChecklist = [
-        {item: "Check for location of fan junction box and light points as per GDC drawing."},
-        {item: "Check for cleanliness once the conduiting work is over."},
-        {item: "Check for if the Shaft is provided for Maintenance."},
-        {item: "Check the mounting heights of DBs and switches are as per standards."},
-        {item: "Check for separate circuits for lighting and power connections."},
-        {item: "Check the makelist list of specified materials for junction boxes, lights, switches."},
-        {item: "Check for different circuits for various purposes such as TV, refrigerator, internet connection etc."},
-        {item: "Check if the location of distribution board and switches is as per approved GFC drawing."},
-        {item: "Ensure correctness of lighting wire size and no. of wires as per the drawing in each conduit portion."},
-        {item: "Ensure conduits are properly tied to reinforcement bars to prevent floating during concrete."}
+        {item: "Check for location of fan junction box and light points as per GDC drawing.", checked: false},
+        {item: "Check for cleanliness once the conduiting work is over.", checked: false},
+        {item: "Check for if the Shaft is provided for Maintenance.", checked: false},
+        {item: "Check the mounting heights of DBs and switches are as per standards.", checked: false},
+        {item: "Check for separate circuits for lighting and power connections.", checked: false},
+        {item: "Check the makelist list of specified materials for junction boxes, lights, switches.", checked: false},
+        {
+            item: "Check for different circuits for various purposes such as TV, refrigerator, internet connection etc.",
+            checked: false
+        },
+        {
+            item: "Check if the location of distribution board and switches is as per approved GFC drawing.",
+            checked: false
+        },
+        {
+            item: "Ensure correctness of lighting wire size and no. of wires as per the drawing in each conduit portion.",
+            checked: false
+        },
+        {
+            item: "Ensure conduits are properly tied to reinforcement bars to prevent floating during concrete.",
+            checked: false
+        }
     ];
 
     const FinishesSubTypes = [
         "Tile"
     ];
     const FinishesTileChecklist = [
-        {item: "Check whether relevant drawings are available."},
-        {item: "Check whether the quality, tile pattern and design as per the client requirement."},
-        {item: "Check the border tile."},
-        {item: "Check for corner beading."},
-        {item: "Check for spacer / paper joint."},
-        {item: "Check for tile drop."},
-        {item: "Check for tile grout."},
-        {item: "Check if the tile is soaked before laying."},
-        {item: "Check for slope."}
+        {item: "Check whether relevant drawings are available.", checked: false},
+        {item: "Check whether the quality, tile pattern and design as per the client requirement.", checked: false},
+        {item: "Check the border tile.", checked: false},
+        {item: "Check for corner beading.", checked: false},
+        {item: "Check for spacer / paper joint.", checked: false},
+        {item: "Check for tile drop.", checked: false},
+        {item: "Check for tile grout.", checked: false},
+        {item: "Check if the tile is soaked before laying.", checked: false},
+        {item: "Check for slope.", checked: false}
     ];
 
     let type = null;
@@ -183,9 +194,9 @@ function InspectionForm(props: any) {
                                         <div className="form-panel">
                                             <label className="form-label"
                                                    htmlFor="Inspection Description">Description</label>
-                                            <textarea className="form-input" rows={3} id="" name="InspectionDescription"
-                                                      required placeholder="Description"
-                                                      aria-label="Inspection Description" aria-required="true"/>
+                                            <Field className="form-input" rows={3} id="" name="InspectionDescription"
+                                                   required placeholder="Description"
+                                                   aria-label="Inspection Description" aria-required="true"/>
                                         </div>
                                     </div>
                                     <div className="w-full md:w-1/3 px-3 mb-5">

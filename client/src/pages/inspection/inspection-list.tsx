@@ -3,6 +3,7 @@ import Loader from "../../components/loader";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {inspectionList} from "../../redux/inspection/actions";
+import {inspectionUpdate} from "../../redux/inspection/actions";
 import ToasterService from "../../services/toaster-service";
 import {Inspection} from "../../models/inspection";
 import moment from "moment";
@@ -30,6 +31,17 @@ function InspectionList(props: any) {
             ToasterService.Toast(props.success, 'error')
         }
     }, [props.error, props.success])
+
+
+    const onInspectionUpdate = (values: any) => {
+        if (!props.loading) {
+            props.inspectionUpdate({
+                updated_details : [
+
+                ]
+            }, props.history)
+        }
+    }
 
     function getFormattedDate(date: string) {
         if (date) {
@@ -67,7 +79,7 @@ function InspectionList(props: any) {
                                         <div onClick={() => {
                                             setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
                                         }}
-                                             className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">{getFormattedDate(item.created_at)}
+                                             className="p-2 m-1 bg-primary-lightest text-white rounded-md text-sm">{item.created_at}
                                         </div>
                                         <div onClick={() => {
                                             setOpenDetailIndex(openDetailIndex === inx ? -1 : inx)
@@ -181,7 +193,7 @@ function InspectionList(props: any) {
                                                     <path
                                                         d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/>
                                                 </svg>
-                                                <p className="text-gray-500 text-sm">{getFormattedDate(inspectionList[openDetailIndex].created_at)}</p>
+                                                <p className="text-gray-500 text-sm">{inspectionList[openDetailIndex].created_at}</p>
                                             </div>
                                         </div>
                                         <p className="my-2 text-sm text-gray-500 break-all">
@@ -232,10 +244,13 @@ function InspectionList(props: any) {
 
                                                 {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk, inx) =>
                                                     (<label key={`chk-${inx}`}
-                                                        className="custom-label flex w-full mt-2 p cursor-pointer p-2 border bg-gray-300 hover:border-primary rounded-md">
+                                                            className="custom-label flex w-full mt-2 p cursor-pointer p-2 border bg-gray-300 hover:border-primary rounded-md">
                                                         <div
                                                             className="bg-white rounded-md w-6 h-6 p-1 flex justify-center items-center mr-2">
-                                                            <input onChange={() => {chk.checked = !chk.checked}} type="checkbox" className="hidden" value={chk.item} defaultChecked={chk.checked}/>
+                                                            <input onChange={() => {
+                                                                chk.checked = !chk.checked
+                                                            }} type="checkbox" className="hidden" value={chk.item}
+                                                                   defaultChecked={chk.checked}/>
                                                             <svg
                                                                 className="opacity-0 invisible w-4 h-4 text-primary pointer-events-none"
                                                                 viewBox="0 0 172 172">
@@ -255,6 +270,13 @@ function InspectionList(props: any) {
                                                     </label>))
                                                 }
                                             </div>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                    className="button blue-btn"
+                                                    onClick={onInspectionUpdate}>
+                                                Update
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

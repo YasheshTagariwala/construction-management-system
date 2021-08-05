@@ -1,7 +1,7 @@
 import {all, call, fork, put, takeEvery} from 'redux-saga/effects';
 import ApiService from "../../services/api-service";
-import {INSPECTION_ADD, INSPECTION_LIST} from "../actions";
-import {inspectionAddError, inspectionAddSuccess, inspectionListError, inspectionListSuccess} from "./actions";
+import {INSPECTION_ADD, INSPECTION_LIST, INSPECTION_UPDATE} from "../actions";
+import {inspectionAddError, inspectionAddSuccess, inspectionListError, inspectionListSuccess, inspectionUpdateError, inspectionUpdateSuccess} from "./actions";
 
 interface Parameters {
     payload: any
@@ -46,10 +46,32 @@ function* getInspectionAdd({payload}: Parameters): any {
     }
 }
 
+//INSPECTION UPDATE
+export function* watchInspectionUpdate() {
+    yield takeEvery<any>(INSPECTION_UPDATE, getInspectionUpdate);
+}
+
+const getInspectionUpdateAsync = async (body: any) => {
+    return await ApiService.callPost('/updateInspection', body);
+};
+
+function* getInspectionUpdate({payload}: Parameters): any {
+    const {history} = payload;
+    try {
+        yield call(getInspectionAddAsync, payload.body);
+        yield put(inspectionAddSuccess());
+        history.push('/inspector');
+    } catch (error) {
+        let err = error.response ? error.response.data.message : error.message
+        yield put(inspectionAddError(err));
+    }
+}
+
 export default function* rootSaga() {
     yield all([
         fork(watchInspectionList),
         fork(watchInspectionAdd),
+        fork(watchInspectionUpdate),
     ])
 }
 
