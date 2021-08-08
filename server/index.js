@@ -2,10 +2,15 @@
 var express = require('express');
 var app = express();
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
 const cors = require('cors')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(bodyParser.json())
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
 //
 // introductory ping results
 app.get('/', function (req, res) {

@@ -3,8 +3,30 @@ const client = new Client({node: 'http://localhost:9200'})
 const jwt = require('jwt-simple');
 const {jwtSecret, jwtExpirationInterval} = require('../config');
 const {DateTime} = require('luxon');
+const AwsController = require('./AwsController');
+const path = require("path");
 
 createInspection = async (req, res) => {
+    let filesPaths = [];
+    if (req.files) {
+        let files = req.files.images;
+        if (files) {
+            if (files.length) {
+                for (let i = 0; i < files.length; i++) {
+                    let contentType = path.extname(files[i].tempFilePath).replace('.', '');
+                    let result = await AwsController.uploadFile(files[i].tempFilePath, contentType);
+                    filesPaths.push(result.url)
+                }
+            } else {
+                let contentType = path.extname(files.tempFilePath).replace('.', '');
+                let result = await AwsController.uploadFile(files.tempFilePath, contentType);
+                filesPaths.push(result.url)
+            }
+
+        }
+    }
+    let sessions = req.body.sessions;
+    sessions[0].images = filesPaths
 
     await client.index({
             index: 'inspection-test',
@@ -14,7 +36,7 @@ createInspection = async (req, res) => {
                 "created_at": req.body.created_at,
                 "finished_at": req.body.finished_at,
                 "type": req.body.type,
-                "sessions": req.body.sessions
+                "sessions": sessions
             }
         }, (err, data) => {
             if (err) {

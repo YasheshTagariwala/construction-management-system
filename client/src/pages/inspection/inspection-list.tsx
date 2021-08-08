@@ -3,9 +3,8 @@ import Loader from "../../components/loader";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {inspectionList} from "../../redux/inspection/actions";
-import {inspectionUpdate} from "../../redux/inspection/actions";
 import ToasterService from "../../services/toaster-service";
-import {Inspection} from "../../models/inspection";
+import {CheckList, Inspection} from "../../models/inspection";
 import moment from "moment";
 
 function InspectionList(props: any) {
@@ -255,7 +254,7 @@ function InspectionList(props: any) {
                                         <div className="mt-2 flex flex-wrap justify-start">
                                             <div className="my-1 w-full">
                                                 <p className="uppercase text-xs text-black mb-1">Check list</p>
-                                                {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk, chkInx) => (
+                                                {inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].checklist.map((chk: CheckList, chkInx: number) => (
                                                     <div key={`chk-${chkInx}`} className="p-2 mb-2 border bg-gray-300 hover:border-primary rounded-md">
                                                         <div className="flex flex-wrap">
                                                             <div className="flex flex-wrap w-full justify-between">
@@ -297,14 +296,14 @@ function InspectionList(props: any) {
                                                             </div>
                                                         </div>
                                                         <ul className="mt-2">
-                                                            {(chk.issues || []).map((issue, issueInx) => (
+                                                            {(chk.issues || []).map((issue: string, issueInx: number) => (
                                                                 <li key={`issu-${issueInx}`} className="break-all font-light text-gray-800 text-sm border-t border-gray-500 p-1">Lorem,
                                                                     {issue}
                                                                 </li>
                                                             ))}
                                                         </ul>
                                                     </div>
-                                                ))};
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

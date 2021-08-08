@@ -277,6 +277,14 @@ function InspectionForm(props: any) {
                                             </select>
                                         </div>
                                     </div>
+                                    <div className="w-full md:w-1/3 px-3 mb-5">
+                                        <div className="form-panel">
+                                            <label className="form-label" htmlFor="Inspection file">Images</label>
+                                            <input className="form-select" type="file" id="" name="Inspection file"
+                                                   aria-label="Inspection file" aria-required="true"
+                                                   multiple/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit" className="button blue-btn">
                                     submit
