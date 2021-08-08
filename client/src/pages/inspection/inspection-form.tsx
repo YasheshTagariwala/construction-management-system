@@ -13,30 +13,35 @@ function InspectionForm(props: any) {
         InspectionTag: '',
         InspectionDescription: '',
         InspectionProject: '',
-        InspectionMember: ''
-
+        InspectionMember: '',
+        images: []
     });
+
+    let images: any[] = [];
 
     const onInspectionSave = (values: any) => {
         if (!props.loading) {
-            props.inspectionAdd({
-                name: values.InspectionTitle,
-                created_by: "contractor",
-                created_at: moment().format('DD/MM/YYYY'),
-                finished_at: "",
-                type: [],
-                sessions: [
-                    {
-                        name: moment().format('DD/MM/YYYY HH:mm A'),
-                        type: "OnField/Remote",
-                        created_at: moment().format('DD/MM/YYYY'),
-                        finished_at: "",
-                        assigned_to: 'inspector',
-                        checklist,
-                        notes: values.InspectionDescription
-                    }
-                ]
-            }, props.history)
+            const fd = new FormData();
+            fd.append('name', values.InspectionTitle);
+            fd.append('created_by', 'contractor');
+            fd.append('created_at', moment().format('DD/MM/YYYY'));
+            fd.append('finished_at', '');
+            fd.append('type', JSON.stringify([]));
+            fd.append('sessions', JSON.stringify([
+                {
+                    name: moment().format('DD/MM/YYYY HH:mm A'),
+                    type: "OnField/Remote",
+                    created_at: moment().format('DD/MM/YYYY'),
+                    finished_at: "",
+                    assigned_to: 'inspector',
+                    checklist,
+                    notes: values.InspectionDescription
+                }
+            ]));
+            images.forEach(img => {
+                fd.append('images', img);
+            })
+            props.inspectionAdd(fd, props.history)
         }
     }
 
@@ -280,8 +285,16 @@ function InspectionForm(props: any) {
                                     <div className="w-full md:w-1/3 px-3 mb-5">
                                         <div className="form-panel">
                                             <label className="form-label" htmlFor="Inspection file">Images</label>
-                                            <input className="form-select" type="file" id="" name="Inspection file"
+                                            <input className="form-select" type="file" id="" accept="image/*" name="Inspection file"
                                                    aria-label="Inspection file" aria-required="true"
+                                                   onChange={(ev) => {
+                                                       images = [];
+                                                       if (ev.target.files) {
+                                                           for (let i = 0; i < ev.target.files.length; i++) {
+                                                               images.push(ev.target.files[i]);
+                                                           }
+                                                       }
+                                                   }}
                                                    multiple/>
                                         </div>
                                     </div>

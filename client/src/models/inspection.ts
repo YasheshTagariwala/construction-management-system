@@ -15,7 +15,7 @@ export interface Session {
     finished_at: string;
     type: string;
     checklist: CheckList[]
-    images: string;
+    images: string[];
     start_end: any;
     notes: string;
     signature: string;

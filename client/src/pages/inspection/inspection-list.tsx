@@ -240,14 +240,12 @@ function InspectionList(props: any) {
                                             <div className="my-1 w-full">
                                                 <p className="uppercase text-xs text-black mb-1">images</p>
                                                 <div className="flex items-center overflow-auto pb-1">
-
-                                                    {/* I know this is "BAD CODE" */}
-                                                    {[1, 1, 1, 1, 1, 1, 1, 1].map((x, i) => (
+                                                    {(inspectionList[openDetailIndex].sessions[inspectionList[openDetailIndex].sessions.length - 1].images || []).map((x,i) => (
                                                         <img key={`img-${i}`}
-                                                            className="inline-block h-24 mr-2 rounded-md border border-gray-400 object-cover object-center"
-                                                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
-                                                            alt=""/>
-                                                    ))}
+                                                             className="inline-block h-24 mr-2 rounded-md border border-gray-400 object-cover object-center"
+                                                             src={x}
+                                                             alt=""/>
+                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
