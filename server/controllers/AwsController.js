@@ -1,7 +1,7 @@
-import AWS from "aws-sdk";
-import path from "path";
-import fs from "fs";
-import axios from "axios";
+const AWS = require("aws-sdk");
+const path = require("path");
+const fs = require("fs");
+const axios = require("axios");
 
 const awsOptions = {
     accessKeyId: 'AKIAZRIIQEOJE5FKJFEB',
