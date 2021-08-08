@@ -25,7 +25,10 @@ createInspection = async (req, res) => {
 
         }
     }
-    let sessions = JSON.parse(req.body.sessions);
+    let sessions = req.body.sessions;
+    while (typeof sessions === 'string') {
+        sessions = JSON.parse(sessions);
+    }
     sessions[0].images = filesPaths
 
     await client.index({
