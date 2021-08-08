@@ -13,12 +13,12 @@ createInspection = async (req, res) => {
         if (files) {
             if (files.length) {
                 for (let i = 0; i < files.length; i++) {
-                    let contentType = path.extname(files[i].tempFilePath).replace('.', '');
+                    let contentType = path.extname(files[i].name).replace('.', '');
                     let result = await AwsController.uploadFile(files[i].tempFilePath, contentType);
                     filesPaths.push(result.url)
                 }
             } else {
-                let contentType = path.extname(files.tempFilePath).replace('.', '');
+                let contentType = path.extname(files.name).replace('.', '');
                 let result = await AwsController.uploadFile(files.tempFilePath, contentType);
                 filesPaths.push(result.url)
             }
