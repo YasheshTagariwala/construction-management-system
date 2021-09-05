@@ -1,7 +1,4 @@
 import React, {Suspense} from 'react';
-// import Header from "./layouts/header";
-// import Footer from "./layouts/footer";
-// import Login from "./pages/login";
 import {
     BrowserRouter as Router,
     Route,
@@ -25,14 +22,10 @@ const ViewInspection = React.lazy(() =>
 
 ToasterService.Configure();
 
-interface Props {
-    loginUser: any
-}
-
-function App(props: Props) {
+function App(props) {
     const {loginUser} = props;
 
-    const getRedirectPath = (loginUser: any) => {
+    const getRedirectPath = (loginUser) => {
         if (loginUser) {
             return '/' + loginUser.role;
         }
@@ -83,7 +76,7 @@ function App(props: Props) {
     );
 }
 
-const mapStateToProps = ({authUser}: { authUser: any }) => {
+const mapStateToProps = ({authUser}) => {
     const {user: loginUser} = authUser;
     return {loginUser};
 };

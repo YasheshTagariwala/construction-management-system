@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {logoutUser} from "../redux/auth/actions";
 import {connect} from "react-redux";
 
-function Header(props: any) {
+function Header(props) {
     const [notifyDropdown, setNotifyDropdown] = useState(false);
     const [profileDropdown, setProfileDropdown] = useState(false);
     return (

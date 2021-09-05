@@ -8,7 +8,7 @@ import ToasterService from "../../services/toaster-service";
 import {Link} from 'react-router-dom';
 import Loader from "../../components/loader";
 
-const carousals: any = [
+const carousals = [
     {
         title: 'Welcome to C360 Labs',
         message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur fugit ' +
@@ -32,14 +32,14 @@ const carousals: any = [
     }
 ]
 
-function Login(props: any) {
+function Login(props) {
     const [formFields] = useState({
         remember_me: true,
         email: '',
         password: ''
     });
     const [slideIndex, setSlideIndex] = useState(0);
-    const onUserLogin = (values: any) => {
+    const onUserLogin = (values) => {
         if (!props.loading) {
             props.loginUser(values, props.history)
         }
@@ -110,7 +110,7 @@ function Login(props: any) {
                 <div className="banner w-full lg:w-1/2 xl:w-3/5 lg:h-screen h-auto pt-40 grid">
                     <div className="relative self-end">
                         <div className="relative w-full overflow-hidden text-center">
-                            {carousals.map((carousal: any, index: number) => {
+                            {carousals.map((carousal, index) => {
                                 return (
                                     <React.Fragment key={index}>
                                         <input value={index} className="input-checked hidden" type="radio"
@@ -132,7 +132,7 @@ function Login(props: any) {
                                 )
                             })}
                             <ol className="list-none m-0 p-0 absolute bottom-10 left-0 right-0 text-center z-9">
-                                {carousals.map((carousal: any, index: number) => (
+                                {carousals.map((carousal, index) => (
                                     <li key={index} className="inline-block my-0 mx-1.5"
                                         onClick={() => setSlideIndex(index)}>
                                         <label
@@ -148,7 +148,7 @@ function Login(props: any) {
     )
 }
 
-const mapStateToProps = ({authUser}: { authUser: any }) => {
+const mapStateToProps = ({authUser}) => {
     const {user, loading, error, success} = authUser
     return {user, loading, error, success}
 }

@@ -3,19 +3,15 @@ import ApiService from "../../services/api-service";
 import {INSPECTION_ADD, INSPECTION_LIST, INSPECTION_UPDATE} from "../actions";
 import {inspectionAddError, inspectionAddSuccess, inspectionListError, inspectionListSuccess, inspectionUpdateError, inspectionUpdateSuccess} from "./actions";
 
-interface Parameters {
-    payload: any
-}
-
 export function* watchInspectionList() {
-    yield takeEvery<any>(INSPECTION_LIST, getInspectionList);
+    yield takeEvery(INSPECTION_LIST, getInspectionList);
 }
 
-const getInspectionListAsync = async (body: any) => {
+const getInspectionListAsync = async (body) => {
     return await ApiService.callPost('/viewInspectorsInspection', body);
 };
 
-function* getInspectionList({payload}: Parameters): any {
+function* getInspectionList({payload}) {
     try {
         const inspectionList = yield call(getInspectionListAsync, payload.body);
         yield put(inspectionListSuccess(inspectionList.data));
@@ -27,14 +23,14 @@ function* getInspectionList({payload}: Parameters): any {
 
 //INSPECTION ADD
 export function* watchInspectionAdd() {
-    yield takeEvery<any>(INSPECTION_ADD, getInspectionAdd);
+    yield takeEvery(INSPECTION_ADD, getInspectionAdd);
 }
 
-const getInspectionAddAsync = async (body: any) => {
+const getInspectionAddAsync = async (body) => {
     return await ApiService.callPost('/createInspection', body);
 };
 
-function* getInspectionAdd({payload}: Parameters): any {
+function* getInspectionAdd({payload}) {
     const {history} = payload;
     try {
         yield call(getInspectionAddAsync, payload.body);
@@ -48,22 +44,22 @@ function* getInspectionAdd({payload}: Parameters): any {
 
 //INSPECTION UPDATE
 export function* watchInspectionUpdate() {
-    yield takeEvery<any>(INSPECTION_UPDATE, getInspectionUpdate);
+    yield takeEvery(INSPECTION_UPDATE, getInspectionUpdate);
 }
 
-const getInspectionUpdateAsync = async (body: any) => {
+const getInspectionUpdateAsync = async (body) => {
     return await ApiService.callPost('/updateInspection', body);
 };
 
-function* getInspectionUpdate({payload}: Parameters): any {
+function* getInspectionUpdate({payload}) {
     const {history} = payload;
     try {
-        yield call(getInspectionAddAsync, payload.body);
-        yield put(inspectionAddSuccess());
+        yield call(getInspectionUpdateAsync, payload.body);
+        yield put(inspectionUpdateSuccess());
         history.push('/inspector');
     } catch (error) {
         let err = error.response ? error.response.data.message : error.message
-        yield put(inspectionAddError(err));
+        yield put(inspectionUpdateError(err));
     }
 }
 

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {inspectionAddSchema} from "../../schemas/validation-schemas";
 import moment from "moment";
 
-function InspectionForm(props: any) {
+function InspectionForm(props) {
 
     const [formFields] = useState({
         InspectionTitle: '',
@@ -17,9 +17,9 @@ function InspectionForm(props: any) {
         images: []
     });
 
-    let images: any[] = [];
+    let images = [];
 
-    const onInspectionSave = (values: any) => {
+    const onInspectionSave = (values) => {
         if (!props.loading) {
             const fd = new FormData();
             fd.append('name', values.InspectionTitle);
@@ -47,10 +47,10 @@ function InspectionForm(props: any) {
 
     const [selected, setSelected] = React.useState("");
     const [selected1, setSelected1] = React.useState("");
-    const changeSelectOptionHandler = (event: any) => {
+    const changeSelectOptionHandler = (event) => {
         setSelected(event.target.value);
     };
-    const changeSelectOptionHandler1 = (event: any) => {
+    const changeSelectOptionHandler1 = (event) => {
         setSelected1(event.target.value);
     };
 
@@ -134,7 +134,7 @@ function InspectionForm(props: any) {
 
     let type = null;
     let checklist = [{item: "Select type"}];
-    let subTypesOptions: any = null;
+    let subTypesOptions = null;
 
     if (selected === "Structure") {
         type = StructureSubTypes;
@@ -237,7 +237,7 @@ function InspectionForm(props: any) {
                                             <label className="form-label font-black"
                                                    htmlFor="Checklist Points">Checklist Points</label>
 
-                                            {checklist.map((clist: any, index: number) => {
+                                            {checklist.map((clist, index) => {
                                                 return (
                                                     <React.Fragment key={index}>
                                                         <label className="form-label font-normal">
@@ -311,7 +311,7 @@ function InspectionForm(props: any) {
     )
 }
 
-const mapStateToProps = ({inspectionsReducer}: { inspectionsReducer: any }) => {
+const mapStateToProps = ({inspectionsReducer}) => {
     const {loading, error, success} = inspectionsReducer
     return {loading, error, success}
 }

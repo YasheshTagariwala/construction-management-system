@@ -8,7 +8,7 @@ const INIT_STATE = {
     success: ''
 }
 
-const authReducer = (state = INIT_STATE, action: any) => {
+const authReducer = (state = INIT_STATE, action) => {
     switch (action.type) {
         case LOGIN_USER:
             return {...state, loading: true, error: '', success: ''};

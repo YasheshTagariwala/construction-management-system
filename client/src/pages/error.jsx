@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 
-function Error(props: any) {
+function Error(props) {
     return (
         <Fragment>
             404 NOT FOUND

@@ -4,19 +4,15 @@ import ApiService from "../../services/api-service";
 import {setSessionCookie} from "../../services/localstorage-service";
 import {loginUserError, loginUserSuccess} from "./actions";
 
-interface Parameters {
-    payload: any
-}
-
 export function* watchLoginUser() {
-    yield takeEvery<any>(LOGIN_USER, loginWithEmailPassword);
+    yield takeEvery(LOGIN_USER, loginWithEmailPassword);
 }
 
-const loginWithEmailPasswordAsync = async (email: string, password: string) => {
+const loginWithEmailPasswordAsync = async (email, password) => {
     return await ApiService.callPost('/auth/login', {email, password}, {'Skip-Headers': true});
 };
 
-function* loginWithEmailPassword({payload}: Parameters): any {
+function* loginWithEmailPassword({payload}) {
     const {email, password} = payload.user;
     const {history} = payload;
     try {
@@ -31,14 +27,14 @@ function* loginWithEmailPassword({payload}: Parameters): any {
 }
 
 export function* watchLogoutUser() {
-    yield takeEvery<any>(LOGOUT_USER, logout);
+    yield takeEvery(LOGOUT_USER, logout);
 }
 
-const logoutAsync = async (history: any) => {
+const logoutAsync = async (history) => {
     history.push('/')
 };
 
-function* logout({payload}: Parameters) {
+function* logout({payload}) {
     const {history} = payload;
     try {
         localStorage.removeItem('construction');

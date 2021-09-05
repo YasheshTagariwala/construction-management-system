@@ -5,7 +5,7 @@ const Login = React.lazy(() =>
     import(/* webpackChunkName: "user-login" */ './login')
 );
 
-const Auth = (props: any) => {
+const Auth = (props) => {
     return (
         <Suspense fallback={<div className="loading"/>}>
             <Switch>

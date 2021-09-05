@@ -15,11 +15,7 @@ const InspectionForm = React.lazy(() =>
     import(/* webpackChunkName: "inspection-form" */ './inspection-form')
 );
 
-const InspectionKanban = React.lazy(() =>
-    import(/* webpackChunkName: "inspection-kanban" */ './inspection-kanban')
-);
-
-const Inspection = (props: any) => {
+const Inspection = (props) => {
     const [sideBarOpen, setSideBarOpen] = useState(false);
     return (
         <Suspense fallback={<div className="loading"/>}>
@@ -42,10 +38,6 @@ const Inspection = (props: any) => {
                         <Route
                             path={`${props.match.url}/inspection`}
                             render={props => <InspectionList {...props} />}
-                        />
-                        <Route
-                            path={`${props.match.url}/inspection-kanban`}
-                            render={props => <InspectionKanban {...props} />}
                         />
                         <Redirect to="/error"/>
                     </Switch>

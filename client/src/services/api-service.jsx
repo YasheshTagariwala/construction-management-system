@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios from "axios";
 import {getSessionCookie, setSessionCookie} from "./localstorage-service";
 
 const axiosInstance = axios.create({
@@ -8,15 +8,15 @@ const axiosInstance = axios.create({
         'Accept': 'application/json',
         'Content-Type': ' application/json'
     }
-})
+});
 
-axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+axiosInstance.interceptors.request.use((config) => {
     let userSession = getSessionCookie();
 
     if (config.headers.hasOwnProperty('Skip-Headers')) {
         delete config.headers['Skip-Headers'];
     } else {
-        config.headers.Authorization = `Bearer ${userSession.token}`
+        config.headers.Authorization = userSession.token
 
         delete config.headers['Skip-Headers'];
     }
@@ -33,24 +33,24 @@ axiosInstance.interceptors.response.use((response) => {
                 },
                 accessToken: ""
             };
-            setSessionCookie(session);
+            setSessionCookie(JSON.stringify(session));
             window.location.href = `${process.env.REACT_APP_BASE_URL}`
         }
     }
     return response.data;
 });
 
-export default class ApiService {
-    static callPost(url: string, payload: any, headers: any = {}, options = {}) {
+class ApiService {
+    static callPost(url, payload, headers, options = {}) {
         return axiosInstance.post(url, payload, {
             headers: {
                 ...headers
             },
             ...options
-        })
+        });
     }
 
-    static callGet(url: string, params: any, headers: any = {}) {
+    static callGet(url, params, headers) {
         return axiosInstance.get(url, {
             headers: {
                 ...headers
@@ -59,7 +59,7 @@ export default class ApiService {
         });
     }
 
-    static callPut(url: string, payload: any, headers: any = {}) {
+    static callPut(url, payload, headers) {
         return axiosInstance.put(url, payload, {
             headers: {
                 ...headers
@@ -67,7 +67,7 @@ export default class ApiService {
         });
     }
 
-    static callDelete(url: string, params: any, headers: any = {}) {
+    static callDelete(url, params, headers) {
         return axiosInstance.delete(url, {
             headers: {
                 ...headers
@@ -76,3 +76,5 @@ export default class ApiService {
         });
     }
 }
+
+export default ApiService;

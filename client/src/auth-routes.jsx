@@ -1,20 +1,13 @@
-import React, {FC} from "react";
+import React from "react";
 import {Redirect, Route} from "react-router-dom";
 
-interface Props {
-    component: any,
-    authUser: any,
-    role: any,
-    path: string
-}
-
-const AuthRoute: FC<Props> = ({component: Component, authUser, role, path}) => {
+const AuthRoute = ({component: Component, authUser, role, ...rest}) => {
     return (
         <Route
-            path={path}
+            {...rest}
             render={props =>
                 authUser ? (
-                    role.includes(authUser.role) ? <Component {...props} authUser={authUser} /> : <Redirect
+                    role.includes(authUser.role) ? <Component {...props} /> : <Redirect
                         to={{
                             pathname: '/' + authUser.role,
                             state: {from: props.location}

@@ -17,7 +17,7 @@ const INIT_STATE = {
     success: ''
 }
 
-const inspectionReducer = (state = INIT_STATE, action: any) => {
+const inspectionReducer = (state = INIT_STATE, action) => {
     switch (action.type) {
         case INSPECTION_LIST:
             return {...state, loading: true, error: '', success: '', inspections: [], inspection: null};

@@ -13,7 +13,7 @@ let options = {
 
 class ToasterService {
 
-    static getMessageWithIcons(message: string, type: string) {
+    static getMessageWithIcons(message, type) {
         switch (type) {
             case "success":
                 return (<span><i className="fa fa-check-circle mr-1"/>{message}</span>)
@@ -32,7 +32,7 @@ class ToasterService {
         toast.configure(options)
     }
 
-    static Toast(message: any, type: string, autoclose?: number, customClass?: string, customOptions?: any, toastId?: any) {
+    static Toast(message, type, autoclose, customClass, customOptions, toastId) {
 
         if (message instanceof Object) {
             message = JSON.stringify(message)
