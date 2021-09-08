@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button, Form, TextArea } from 'semantic-ui-react';
 
-import { useClosableForm, useField } from '../../hooks';
+import { useClosableForm, useField } from '../../../../hooks';
 
 import styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
-  const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
   const [value, handleFieldChange, setValue] = useField(defaultValue);
 
@@ -107,7 +105,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
         <Button
           positive
-          content={t('action.save')}
+          content={'Save'}
           className={styles.submitButton}
           onMouseOver={handleControlMouseOver}
           onMouseOut={handleControlMouseOut}

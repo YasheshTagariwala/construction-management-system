@@ -1,6 +1,12 @@
 import React, {useEffect, useState, useRef, useCallback} from "react";
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import styles from './list.scss';
+import Card from "../Card";
+import CardAdd from "./CardAdd";
+import NameEdit from "../Card/NameEdit";
+import ActionsPopup from "../Card/ActionsPopup";
+import {Button, Icon} from "semantic-ui-react";
+import classNames from "classnames";
 
 function List(props) {
 
@@ -58,7 +64,7 @@ function List(props) {
                 <div {...droppableProps} ref={innerRef}>
                     <div className={styles.cards}>
                         {cardIds.map((cardId, cardIndex) => (
-                            <CardContainer key={cardId} id={cardId} index={cardIndex} />
+                            <Card key={cardId} id={cardId} index={cardIndex} />
                         ))}
                         {placeholder}
                         {canEdit && (
@@ -126,9 +132,10 @@ function List(props) {
                                 className={classNames(styles.addCardButton)}
                                 onClick={handleAddCardClick}
                             >
-                                <PlusMathIcon className={styles.addCardButtonIcon} />
+                                {/*<PlusMathIcon className={styles.addCardButtonIcon} />*/}
+                                {'###add_icon###'}
                                 <span className={styles.addCardButtonText}>
-                    {cardIds.length > 0 ? t('action.addAnotherCard') : t('action.addCard')}
+                    {cardIds.length > 0 ? 'Add Another Card' : 'action.addCard'}
                   </span>
                             </button>
                         )}

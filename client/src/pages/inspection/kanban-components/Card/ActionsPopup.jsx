@@ -1,18 +1,17 @@
 import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../lib/popup';
-import { Popup } from '../../lib/custom-ui';
+import { withPopup } from '../../../../lib/popup';
+import { Popup } from '../../../../lib/custom-ui';
 
-import { useSteps } from '../../hooks';
+import { useSteps } from '../../../../hooks';
 import BoardMembershipsStep from '../BoardMembershipsStep';
 import LabelsStep from '../LabelsStep';
-import DueDateEditStep from '../DueDateEditStep';
-import TimerEditStep from '../TimerEditStep';
-import CardMoveStep from '../CardMoveStep';
-import DeleteStep from '../DeleteStep';
+import DueDateEditStep from '../DueDateEditStep/DueDateEditStep';
+import TimerEditStep from '../TimerEditStep/TimerEditStep';
+import CardMoveStep from '../CardMoveStep/CardMoveStep';
+import DeleteStep from '../DeleteStep/DeleteStep';
 
 import styles from './ActionsPopup.module.scss';
 
@@ -48,7 +47,6 @@ const ActionsStep = React.memo(
     onLabelDelete,
     onClose,
   }) => {
-    const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
     const handleEditNameClick = useCallback(() => {
@@ -156,11 +154,9 @@ const ActionsStep = React.memo(
         case StepTypes.DELETE:
           return (
             <DeleteStep
-              title={t('common.deleteCard', {
-                context: 'title',
-              })}
-              content={t('common.areYouSureYouWantToDeleteThisCard')}
-              buttonContent={t('action.deleteCard')}
+              title={'DeleteCard'}
+              content={'Are You Sure You Want To Delete This Card'}
+              buttonContent={'Delete Card'}
               onConfirm={onDelete}
               onBack={handleBack}
             />
@@ -172,46 +168,30 @@ const ActionsStep = React.memo(
     return (
       <>
         <Popup.Header>
-          {t('common.cardActions', {
-            context: 'title',
-          })}
+          {'Card Actions'}
         </Popup.Header>
         <Popup.Content>
           <Menu secondary vertical className={styles.menu}>
             <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-              {t('action.editTitle', {
-                context: 'title',
-              })}
+              {'Edit Title'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleUsersClick}>
-              {t('common.members', {
-                context: 'title',
-              })}
+              {'Members'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleLabelsClick}>
-              {t('common.labels', {
-                context: 'title',
-              })}
+              {'Labels'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditDueDateClick}>
-              {t('action.editDueDate', {
-                context: 'title',
-              })}
+              {'Edit DueDate'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditTimerClick}>
-              {t('action.editTimer', {
-                context: 'title',
-              })}
+              {'Edit Timer'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleMoveClick}>
-              {t('action.moveCard', {
-                context: 'title',
-              })}
+              {'Move Card'}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-              {t('action.deleteCard', {
-                context: 'title',
-              })}
+              {'Delete Card'}
             </Menu.Item>
           </Menu>
         </Popup.Content>

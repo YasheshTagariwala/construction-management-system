@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Progress } from 'semantic-ui-react';
-import { useToggle } from '../../lib/hooks';
+import { useToggle } from '../../../../lib/hooks';
 
 import styles from './Tasks.module.scss';
 
@@ -38,7 +37,7 @@ const Tasks = React.memo(({ items }) => {
           />
         </span>
         <span
-          className={classNames(styles.count, isOpened ? styles.countOpened : styles.countClosed)}
+          className={`${styles.count} ${isOpened ? styles.countOpened : styles.countClosed}`}
         >
           {completedItems.length}
           {'/'}
@@ -50,7 +49,7 @@ const Tasks = React.memo(({ items }) => {
           {items.map((item) => (
             <li
               key={item.id}
-              className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}
+              className={`${styles.task} ${item.isCompleted && styles.taskCompleted}`}
             >
               {item.name}
             </li>

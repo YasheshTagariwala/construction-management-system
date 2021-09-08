@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
@@ -8,10 +7,10 @@ import { Draggable } from 'react-beautiful-dnd';
 import Tasks from './Tasks';
 import NameEdit from './NameEdit';
 import ActionsPopup from './ActionsPopup';
-import User from '../User';
-import Label from '../Label';
-import DueDate from '../DueDate';
-import Timer from '../Timer';
+import User from '../User/User';
+import Label from '../Label/Label';
+import DueDate from '../DueDate/DueDate';
+import Timer from '../Timer/Timer';
 
 import styles from './Card.module.scss';
 
@@ -78,7 +77,7 @@ const Card = React.memo(
               {labels.map((label) => (
                 <span
                   key={label.id}
-                  className={classNames(styles.attachment, styles.attachmentLeft)}
+                  className={`${styles.attachment} ${styles.attachmentLeft}`}
                 >
                   <Label name={label.name} color={label.color} size="tiny" />
                 </span>
@@ -91,34 +90,29 @@ const Card = React.memo(
             <span className={styles.attachments}>
               {notificationsTotal > 0 && (
                 <span
-                  className={classNames(
-                    styles.attachment,
-                    styles.attachmentLeft,
-                    styles.notification,
-                  )}
+                  className={`${styles.attachment} ${styles.attachmentLeft} ${styles.notification}`}
                 >
                   {notificationsTotal}
                 </span>
               )}
               {dueDate && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                <span className={`${styles.attachment} ${styles.attachmentLeft}`}>
                   <DueDate value={dueDate} size="tiny" />
                 </span>
               )}
               {timer && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                <span className={`${styles.attachment} ${styles.attachmentLeft}`}>
                   <Timer startedAt={timer.startedAt} total={timer.total} size="tiny" />
                 </span>
               )}
             </span>
           )}
           {users.length > 0 && (
-            <span className={classNames(styles.attachments, styles.attachmentsRight)}>
+            <span className={`${styles.attachments} ${styles.attachmentsRight}`}>
               {users.map((user) => (
                 <span
                   key={user.id}
-                  className={classNames(styles.attachment, styles.attachmentRight)}
-                >
+                  className={`${styles.attachment} ${styles.attachmentRight}`}>
                   <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
                 </span>
               ))}
@@ -176,7 +170,7 @@ const Card = React.memo(
                         onLabelUpdate={onLabelUpdate}
                         onLabelDelete={onLabelDelete}
                       >
-                        <Button className={classNames(styles.actionsButton, styles.target)}>
+                        <Button className={`${styles.actionsButton}, ${styles.target}`}>
                           <Icon fitted name="pencil" size="small" />
                         </Button>
                       </ActionsPopup>
