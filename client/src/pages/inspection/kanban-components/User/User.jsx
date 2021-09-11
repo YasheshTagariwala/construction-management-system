@@ -1,6 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
-import initials from 'initials';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -35,6 +34,16 @@ const getColor = (name) => {
 };
 
 const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
+  const getInitials = (str) => {
+    if (str) {
+      if (str.trim().split(' ').length >= 2) {
+        return (str.trim().split(' ')[0] + '' + str.trim().split(' ')[1]).toUpperCase()
+      } else if (str.trim().length >= 2) {
+        return str.trim().substring(0, 2).toUpperCase();
+      }
+    }
+    return str || '';
+  }
   const contentNode = (
     <span
       title={name}
@@ -48,7 +57,7 @@ const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
         background: avatarUrl && `url("${avatarUrl}") center / cover`,
       }}
     >
-      {!avatarUrl && <span className={styles.initials}>{initials(name)}</span>}
+      {!avatarUrl && <span className={styles.initials}>{getInitials(name)}</span>}
     </span>
   );
 

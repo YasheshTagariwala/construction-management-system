@@ -10,7 +10,6 @@ import Editor from './Editor';
 import styles from './AddStep.module.scss';
 
 const AddStep = React.memo(({ onCreate, onBack }) => {
-  const [t] = useTranslation();
 
   const [data, handleFieldChange] = useForm(() => ({
     name: '',

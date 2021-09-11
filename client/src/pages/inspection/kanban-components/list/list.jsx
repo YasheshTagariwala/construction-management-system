@@ -12,6 +12,50 @@ function List(props) {
 
     const {id, index, name, isPersisted, cardIds, canEdit, onUpdate, onDelete, onCardCreate} = props
     const [isAddCardOpened, setIsAddCardOpened] = useState(false);
+    const [labels, setLabels] = useState([
+        {
+            id: 'lbl1',
+            name: 'LBL1',
+            color: 'yellow',
+        },
+        {
+            id: 'lbl2',
+            name: 'LBL2',
+            color: 'red',
+        },
+        {
+            id: 'lbl3',
+            name: 'LB32',
+            color: 'green',
+        }
+    ]);
+
+    const [tasks, setTasks] = useState([
+        {
+            id: 'tsk1',
+            name: 'TASK1',
+            isCompleted: true,
+            cardId: 1
+        },
+        {
+            id: 'tsk2',
+            name: 'TASK2',
+            isCompleted: false,
+            cardId: 2
+        },
+        {
+            id: 'tsk3',
+            name: 'TASK3',
+            isCompleted: false,
+            cardId: 3
+        },
+        {
+            id: 'tsk4',
+            name: 'TASK4',
+            isCompleted: true,
+            cardId: 4
+        }
+    ]);
 
     const nameEdit = useRef(null);
     const listWrapper = useRef(null);
@@ -64,7 +108,9 @@ function List(props) {
                 <div {...droppableProps} ref={innerRef}>
                     <div className={styles.cards}>
                         {cardIds.map((cardId, cardIndex) => (
-                            <Card key={cardId} id={cardId} index={cardIndex} />
+                            <Card key={cardId} id={cardId}
+                                  index={cardIndex} labels={labels}
+                                  tasks={tasks} notificationsTotal={2}/>
                         ))}
                         {placeholder}
                         {canEdit && (

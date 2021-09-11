@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
-import { Popup } from '../../lib/custom-ui';
+import { Popup } from '../../../../lib/custom-ui';
 
 import styles from './DeleteStep.module.scss';
 

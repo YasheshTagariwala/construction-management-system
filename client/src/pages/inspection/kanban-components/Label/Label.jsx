@@ -4,10 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import LabelColors from '../../constants/LabelColors';
+import LabelColors from '../../../../constants/LabelColors';
 
 import styles from './Label.module.scss';
-import globalStyles from '../../styles.module.scss';
+import globalStyles from '../styles.module.scss';
 
 const SIZES = {
   TINY: 'tiny',

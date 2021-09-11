@@ -2,9 +2,9 @@ import upperFirst from 'lodash/upperFirst';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useForceUpdate, usePrevious } from '../../lib/hooks';
+import { useForceUpdate, usePrevious } from '../../../../lib/hooks';
 
-import { formatTimer } from '../../utils/timer';
+import { formatTimer } from '../../../../utils/timer';
 
 import styles from './Timer.module.scss';
 

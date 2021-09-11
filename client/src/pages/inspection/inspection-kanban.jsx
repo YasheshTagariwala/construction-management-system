@@ -2,15 +2,20 @@ import React, {useEffect, useState, useRef, useCallback} from "react";
 import Loader from "../../components/loader";
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import moment from "moment";
+import { closePopup } from '../../lib/popup';
 import styles from './inspection-kanban.scss';
+import DroppableTypes from '../../constants/DroppableTypes';
 import ListAdd from "./kanban-components/list-add/list-add";
+import List from "./kanban-components/list/list";
 
 const parseDndId = (dndId) => dndId.split(':')[1];
 
 function InspectionKanban(props) {
 
     let { isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove } = props;
-    const [listIds, setListIds] = useState([]);
+    const [listIds, setListIds] = useState([
+        {}
+    ]);
     const [isListAddOpened, setIsListAddOpened] = useState(false);
 
     const wrapper = useRef(null);
@@ -126,7 +131,8 @@ function InspectionKanban(props) {
                                         ref={innerRef}
                                         className={styles.lists}>
                                         {listIds.map((listId, index) => (
-                                            <ListContainer key={listId} id={listId} index={index} />
+                                            // <ListContainer key={listId} id={listId} index={index} />
+                                            <List key={listId} id={listId} index={index} cardIds={[1,2,3,4]}/>
                                         ))}
                                         {placeholder}
                                         {canEdit && (
@@ -139,7 +145,8 @@ function InspectionKanban(props) {
                                                         className={styles.addListButton}
                                                         onClick={handleAddListClick}
                                                     >
-                                                        <PlusMathIcon className={styles.addListButtonIcon} />
+                                                        {/*<PlusMathIcon className={styles.addListButtonIcon} />*/}
+                                                        {'###PlusMathIcon###'}
                                                         <span className={styles.addListButtonText}>
                               {listIds.length > 0
                                   ? 'Add another list'
@@ -155,7 +162,7 @@ function InspectionKanban(props) {
                         </DragDropContext>
                     </div>
                 </div>
-                {isCardModalOpened && <CardModalContainer />}
+                {/*{isCardModalOpened && <CardModalContainer />}*/}
             </>
         </main>
     )

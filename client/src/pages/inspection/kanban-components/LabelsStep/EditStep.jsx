@@ -15,7 +15,6 @@ const StepTypes = {
 };
 
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
-  const [t] = useTranslation();
 
   const [data, handleFieldChange] = useForm(() => ({
     color: LabelColors[0],
