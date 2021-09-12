@@ -11,9 +11,9 @@ const InspectionList = React.lazy(() =>
     import(/* webpackChunkName: "inspection-list" */ './inspection-list')
 );
 
-const InspectionKanban = React.lazy(() =>
-    import(/* webpackChunkName: "inspection-kanban" */ './inspection-kanban')
-);
+// const InspectionKanban = React.lazy(() =>
+//     import(/* webpackChunkName: "inspection-kanban" */ './inspection-kanban')
+// );
 
 const InspectionForm = React.lazy(() =>
     import(/* webpackChunkName: "inspection-form" */ './inspection-form')
@@ -43,10 +43,10 @@ const Inspection = (props) => {
                             path={`${props.match.url}/inspection`}
                             render={props => <InspectionList {...props} />}
                         />
-                        <Route
-                            path={`${props.match.url}/inspection-kanban`}
-                            render={props => <InspectionKanban {...props} />}
-                        />
+                        {/*<Route*/}
+                        {/*    path={`${props.match.url}/inspection-kanban`}*/}
+                        {/*    render={props => <InspectionKanban {...props} />}*/}
+                        {/*/>*/}
                         {/*<Route*/}
                         {/*    path={`${props.match.url}/inspection-kanban`}*/}
                         {/*    authUser={props.loginUser}*/}
