@@ -1,162 +1,151 @@
-import React, {useEffect, useState, useRef, useCallback} from "react";
-import Loader from "../../components/loader";
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
+import '@atlaskit/css-reset';
+import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import moment from "moment";
-import styles from './inspection-kanban.scss';
-import ListAdd from "./kanban-components/list-add/list-add";
+import initialData from './kanban/initial-data';
+import Column from './kanban/column';
+import Loader from "../../components/loader";
 
-const parseDndId = (dndId) => dndId.split(':')[1];
+const Container = styled.div`
+  display: flex;
+`;
+
+class InnerList extends React.PureComponent {
+    render() {
+        const { column, taskMap, index } = this.props;
+        const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+        return <Column column={column} tasks={tasks} index={index} />;
+    }
+}
 
 function InspectionKanban(props) {
 
-    let { isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove } = props;
-    const [listIds, setListIds] = useState([]);
-    const [isListAddOpened, setIsListAddOpened] = useState(false);
+    const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
+    const [columns, setColumns] = useState(initialData.columns);
+    const [tasks, setTasks] = useState(initialData.tasks);
 
-    const wrapper = useRef(null);
-    const prevPosition = useRef(null);
+    const onDragStart = (start, provided) => {
+        provided.announce(
+            `You have lifted the task in position ${start.source.index + 1}`,
+        );
+    };
 
-    const handleAddListClick = useCallback(() => {
-        setIsListAddOpened(true);
-    }, []);
+    const onDragUpdate = (update, provided) => {
+        const message = update.destination
+            ? `You have moved the task to position ${update.destination.index + 1}`
+            : `You are currently not over a droppable area`;
 
-    const handleAddListClose = useCallback(() => {
-        setIsListAddOpened(false);
-    }, []);
+        provided.announce(message);
+    };
 
-    const handleDragStart = useCallback(() => {
-        closePopup();
-    }, []);
+    const onDragEnd = (result, provided) => {
+        const message = result.destination
+            ? `You have moved the task from position
+        ${result.source.index + 1} to ${result.destination.index + 1}`
+            : `The task has been returned to its starting position of
+        ${result.source.index + 1}`;
 
-    const handleDragEnd = useCallback(
-        ({ draggableId, type, source, destination }) => {
-            if (
-                !destination ||
-                (source.droppableId === destination.droppableId && source.index === destination.index)
-            ) {
-                return;
-            }
+        provided.announce(message);
 
-            const id = parseDndId(draggableId);
+        const { destination, source, draggableId, type } = result;
 
-            switch (type) {
-                case 'LIST':
-                    onListMove(id, destination.index);
-
-                    break;
-                case 'CARD':
-                    onCardMove(id, parseDndId(destination.droppableId), destination.index);
-
-                    break;
-                default:
-            }
-        },
-        [onListMove, onCardMove],
-    );
-
-    const handleMouseDown = useCallback(
-        (event) => {
-            if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
-                return;
-            }
-
-            prevPosition.current = event.clientX;
-        },
-        [wrapper],
-    );
-
-    const handleWindowMouseMove = useCallback(
-        (event) => {
-            if (!prevPosition.current) {
-                return;
-            }
-
-            event.preventDefault();
-
-            window.scrollBy({
-                left: prevPosition.current - event.clientX,
-            });
-
-            prevPosition.current = event.clientX;
-        },
-        [prevPosition],
-    );
-
-    const handleWindowMouseUp = useCallback(() => {
-        prevPosition.current = null;
-    }, [prevPosition]);
-
-    useEffect(() => {
-        document.body.style.overflowX = 'auto';
-
-        return () => {
-            document.body.style.overflowX = null;
-        };
-    }, []);
-
-    useEffect(() => {
-        if (isListAddOpened) {
-            window.scroll(document.body.scrollWidth, 0);
+        if (!destination) {
+            return;
         }
-    }, [listIds, isListAddOpened]);
 
-    useEffect(() => {
-        window.addEventListener('mouseup', handleWindowMouseUp);
-        window.addEventListener('mousemove', handleWindowMouseMove);
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
 
-        return () => {
-            window.removeEventListener('mouseup', handleWindowMouseUp);
-            window.removeEventListener('mousemove', handleWindowMouseMove);
+        if (type === 'column') {
+            const newColumnOrder = Array.from(columnOrder);
+            newColumnOrder.splice(source.index, 1);
+            newColumnOrder.splice(destination.index, 0, draggableId);
+            setColumnOrder(newColumnOrder)
+            return;
+        }
+
+        const home = columns[source.droppableId];
+        const foreign = columns[destination.droppableId];
+
+        if (home === foreign) {
+            const newTaskIds = Array.from(home.taskIds);
+            newTaskIds.splice(source.index, 1);
+            newTaskIds.splice(destination.index, 0, draggableId);
+
+            const newHome = {
+                ...home,
+                taskIds: newTaskIds,
+            };
+
+            setColumns({
+                ...columns,
+                [newHome.id]: newHome,
+            })
+            return;
+        }
+
+        // moving from one list to another
+        const homeTaskIds = Array.from(home.taskIds);
+        homeTaskIds.splice(source.index, 1);
+        const newHome = {
+            ...home,
+            taskIds: homeTaskIds,
         };
-    }, [handleWindowMouseUp, handleWindowMouseMove]);
+
+        const foreignTaskIds = Array.from(foreign.taskIds);
+        foreignTaskIds.splice(destination.index, 0, draggableId);
+        const newForeign = {
+            ...foreign,
+            taskIds: foreignTaskIds,
+        };
+
+        setColumns({
+            ...columns,
+            [newHome.id]: newHome,
+            [newForeign.id]: newForeign,
+        })
+    };
 
     return (
         <main className="h-full pb-16 overflow-y-auto">
             {props.loading && <Loader/>}
-            <>
-                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                <div ref={wrapper} className={styles.wrapper} onMouseDown={handleMouseDown}>
-                    <div>
-                        <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-                            <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-                                {({ innerRef, droppableProps, placeholder }) => (
-                                    <div
-                                        {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                                        data-drag-scroller
-                                        ref={innerRef}
-                                        className={styles.lists}>
-                                        {listIds.map((listId, index) => (
-                                            <ListContainer key={listId} id={listId} index={index} />
-                                        ))}
-                                        {placeholder}
-                                        {canEdit && (
-                                            <div data-drag-scroller className={styles.list}>
-                                                {isListAddOpened ? (
-                                                    <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                                                ) : (
-                                                    <button
-                                                        type="button"
-                                                        className={styles.addListButton}
-                                                        onClick={handleAddListClick}
-                                                    >
-                                                        <PlusMathIcon className={styles.addListButtonIcon} />
-                                                        <span className={styles.addListButtonText}>
-                              {listIds.length > 0
-                                  ? 'Add another list'
-                                  : 'Add list'}
-                            </span>
-                                                    </button>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
-                    </div>
-                </div>
-                {isCardModalOpened && <CardModalContainer />}
-            </>
+            <DragDropContext
+                onDragStart={onDragStart}
+                onDragUpdate={onDragUpdate}
+                onDragEnd={onDragEnd}
+            >
+                <Droppable
+                    droppableId="all-columns"
+                    direction="horizontal"
+                    type="column"
+                >
+                    {provided => (
+                        <Container
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={{height: '100%'}}
+                        >
+                            {columnOrder.map((columnId, index) => {
+                                const column = columns[columnId];
+                                return (
+                                    <InnerList
+                                        key={column.id}
+                                        column={column}
+                                        taskMap={tasks}
+                                        index={index}
+                                    />
+                                );
+                            })}
+                            {provided.placeholder}
+                        </Container>
+                    )}
+                </Droppable>
+            </DragDropContext>
         </main>
     )
 }
