@@ -15,7 +15,7 @@ class InnerList extends React.PureComponent {
     render() {
         const { column, taskMap, index } = this.props;
         const tasks = column.taskIds.map(taskId => taskMap[taskId]);
-        return <Column column={column} tasks={tasks} index={index} />;
+        return <Column column={column} tasks={tasks} index={index} taskClick={this.props.taskClick} />;
     }
 }
 
@@ -111,6 +111,11 @@ function InspectionKanban(props) {
         })
     };
 
+    const taskClick = (task) => {
+        console.log('-----------------', task);
+        props.history.push(`/inspector/inspection-kanban/details`);
+    }
+
     return (
         <main className="h-full pb-16 overflow-y-auto">
             {props.loading && <Loader/>}
@@ -138,6 +143,7 @@ function InspectionKanban(props) {
                                         column={column}
                                         taskMap={tasks}
                                         index={index}
+                                        taskClick={taskClick}
                                     />
                                 );
                             })}

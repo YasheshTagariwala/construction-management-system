@@ -33,7 +33,7 @@ class InnerList extends React.Component {
     }
     render() {
         return this.props.tasks.map((task, index) => (
-            <Task key={task.id} task={task} index={index} />
+            <Task key={task.id} task={task} index={index} taskClick={this.props.taskClick} />
         ));
     }
 }
@@ -54,7 +54,7 @@ export default class Column extends React.Component {
                                     {...provided.droppableProps}
                                     isDraggingOver={snapshot.isDraggingOver}
                                 >
-                                    <InnerList tasks={this.props.tasks} />
+                                    <InnerList tasks={this.props.tasks} taskClick={this.props.taskClick} />
                                     {provided.placeholder}
                                 </TaskList>
                             )}
