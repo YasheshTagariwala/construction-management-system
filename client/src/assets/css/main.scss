@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+@font-face {
+    font-family: Agenor-Regular;
+    font-weight: 400;
+    src: url(../fonts/Agenor-Regular.ttf);
+}
+
+@font-face {
+    font-family: Agenor-Bold;
+    font-weight: 900;
+    src: url(../fonts/Agenor-Bold.ttf);
+}
+
+@font-face {
+    font-family: Agenor-Black;
+    font-weight: 700;
+    src: url(../fonts/Agenor-Black.ttf);
+}
+
+.banner {
+    background: url("../images/geometric-banner.png") top right no-repeat;
+}
+
+.form-label {
+
+}
+
+.form-input,
+.form-select {
+
+}
+
+.form-select-icon {
+    background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0aec0'%3E%3Cpath d='M15.3 9.3a1 1 0 011.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4l3.3 3.29 3.3-3.3z'/%3E%3C/svg%3E") right .5rem center;
+    background-size: 25px;
+
+}
+
+.blue-btn {
+
+}
+
+.open-inspection {
+
+}
+
+.open-inspection h6 {
+
+}
+
+.custom-label input:checked + svg {
+
+}

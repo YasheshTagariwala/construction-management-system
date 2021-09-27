@@ -1,6 +1,6 @@
 import React, {Suspense, StrictMode, lazy} from 'react';
 import ReactDOM from 'react-dom';
-import './assets/css/main.css';
+import './assets/css/main.scss';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {configureStore} from "./redux/store";
