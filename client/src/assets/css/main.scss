@@ -2006,6 +2006,10 @@ body.sidebar-toggled footer.sticky-footer {
   border-radius: 5px;
 }
 
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 @media (max-width: 1560px) {
   .carousel-item img {
     width: 85%;
