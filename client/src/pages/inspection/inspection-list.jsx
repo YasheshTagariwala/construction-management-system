@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {inspectionList} from "../../redux/inspection/actions";
 import ToasterService from "../../services/toaster-service";
-import moment from "moment";
+// import moment from "moment";
 
 function InspectionList(props) {
     const {inspectionList: getInspectionList} = props;
@@ -32,20 +32,20 @@ function InspectionList(props) {
     }, [props.error, props.success])
 
 
-    const onInspectionUpdate = (values) => {
-        if (!props.loading) {
-            props.inspectionUpdate({
-                updated_details: []
-            }, props.history)
-        }
-    }
-
-    function getFormattedDate(date) {
-        if (date) {
-            return moment(date).format('DD/MM/YYYY');
-        }
-        return moment().format('DD/MM/YYYY');
-    }
+    // const onInspectionUpdate = (values) => {
+    //     if (!props.loading) {
+    //         props.inspectionUpdate({
+    //             updated_details: []
+    //         }, props.history)
+    //     }
+    // }
+    //
+    // function getFormattedDate(date) {
+    //     if (date) {
+    //         return moment(date).format('DD/MM/YYYY');
+    //     }
+    //     return moment().format('DD/MM/YYYY');
+    // }
 
     return (
         <main className="h-full pb-16 overflow-y-auto">

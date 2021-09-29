@@ -5,6 +5,7 @@ import {inspectionAdd} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
 import {inspectionAddSchema} from "../../schemas/validation-schemas";
 import moment from "moment";
+import {Button, Card, CardBody, Col, FormGroup, Label, Row} from "reactstrap";
 
 function InspectionForm(props) {
 
@@ -161,153 +162,179 @@ function InspectionForm(props) {
     }
 
     return (
-        <main className="h-full pb-16 overflow-y-auto">
-            {props.loading && <Loader/>}
-            <div className="container px-6 mt-10 mx-auto grid">
-                {/*Card*/}
-                <div className="p-10 bg-white rounded-lg shadow-xl">
-                    <h2 className="font-agenor-regular font-sans text-xl md:text-3xl tracking-wide mb-5 px-3">Add
-                        Inspection</h2>
-
-                    <Formik initialValues={formFields} validationSchema={inspectionAddSchema}
-                            onSubmit={onInspectionSave}>
-
-                        {({errors, touched}) => (
-
-                            <FormikForm className="add-inspection">
-                                <div className="flex flex-wrap">
-                                    <div className="w-full md:w-1/2 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Inspection Title">Title</label>
-                                            <Field className="form-input" name="InspectionTitle" type="text"
-                                                   required
-                                                   placeholder="Title"/>
-                                            {errors.InspectionTitle && touched.InspectionTitle && (
-                                                <div
-                                                    className="block text-red-800">{errors.InspectionTitle}</div>)}
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/2 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Inspection Tag">Tag</label>
-                                            <input className="form-input" id="" name="InspectionTag" type="text"
-                                                   required
-                                                   placeholder="Tag" aria-label="Inspection Tag" aria-required="true"/>
-                                        </div>
-                                    </div>
-                                    <div className="w-full px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label"
-                                                   htmlFor="Inspection Description">Description</label>
-                                            <Field className="form-input" rows={3} id="" name="InspectionDescription"
-                                                   required placeholder="Description"
-                                                   aria-label="Inspection Description" aria-required="true"/>
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Checklist Type">Checklist
-                                                Type</label>
-                                            <select className="form-select form-select-icon" id=""
-                                                    name="ChecklistType"
-                                                    onChange={changeSelectOptionHandler}
-                                                    required aria-label="Checklist Type" aria-required="true">
-                                                <option value="">Choose Checklist Type</option>
-                                                <option>Structure</option>
-                                                <option>Services</option>
-                                                <option>Finishes</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Checklist Subtype">Checklist
-                                                Subtype</label>
-                                            <select className="form-select form-select-icon" id=""
-                                                    name="ChecklistSubtype"
-                                                    onChange={changeSelectOptionHandler1}
-                                                    required aria-label="Checklist Subtype" aria-required="true">
-                                                <option value="">Choose SubChecklist Type</option>
-                                                {subTypesOptions}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-full px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label font-black"
-                                                   htmlFor="Checklist Points">Checklist Points</label>
-
-                                            {checklist.map((clist, index) => {
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        <label className="form-label font-normal">
-                                                            {clist.item}
-                                                        </label>
-                                                    </React.Fragment>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Inspection Project">Project</label>
-                                            <select className="form-select form-select-icon" id=""
-                                                    name="InspectionProject"
-                                                    required aria-label="Inspection Project" aria-required="true">
-                                                <option value="">Choose Project</option>
-                                                <option>Project-1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Sub Project">Sub Project</label>
-                                            <select className="form-select form-select-icon" id=""
-                                                    name="SubProject"
-                                                    required aria-label="Sub Project" aria-required="true">
-                                                <option value="">Choose SubProject</option>
-                                                <option>SubProject-1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Inspection Member">Assigned
-                                                To</label>
-                                            <select className="form-select form-select-icon" id=""
-                                                    name="InspectionMember"
-                                                    required aria-label="Inspection Member" aria-required="true">
-                                                <option value="">Choose Member</option>
-                                                <option>Inspector</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-full md:w-1/3 px-3 mb-5">
-                                        <div className="form-panel">
-                                            <label className="form-label" htmlFor="Inspection file">Images</label>
-                                            <input className="form-select" type="file" id="" accept="image/*" name="Inspection file"
-                                                   aria-label="Inspection file" aria-required="true"
-                                                   onChange={(ev) => {
-                                                       images = [];
-                                                       if (ev.target.files) {
-                                                           for (let i = 0; i < ev.target.files.length; i++) {
-                                                               images.push(ev.target.files[i]);
-                                                           }
-                                                       }
-                                                   }}
-                                                   multiple/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" className="button blue-btn">
-                                    submit
-                                </button>
-                            </FormikForm>
-                        )}
-                    </Formik>
-                </div>
+        <React.Fragment>
+            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                <h3 className="mb-0 font-weight-normal">Add Inspection</h3>
             </div>
-        </main>
+            {props.loading && <Loader/>}
+            <Row className="mb-3">
+                <Col md={12} className="mb-4">
+                    <Card>
+                        <CardBody>
+                            <Formik initialValues={formFields} validationSchema={inspectionAddSchema}
+                                    onSubmit={onInspectionSave}>
+                                {({errors, touched}) => (
+                                    <FormikForm>
+                                        <Row>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Inspection Title">Title</Label>
+                                                    <Field className="form-control" name="InspectionTitle" type="text"
+                                                           required
+                                                           placeholder="Title"/>
+                                                    {errors.InspectionTitle && touched.InspectionTitle && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTitle}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Inspection Tag">Tag</Label>
+                                                    <Field className="form-control" name="InspectionTag" type="text"
+                                                           required
+                                                           placeholder="Tag"/>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={12}>
+                                                <FormGroup>
+                                                    <Label for="Inspection Description">Description</Label>
+                                                    <Field className="form-control" rows={3}
+                                                           name="InspectionDescription" type="text"
+                                                           required
+                                                           placeholder="Description"/>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Checklist Type">Checklist Type</Label>
+                                                    <select className="custom-select d-block w-100 form-control"
+                                                            name="ChecklistType"
+                                                            onChange={changeSelectOptionHandler}
+                                                            required>
+                                                        <option value="">Choose Checklist Type</option>
+                                                        <option>Structure</option>
+                                                        <option>Services</option>
+                                                        <option>Finishes</option>
+                                                    </select>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Checklist Type">Checklist Subtype</Label>
+                                                    <select className="custom-select d-block w-100 form-control"
+                                                            name="ChecklistSubType"
+                                                            onChange={changeSelectOptionHandler1}
+                                                            required>
+                                                        <option value="">Choose SubChecklist Type</option>
+                                                        {subTypesOptions}
+                                                    </select>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={12}>
+                                                <FormGroup>
+                                                    <Label for="Checklist Type">Checklist Points</Label>
+                                                    {checklist.map((clist, index) => {
+                                                        return (
+                                                            <React.Fragment key={index}>
+                                                                <Label className="form-label">
+                                                                    {clist.item}
+                                                                </Label>
+                                                            </React.Fragment>
+                                                        )
+                                                    })}
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Inspection Project">Project</Label>
+                                                    <select className="custom-select d-block w-100 form-control" id=""
+                                                            name="InspectionProject"
+                                                            required>
+                                                        <option value="">Choose Project</option>
+                                                        <option>Project-1</option>
+                                                    </select>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Sub Project">Sub Project</Label>
+                                                    <select className="custom-select d-block w-100 form-control" id=""
+                                                            name="SubProject"
+                                                            required>
+                                                        <option value="">Choose SubProject</option>
+                                                        <option>SubProject-1</option>
+                                                    </select>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup>
+                                                    <Label for="Inspection Member">Assigned To</Label>
+                                                    <select className="custom-select d-block w-100 form-control" id=""
+                                                            name="InspectionMember"
+                                                            required>
+                                                        <option value="">Choose Member</option>
+                                                        <option>Inspector</option>
+                                                    </select>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={12}>
+                                                <FormGroup>
+                                                    <Label for="Inspection file">Images</Label>
+                                                    <input className="form-control" type="file" style={{
+                                                        height: '60px'
+                                                    }} id="" accept="image/*"
+                                                           name="Inspection file"
+                                                           onChange={(ev) => {
+                                                               images = [];
+                                                               if (ev.target.files) {
+                                                                   for (let i = 0; i < ev.target.files.length; i++) {
+                                                                       images.push(ev.target.files[i]);
+                                                                   }
+                                                               }
+                                                           }}
+                                                           multiple/>
+                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                        <div
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                </FormGroup>
+                                            </Col>
+
+                                            <div className="col-12 text-right mt-4">
+                                                <Button type="submit" className="primary-btn form-btn">Submit</Button>
+                                            </div>
+                                        </Row>
+                                    </FormikForm>
+                                )}
+                            </Formik>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </React.Fragment>
     )
 }
 

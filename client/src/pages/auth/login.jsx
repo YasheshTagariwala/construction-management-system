@@ -7,6 +7,7 @@ import {loginSchema} from '../../schemas/validation-schemas'
 import ToasterService from "../../services/toaster-service";
 import {Link} from 'react-router-dom';
 import Loader from "../../components/loader";
+import {Button, Col, Container, FormGroup, Label, Row} from "reactstrap";
 
 const carousals = [
     {
@@ -55,95 +56,92 @@ function Login(props) {
     }, [props.error, props.success])
 
     return (
-        <div className="w-full flex-col">
+        <div className="log-in-page">
             {props.loading && <Loader/>}
-            <div className="flex flex-wrap">
-                <div className="w-full lg:w-1/2 xl:w-2/5 lg:h-screen h-auto pt-20 pb-20 grid justify-items-center">
-                    <div className="w-3/4 self-center">
-                        <h1 className="uppercase text-4xl tracking-wide font-agenor-bold font-sans mb-6 sm:text-6xl">LogIn</h1>
+            <Container fluid>
+                <Row className="justify-content-center align-items-center">
+                    <Col lg={5} className="px-0 mb-lg-0 mb-3">
                         <Formik initialValues={formFields}
                                 validationSchema={loginSchema}
                                 onSubmit={onUserLogin}>
                             {({errors, touched}) => (
-                                <FormikForm>
-                                    <div className="login-form">
-                                        <div className="form-panel">
-                                            <label className="form-label">Email ID</label>
-                                            <Field className="form-input" placeholder="Email address" type="email" name="email"/>
-                                            {errors.email && touched.email && (
+                                <FormikForm className="log-in-form">
+                                    <h1 className="section-title">LogIn</h1>
+                                    <Row>
+                                        <Col md={12}>
+                                            <FormGroup>
+                                                <Label for="emailID">Email ID</Label>
+                                                <Field className="form-control" placeholder="Email address"
+                                                       type="email" name="email"/>
+                                                {errors.email && touched.email && (
+                                                    <div className="d-block text-danger">{errors.email}</div>)}
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={12}>
+                                            <FormGroup>
+                                                <Label for="password">Password</Label>
+                                                <Field className="form-control" placeholder="8+ character"
+                                                       type="password" name="password"/>
+                                                {errors.password && touched.password && (
+                                                    <div className="d-block text-danger">{errors.password}</div>)}
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={6}>
+                                            <FormGroup>
                                                 <div
-                                                    className="block text-red-800">{errors.email}</div>)}
-                                        </div>
-                                        <div className="form-panel mt-4">
-                                            <label className="form-label">Password</label>
-                                            <Field className="form-input" placeholder="8+ character" type="password" name="password"/>
-                                            {errors.password && touched.password && (
-                                                <div
-                                                    className="block text-red-800">{errors.password}</div>)}
-                                        </div>
-
-                                        <div className="flex flex-wrap">
-                                            <div className="sm:w-1/2 w-full mt-3">
-                                                <label className="inline-flex items-center">
-                                                    <Field className="form-checkbox" type="checkbox"
+                                                    className="d-flex custom-checkbox custom-control custom-control-inline align-items-center">
+                                                    <Field className="custom-control-input" type="checkbox"
+                                                           id="rememberMe"
                                                            name="remember_me"/>
                                                     {errors.remember_me && touched.remember_me && (
                                                         <div
-                                                            className="block text-red-800">{errors.remember_me}</div>)}
-                                                    <span className="ml-2">Remember Me</span>
-                                                </label>
-                                            </div>
-                                            <div className="sm:w-1/2 w-full mt-3">
-                                                <Link to="/" className="main-text-color float-right">Forget Password ?</Link>
-                                            </div>
-                                        </div>
-                                        <button type="submit" disabled={props.loading}
-                                                className="button blue-btn">SIGN
-                                            IN
-                                        </button>
-                                    </div>
+                                                            className="d-block text-danger">{errors.remember_me}</div>)}
+                                                    <Label for="rememberMe" className="custom-control-label ml-1">Remember
+                                                        Me</Label>
+                                                </div>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={6}>
+                                            <FormGroup className="text-end">
+                                                <Link to="/">Forget Password?</Link>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={12} className="text-end mt-3">
+                                            <Button type="submit" disabled={props.loading} className="primary-btn">SIGN
+                                                IN</Button>
+                                        </Col>
+                                    </Row>
                                 </FormikForm>
                             )}
                         </Formik>
-                    </div>
-                </div>
-                <div className="banner w-full lg:w-1/2 xl:w-3/5 lg:h-screen h-auto pt-40 grid">
-                    <div className="relative self-end">
-                        <div className="relative w-full overflow-hidden text-center">
-                            {carousals.map((carousal, index) => {
-                                return (
-                                    <React.Fragment key={index}>
-                                        <input value={index} className="input-checked hidden" type="radio"
-                                               name="carousel" onChange={() => null} checked={slideIndex === index}/>
-                                        <div
-                                            className="opacity-0 absolute m-auto text-white input-checked:static input-checked:opacity-100 transition-opacity ease-out duration-700">
-                                            <img src={carousal.image} alt="Poster"
-                                                 className="block max-w-full m-auto w-5/7"/>
-                                            <div className="bg-primary h-72 sm:h-64 pt-12">
-                                                <h2 className="text-2xl sm:text-3xl font-agenor-regular font-sans tracking-wide">
-                                                    {carousal.title}
-                                                </h2>
-                                                <p className="text-xs sm:text-sm tracking-wide font-light mt-2.5 w-5/7 m-auto">
-                                                    {carousal.message}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                )
-                            })}
-                            <ol className="list-none m-0 p-0 absolute bottom-10 left-0 right-0 text-center z-9">
+                    </Col>
+                    <Col lg={7} className="px-0">
+                        <div className="carousel slide log-in-banner text-center">
+                            <ol className="carousel-indicators">
                                 {carousals.map((carousal, index) => (
-                                    <li key={index} className="inline-block my-0 mx-1.5"
-                                        onClick={() => setSlideIndex(index)}>
-                                        <label
-                                            className="bg-white cursor-pointer block h-2.5 w-2.5 opacity-50 hover:opacity-100"/>
-                                    </li>
+                                    <li key={index} className={`${index === slideIndex ? 'active' : ''}`}
+                                        onClick={() => setSlideIndex(index)}/>
                                 ))}
                             </ol>
+                            <div className="carousel-inner">
+                                {carousals.map((carousal, index) => {
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <div className={`carousel-item ${index === slideIndex ? 'active' : ''}`}>
+                                                <img src={carousal.image} alt="Poster"/>
+                                                <div className="carousel-caption primary-background">
+                                                    <h2>{carousal.title}</h2>
+                                                    <p>{carousal.message}</p>
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 }

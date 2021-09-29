@@ -1,21 +1,15 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import '@atlaskit/css-reset';
-import styled from 'styled-components';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import initialData from './kanban/initial-data';
 import Column from './kanban/column';
 import Loader from "../../components/loader";
-
-const Container = styled.div`
-  display: flex;
-`;
+import {Container} from "reactstrap";
 
 class InnerList extends React.PureComponent {
     render() {
-        const { column, taskMap, index } = this.props;
+        const {column, taskMap, index} = this.props;
         const tasks = column.taskIds.map(taskId => taskMap[taskId]);
-        return <Column column={column} tasks={tasks} index={index} taskClick={this.props.taskClick} />;
+        return <Column column={column} tasks={tasks} index={index} taskClick={this.props.taskClick}/>;
     }
 }
 
@@ -48,7 +42,7 @@ function InspectionKanban(props) {
 
         provided.announce(message);
 
-        const { destination, source, draggableId, type } = result;
+        const {destination, source, draggableId, type} = result;
 
         if (!destination) {
             return;
@@ -112,47 +106,51 @@ function InspectionKanban(props) {
     };
 
     const taskClick = (task) => {
-        console.log('-----------------', task);
         props.history.push(`/inspector/inspection-kanban/details`);
     }
 
     return (
-        <main className="h-full pb-16 overflow-y-auto">
-            {props.loading && <Loader/>}
-            <DragDropContext
-                onDragStart={onDragStart}
-                onDragUpdate={onDragUpdate}
-                onDragEnd={onDragEnd}
-            >
-                <Droppable
-                    droppableId="all-columns"
-                    direction="horizontal"
-                    type="column"
+        <React.Fragment>
+            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                <h3 className="mb-0 font-weight-normal">Inspections</h3>
+            </div>
+            <Container fluid className="m-0 p-0">
+                {props.loading && <Loader/>}
+                <DragDropContext
+                    onDragStart={onDragStart}
+                    onDragUpdate={onDragUpdate}
+                    onDragEnd={onDragEnd}
                 >
-                    {provided => (
-                        <Container
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            style={{height: '100%'}}
-                        >
-                            {columnOrder.map((columnId, index) => {
-                                const column = columns[columnId];
-                                return (
-                                    <InnerList
-                                        key={column.id}
-                                        column={column}
-                                        taskMap={tasks}
-                                        index={index}
-                                        taskClick={taskClick}
-                                    />
-                                );
-                            })}
-                            {provided.placeholder}
-                        </Container>
-                    )}
-                </Droppable>
-            </DragDropContext>
-        </main>
+                    <Droppable
+                        droppableId="all-columns"
+                        direction="horizontal"
+                        type="column"
+                    >
+                        {provided => (
+                            <div className="d-flex"
+                                 {...provided.droppableProps}
+                                 ref={provided.innerRef}
+                                 style={{height: '100%'}}
+                            >
+                                {columnOrder.map((columnId, index) => {
+                                    const column = columns[columnId];
+                                    return (
+                                        <InnerList
+                                            key={column.id}
+                                            column={column}
+                                            taskMap={tasks}
+                                            index={index}
+                                            taskClick={taskClick}
+                                        />
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </Container>
+        </React.Fragment>
     )
 }
 

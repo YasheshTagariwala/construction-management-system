@@ -1,5 +1,7 @@
 import React, {Suspense, StrictMode, lazy} from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/scss/bootstrap.scss';
+import './assets/css/all.min.css';
 import './assets/css/main.scss';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";

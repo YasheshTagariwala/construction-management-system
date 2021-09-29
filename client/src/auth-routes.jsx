@@ -7,7 +7,7 @@ const AuthRoute = ({component: Component, authUser, role, ...rest}) => {
             {...rest}
             render={props =>
                 authUser ? (
-                    role.includes(authUser.role) ? <Component {...props} /> : <Redirect
+                    role.includes(authUser.role) ? <Component authUser={authUser} {...props} /> : <Redirect
                         to={{
                             pathname: '/' + authUser.role,
                             state: {from: props.location}
