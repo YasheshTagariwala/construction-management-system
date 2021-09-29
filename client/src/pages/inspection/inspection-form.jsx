@@ -173,14 +173,13 @@ function InspectionForm(props) {
                         <CardBody>
                             <Formik initialValues={formFields} validationSchema={inspectionAddSchema}
                                     onSubmit={onInspectionSave}>
-                                {({errors, touched}) => (
+                                {({errors, touched, handleChange, handleBlur}) => (
                                     <FormikForm>
                                         <Row>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Inspection Title">Title</Label>
+                                                <FormGroup className={errors.InspectionTitle && touched.InspectionTitle && 'has-error'}>
+                                                    <Label for="Inspection Title">Title *</Label>
                                                     <Field className="form-control" name="InspectionTitle" type="text"
-                                                           required
                                                            placeholder="Title"/>
                                                     {errors.InspectionTitle && touched.InspectionTitle && (
                                                         <div
@@ -188,8 +187,8 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Inspection Tag">Tag</Label>
+                                                <FormGroup className={errors.InspectionTag && touched.InspectionTag && 'has-error'}>
+                                                    <Label for="Inspection Tag">Tag *</Label>
                                                     <Field className="form-control" name="InspectionTag" type="text"
                                                            required
                                                            placeholder="Tag"/>
@@ -199,47 +198,55 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={12}>
-                                                <FormGroup>
-                                                    <Label for="Inspection Description">Description</Label>
+                                                <FormGroup className={errors.InspectionDescription && touched.InspectionDescription && 'has-error'}>
+                                                    <Label for="Inspection Description">Description *</Label>
                                                     <Field className="form-control" rows={3}
                                                            name="InspectionDescription" type="text"
                                                            required
                                                            placeholder="Description"/>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.InspectionDescription && touched.InspectionDescription && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.InspectionDescription}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Checklist Type">Checklist Type</Label>
+                                                <FormGroup className={errors.ChecklistType && touched.ChecklistType && 'has-error'}>
+                                                    <Label for="Checklist Type">Checklist Type *</Label>
                                                     <select className="custom-select d-block w-100 form-control"
                                                             name="ChecklistType"
-                                                            onChange={changeSelectOptionHandler}
+                                                            onBlur={handleBlur}
+                                                            onChange={(ev) => {
+                                                                handleChange(ev);
+                                                                changeSelectOptionHandler(ev);
+                                                            }}
                                                             required>
                                                         <option value="">Choose Checklist Type</option>
                                                         <option>Structure</option>
                                                         <option>Services</option>
                                                         <option>Finishes</option>
                                                     </select>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.ChecklistType && touched.ChecklistType && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.ChecklistType}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Checklist Type">Checklist Subtype</Label>
+                                                <FormGroup className={errors.ChecklistSubType && touched.ChecklistSubType && 'has-error'}>
+                                                    <Label for="Checklist Type">Checklist Subtype *</Label>
                                                     <select className="custom-select d-block w-100 form-control"
                                                             name="ChecklistSubType"
-                                                            onChange={changeSelectOptionHandler1}
+                                                            onBlur={handleBlur}
+                                                            onChange={(ev) => {
+                                                                handleChange(ev);
+                                                                changeSelectOptionHandler1(ev)
+                                                            }}
                                                             required>
                                                         <option value="">Choose SubChecklist Type</option>
                                                         {subTypesOptions}
                                                     </select>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.ChecklistSubType && touched.ChecklistSubType && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.ChecklistSubType}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={12}>
@@ -254,51 +261,57 @@ function InspectionForm(props) {
                                                             </React.Fragment>
                                                         )
                                                     })}
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {/*{errors.InspectionTag && touched.InspectionTag && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.InspectionTag}</div>)}*/}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Inspection Project">Project</Label>
+                                                <FormGroup className={errors.InspectionProject && touched.InspectionProject && 'has-error'}>
+                                                    <Label for="Inspection Project">Project *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="InspectionProject"
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             required>
                                                         <option value="">Choose Project</option>
                                                         <option>Project-1</option>
                                                     </select>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.InspectionProject && touched.InspectionProject && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.InspectionProject}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Sub Project">Sub Project</Label>
+                                                <FormGroup className={errors.SubProject && touched.SubProject && 'has-error'}>
+                                                    <Label for="Sub Project">Sub Project *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="SubProject"
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             required>
                                                         <option value="">Choose SubProject</option>
                                                         <option>SubProject-1</option>
                                                     </select>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.SubProject && touched.SubProject && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.SubProject}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup>
-                                                    <Label for="Inspection Member">Assigned To</Label>
+                                                <FormGroup className={errors.InspectionMember && touched.InspectionMember && 'has-error'}>
+                                                    <Label for="Inspection Member">Assigned To *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="InspectionMember"
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             required>
                                                         <option value="">Choose Member</option>
                                                         <option>Inspector</option>
                                                     </select>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.InspectionMember && touched.InspectionMember && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.InspectionMember}</div>)}
                                                 </FormGroup>
                                             </Col>
                                             <Col md={12}>
@@ -324,7 +337,16 @@ function InspectionForm(props) {
                                             </Col>
 
                                             <div className="col-12 text-right mt-4">
-                                                <Button type="submit" className="primary-btn form-btn">Submit</Button>
+                                                <Button type="submit" disabled={
+                                                    errors.InspectionTitle ||
+                                                    errors.InspectionTag ||
+                                                    errors.InspectionDescription ||
+                                                    errors.ChecklistType ||
+                                                    errors.ChecklistSubType ||
+                                                    errors.InspectionProject ||
+                                                    errors.SubProject ||
+                                                    errors.InspectionMember
+                                                } className="primary-btn form-btn">Submit</Button>
                                             </div>
                                         </Row>
                                     </FormikForm>

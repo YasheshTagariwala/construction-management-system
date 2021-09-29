@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use((config) => {
     if (config.headers.hasOwnProperty('Skip-Headers')) {
         delete config.headers['Skip-Headers'];
     } else {
-        config.headers.Authorization = userSession.token
+        config.headers.Authorization = `bearer ${userSession.token}`
 
         delete config.headers['Skip-Headers'];
     }

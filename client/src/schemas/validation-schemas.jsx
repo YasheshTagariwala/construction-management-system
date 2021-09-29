@@ -6,5 +6,12 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const inspectionAddSchema = Yup.object().shape({
-
+    InspectionTitle: Yup.string().required('Please enter Title'),
+    InspectionTag: Yup.string().required('Please enter Tag'),
+    InspectionDescription: Yup.string().required('Please enter Description '),
+    ChecklistType: Yup.string().required('Please enter Checklist Type'),
+    ChecklistSubType: Yup.string().required('Please enter Checklist Subtype'),
+    InspectionProject: Yup.string().required('Please enter Project'),
+    SubProject: Yup.string().required('Please enter Sub Project'),
+    InspectionMember: Yup.string().required('Please enter Assigned To'),
 })

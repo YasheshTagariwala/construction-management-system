@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import initialData from './kanban/initial-data';
 import Column from './kanban/column';
 import Loader from "../../components/loader";
 import {Container} from "reactstrap";
+import {inspectionList} from "../../redux/inspection/actions";
+import {connect} from "react-redux";
 
 class InnerList extends React.PureComponent {
     render() {
@@ -15,9 +17,31 @@ class InnerList extends React.PureComponent {
 
 function InspectionKanban(props) {
 
+    const {inspectionList: getInspectionList} = props;
+    const [inspectionList, setInspectionList] = useState([]);
     const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
     const [columns, setColumns] = useState(initialData.columns);
     const [tasks, setTasks] = useState(initialData.tasks);
+
+    useEffect(() => {
+        // getInspectionList({text: 'ogemp'})
+        getInspectionList({text: props.user.role})
+    }, [getInspectionList, props.user.role])
+
+    useEffect(() => {
+        const mColumn = columns;
+        const mTasks = {};
+        mColumn['column-1']['taskIds'] = [];
+        const mInspectionList = (props.inspections || []).map((x,i) => {
+            x.id = `ins-${i + 1}`
+            mColumn['column-1']['taskIds'].push(x.id)
+            mTasks[x.id] = x;
+            return x;
+        });
+        setInspectionList(mInspectionList);
+        setColumns(mColumn);
+        setTasks(mTasks);
+    }, [props.inspections])
 
     const onDragStart = (start, provided) => {
         provided.announce(
@@ -106,7 +130,7 @@ function InspectionKanban(props) {
     };
 
     const taskClick = (task) => {
-        props.history.push(`/inspector/inspection-kanban/details`);
+        props.history.push(`/inspector/inspection-kanban/details/${task.id}`);
     }
 
     return (
@@ -154,4 +178,15 @@ function InspectionKanban(props) {
     )
 }
 
-export default InspectionKanban
+const mapStateToProps = ({inspectionsReducer, authUser}) => {
+    const {inspections, loading, error, success} = inspectionsReducer
+    const {user} = authUser
+    return {inspections, loading, error, user, success}
+}
+
+const mapActionsToProps = {inspectionList}
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(InspectionKanban)

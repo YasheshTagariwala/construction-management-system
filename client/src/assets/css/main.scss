@@ -2010,6 +2010,18 @@ body.sidebar-toggled footer.sticky-footer {
   cursor: pointer !important;
 }
 
+.has-error {
+  color: red !important;
+
+  label {
+    color: red !important;
+  }
+
+  input, select {
+    border-color: red !important;
+  }
+}
+
 @media (max-width: 1560px) {
   .carousel-item img {
     width: 85%;
