@@ -4,7 +4,7 @@ import initialData from './kanban/initial-data';
 import Column from './kanban/column';
 import Loader from "../../components/loader";
 import {Button, Container} from "reactstrap";
-import {inspectionList} from "../../redux/inspection/actions";
+import {inspectionList, inspectionUpdate} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
 import ToasterService from "../../services/toaster-service";
 
@@ -133,6 +133,20 @@ function InspectionKanban(props) {
             [newHome.id]: newHome,
             [newForeign.id]: newForeign,
         })
+
+        let inspection = props.inspections.find(i => i.id === result.draggableId);
+        let hasStatus = inspection.hasOwnProperty('status');
+        let body = {
+            id: result.draggableId,
+            updated_details: {
+                ...inspection,
+                status: columns[result.destination.droppableId].title
+            },
+            ...(!hasStatus ? {
+                script: `ctx._source.status = '${columns[result.destination.droppableId].title}'`
+            }: {})
+        }
+        props.inspectionUpdate(body, props.history);
     };
 
     const taskClick = (task) => {
@@ -193,7 +207,7 @@ const mapStateToProps = ({inspectionsReducer, authUser}) => {
     return {inspections, loading, error, user, success}
 }
 
-const mapActionsToProps = {inspectionList}
+const mapActionsToProps = {inspectionList, inspectionUpdate}
 
 export default connect(
     mapStateToProps,

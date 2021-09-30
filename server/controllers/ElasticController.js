@@ -161,7 +161,10 @@ updateInspection = async (req, res) => {
             index: 'inspection-test',
             id: req.body.id,
             body: {
-                doc: req.body.updated_details
+                doc: req.body.updated_details,
+                ...(req.body.script ? {
+                    script: req.body.script
+                }: {})
             }
         }, (err, data) => {
             if (err) {
