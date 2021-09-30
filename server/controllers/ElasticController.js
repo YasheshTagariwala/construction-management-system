@@ -156,7 +156,7 @@ viewInspectionById = async (req, res) => {
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
                 id: hit._id
-            }))
+            }))[0]
             return res.status(200).json({success: true, data: pureData})
         }
     )
