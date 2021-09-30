@@ -45,7 +45,10 @@ createInspection = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true})
         }
     )
@@ -71,7 +74,10 @@ createInspectionSession = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true, data: pureData})
         }
     )
@@ -93,7 +99,10 @@ viewContractorsInspections = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true, data: pureData})
         }
     )
@@ -117,8 +126,10 @@ viewInspectorsInspections = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits
-            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true, data: pureData})
         }
     )
@@ -142,8 +153,10 @@ viewInspectionById = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data
-            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true, data: pureData})
         }
     )
@@ -162,7 +175,10 @@ updateInspection = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data
+            const pureData = data.body.hits.hits.map(hit => ({
+                ...hit._source,
+                _id: hit._id
+            }))
             return res.status(200).json({success: true, data: pureData})
         }
     )
