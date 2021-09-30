@@ -1,7 +1,15 @@
 import {all, call, fork, put, takeEvery} from 'redux-saga/effects';
 import ApiService from "../../services/api-service";
-import {INSPECTION_ADD, INSPECTION_LIST, INSPECTION_UPDATE} from "../actions";
-import {inspectionAddError, inspectionAddSuccess, inspectionListError, inspectionListSuccess, inspectionUpdateError, inspectionUpdateSuccess} from "./actions";
+import {INSPECTION_ADD, INSPECTION_DETAIL, INSPECTION_LIST, INSPECTION_UPDATE} from "../actions";
+import {
+    inspectionAddError,
+    inspectionAddSuccess, inspectionDetailsError,
+    inspectionDetailsSuccess,
+    inspectionListError,
+    inspectionListSuccess,
+    inspectionUpdateError,
+    inspectionUpdateSuccess
+} from "./actions";
 
 export function* watchInspectionList() {
     yield takeEvery(INSPECTION_LIST, getInspectionList);
@@ -56,10 +64,29 @@ function* getInspectionUpdate({payload}) {
     try {
         yield call(getInspectionUpdateAsync, payload.body);
         yield put(inspectionUpdateSuccess());
-        history.push('/inspector');
+        history.push('/inspector/inspection');
     } catch (error) {
         let err = error.response ? error.response.data.message : error.message
         yield put(inspectionUpdateError(err));
+    }
+}
+
+//INSPECTION UPDATE
+export function* watchInspectionDetails() {
+    yield takeEvery(INSPECTION_DETAIL, getInspectionDetail);
+}
+
+const getInspectionDetailsAsync = async (id) => {
+    return await ApiService.callPost('/viewInspectionById', id);
+};
+
+function* getInspectionDetail({payload}) {
+    try {
+        const inspection = yield call(getInspectionDetailsAsync, payload.id);
+        yield put(inspectionDetailsSuccess(inspection.data));
+    } catch (error) {
+        let err = error.response ? error.response.data.message : error.message
+        yield put(inspectionDetailsError(err));
     }
 }
 
@@ -68,6 +95,7 @@ export default function* rootSaga() {
         fork(watchInspectionList),
         fork(watchInspectionAdd),
         fork(watchInspectionUpdate),
+        fork(watchInspectionDetails),
     ])
 }
 

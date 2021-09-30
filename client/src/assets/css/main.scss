@@ -2037,6 +2037,10 @@ body.sidebar-toggled footer.sticky-footer {
   }
 }
 
+.Toastify__toast--success {
+  background-color: #4b2988 !important;
+}
+
 @media (max-width: 1560px) {
   .carousel-item img {
     width: 85%;

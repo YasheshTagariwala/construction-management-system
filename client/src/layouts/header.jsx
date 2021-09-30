@@ -21,12 +21,14 @@ function Header(props) {
 
     document.addEventListener("scroll", (function () {
         let element = document.querySelector(".scroll-to-top");
-        if (document.documentElement.scrollTop > 100) {
-            element.classList.remove('d-none');
-            element.classList.add('d-block');
-        } else {
-            element.classList.remove('d-block');
-            element.classList.add('d-none');
+        if (element) {
+            if (document.documentElement.scrollTop > 100) {
+                element.classList.remove('d-none');
+                element.classList.add('d-block');
+            } else {
+                element.classList.remove('d-block');
+                element.classList.add('d-none');
+            }
         }
     }))
     const toggleSidebar = () => {

@@ -6,19 +6,18 @@ import Loader from "../../components/loader";
 import {Button, Container} from "reactstrap";
 import {inspectionList} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
+import ToasterService from "../../services/toaster-service";
 
 class InnerList extends React.PureComponent {
     render() {
         const {column, taskMap, index} = this.props;
-        const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+        const tasks = column.taskIds.map(taskId => taskMap[taskId]).filter(t => t);
         return <Column column={column} tasks={tasks} index={index} taskClick={this.props.taskClick}/>;
     }
 }
 
 function InspectionKanban(props) {
-
     const {inspectionList: getInspectionList} = props;
-    const [inspectionList, setInspectionList] = useState([]);
     const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
     const [columns, setColumns] = useState(initialData.columns);
     const [tasks, setTasks] = useState(initialData.tasks);
@@ -32,16 +31,23 @@ function InspectionKanban(props) {
         const mColumn = columns;
         const mTasks = {};
         mColumn['column-1']['taskIds'] = [];
-        const mInspectionList = (props.inspections || []).map((x, i) => {
-            x.id = `ins-${i + 1}`
+        (props.inspections || []).forEach((x, i) => {
             mColumn['column-1']['taskIds'].push(x.id)
             mTasks[x.id] = x;
             return x;
         });
-        setInspectionList(mInspectionList);
         setColumns(mColumn);
         setTasks(mTasks);
     }, [props.inspections])
+
+    useEffect(() => {
+        if (props.error) {
+            ToasterService.Toast(props.error, 'error');
+        }
+        if (props.success) {
+            ToasterService.Toast(props.success, 'success');
+        }
+    }, [props.error, props.success])
 
     const onDragStart = (start, provided) => {
         provided.announce(
@@ -130,7 +136,7 @@ function InspectionKanban(props) {
     };
 
     const taskClick = (task) => {
-        props.history.push(`/${props.user?.role}/inspection-kanban/details/${task.id}`);
+        props.history.push(`/${props.user?.role}/inspection/details/${task.id}`);
     }
 
     return (

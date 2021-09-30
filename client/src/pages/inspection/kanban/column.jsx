@@ -1,7 +1,6 @@
 import React from 'react';
 import {Droppable, Draggable} from 'react-beautiful-dnd';
 import Task from './task';
-import {Container} from "reactstrap";
 
 class InnerList extends React.Component {
     shouldComponentUpdate(nextProps) {

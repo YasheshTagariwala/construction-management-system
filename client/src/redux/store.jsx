@@ -13,12 +13,8 @@ export function configureStore(initialState) {
         initialState,
         compose(applyMiddleware(...middlewares))
     )
-
     sagaMiddleware.run(sagas);
-
-    // @ts-ignore
     if (module.hot) {
-        // @ts-ignore
         module.hot.accept('./reducers', () => {
             const nextRootReducer = require('./reducers');
             store.replaceReducer(nextRootReducer);

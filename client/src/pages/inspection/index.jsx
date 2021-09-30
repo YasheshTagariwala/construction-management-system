@@ -41,7 +41,11 @@ const Inspection = (props) => {
                                     render={props => <InspectionForm {...props} />}
                                 />
                                 <Route
-                                    path={`${props.match.url}/inspection-kanban/details/:id`}
+                                    path={`${props.match.url}/inspection/edit/:id`}
+                                    render={props => <InspectionForm {...props} />}
+                                />
+                                <Route
+                                    path={`${props.match.url}/inspection/details/:id`}
                                     render={props => <InspectionDetails {...props} />}
                                 />
                                 <Route

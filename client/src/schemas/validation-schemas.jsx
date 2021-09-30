@@ -7,7 +7,7 @@ export const loginSchema = Yup.object().shape({
 
 export const inspectionAddSchema = Yup.object().shape({
     InspectionTitle: Yup.string().required('Please enter Title'),
-    InspectionTag: Yup.string().required('Please enter Tag'),
+    InspectionTag: Yup.string().optional('Please enter Tag'),
     InspectionDescription: Yup.string().required('Please enter Description '),
     ChecklistType: Yup.string().required('Please enter Checklist Type'),
     ChecklistSubType: Yup.string().required('Please enter Checklist Subtype'),

@@ -14,6 +14,7 @@ function InspectionForm(props) {
         InspectionTag: '',
         InspectionDescription: '',
         InspectionProject: '',
+        SubProject: '',
         InspectionMember: '',
         images: []
     });
@@ -54,7 +55,6 @@ function InspectionForm(props) {
     const changeSelectOptionHandler1 = (event) => {
         setSelected1(event.target.value);
     };
-
 
     const StructureSubTypes = [
         "Plastering",
@@ -176,7 +176,7 @@ function InspectionForm(props) {
                                 {({errors, touched, handleChange, handleBlur}) => (
                                     <FormikForm>
                                         <Row>
-                                            <Col md={6}>
+                                            <Col md={12}>
                                                 <FormGroup
                                                     className={errors.InspectionTitle && touched.InspectionTitle && 'has-error'}>
                                                     <Label for="Inspection Title">Title *</Label>
@@ -187,7 +187,7 @@ function InspectionForm(props) {
                                                             className="block text-red-800">{errors.InspectionTitle}</div>)}
                                                 </FormGroup>
                                             </Col>
-                                            <Col md={6}>
+                                            <Col md={6} className="d-none">
                                                 <FormGroup
                                                     className={errors.InspectionTag && touched.InspectionTag && 'has-error'}>
                                                     <Label for="Inspection Tag">Tag *</Label>
@@ -203,7 +203,7 @@ function InspectionForm(props) {
                                                     className={errors.InspectionDescription && touched.InspectionDescription && 'has-error'}>
                                                     <Label for="Inspection Description">Description *</Label>
                                                     <Field className="form-control" rows={3}
-                                                           name="InspectionDescription" type="textarea"
+                                                           name="InspectionDescription" component="textarea"
                                                            placeholder="Description"/>
                                                     {errors.InspectionDescription && touched.InspectionDescription && (
                                                         <div
