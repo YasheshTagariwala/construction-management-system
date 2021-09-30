@@ -117,7 +117,33 @@ viewInspectorsInspections = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data.body.hits.hits
+            // const pureData = data.body.hits.hits.map(hit => hit._source)
+            return res.status(200).json({success: true, data: pureData})
+        }
+    )
+
+}
+
+viewInspectionById = async (req, res) => {
+
+    // console.log("123 : "+req.body.text)
+
+    await client.search({
+            index: 'inspection-test',
+            body: {
+                query: {
+                    match: {
+                        "_id": req.body.text
+                    }
+                }
+            }
+        }, (err, data) => {
+            if (err) {
+                return res.status(400).json({success: false, message: err})
+            }
+            const pureData = data
+            // const pureData = data.body.hits.hits.map(hit => hit._source)
             return res.status(200).json({success: true, data: pureData})
         }
     )
@@ -126,7 +152,7 @@ viewInspectorsInspections = async (req, res) => {
 
 updateInspection = async (req, res) => {
 
-    /*await client.update({
+    await client.update({
             index: 'inspection-test',
             id: req.body.id,
             body: {
@@ -136,12 +162,12 @@ updateInspection = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => hit._source)
+            const pureData = data
             return res.status(200).json({success: true, data: pureData})
         }
-    )*/
+    )
 
-    await client.updateByQuery({
+    /*await client.updateByQuery({
             index: 'inspection-test',
             body: {
                 script: {
@@ -161,7 +187,7 @@ updateInspection = async (req, res) => {
             // const pureData = data.body.hits.hits.map(hit => hit._source)
             return res.status(200).json({success: true})
         }
-    )
+    )*/
 
 }
 
@@ -214,6 +240,7 @@ module.exports = {
     createInspectionSession,
     viewContractorsInspections,
     viewInspectorsInspections,
+    viewInspectionById,
     updateInspection,
     loginUser
 }

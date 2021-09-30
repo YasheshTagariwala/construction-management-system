@@ -98,6 +98,21 @@ a, a:hover {
   font-size: 14px;
 }
 
+.add-button {
+  background: #4b2988;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #4b2988;
+  cursor: pointer;
+
+  &:hover {
+    background: transparent;
+    color: #4b2988;
+    transition: 0.3s;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
 .primary-btn:hover {
   background: transparent;
   color: #4b2988;

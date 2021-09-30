@@ -177,7 +177,8 @@ function InspectionForm(props) {
                                     <FormikForm>
                                         <Row>
                                             <Col md={6}>
-                                                <FormGroup className={errors.InspectionTitle && touched.InspectionTitle && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.InspectionTitle && touched.InspectionTitle && 'has-error'}>
                                                     <Label for="Inspection Title">Title *</Label>
                                                     <Field className="form-control" name="InspectionTitle" type="text"
                                                            placeholder="Title"/>
@@ -187,10 +188,10 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.InspectionTag && touched.InspectionTag && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.InspectionTag && touched.InspectionTag && 'has-error'}>
                                                     <Label for="Inspection Tag">Tag *</Label>
                                                     <Field className="form-control" name="InspectionTag" type="text"
-                                                           required
                                                            placeholder="Tag"/>
                                                     {errors.InspectionTag && touched.InspectionTag && (
                                                         <div
@@ -198,11 +199,11 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={12}>
-                                                <FormGroup className={errors.InspectionDescription && touched.InspectionDescription && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.InspectionDescription && touched.InspectionDescription && 'has-error'}>
                                                     <Label for="Inspection Description">Description *</Label>
                                                     <Field className="form-control" rows={3}
-                                                           name="InspectionDescription" type="text"
-                                                           required
+                                                           name="InspectionDescription" type="textarea"
                                                            placeholder="Description"/>
                                                     {errors.InspectionDescription && touched.InspectionDescription && (
                                                         <div
@@ -210,7 +211,8 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.ChecklistType && touched.ChecklistType && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.ChecklistType && touched.ChecklistType && 'has-error'}>
                                                     <Label for="Checklist Type">Checklist Type *</Label>
                                                     <select className="custom-select d-block w-100 form-control"
                                                             name="ChecklistType"
@@ -218,8 +220,7 @@ function InspectionForm(props) {
                                                             onChange={(ev) => {
                                                                 handleChange(ev);
                                                                 changeSelectOptionHandler(ev);
-                                                            }}
-                                                            required>
+                                                            }}>
                                                         <option value="">Choose Checklist Type</option>
                                                         <option>Structure</option>
                                                         <option>Services</option>
@@ -231,7 +232,8 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.ChecklistSubType && touched.ChecklistSubType && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.ChecklistSubType && touched.ChecklistSubType && 'has-error'}>
                                                     <Label for="Checklist Type">Checklist Subtype *</Label>
                                                     <select className="custom-select d-block w-100 form-control"
                                                             name="ChecklistSubType"
@@ -239,8 +241,7 @@ function InspectionForm(props) {
                                                             onChange={(ev) => {
                                                                 handleChange(ev);
                                                                 changeSelectOptionHandler1(ev)
-                                                            }}
-                                                            required>
+                                                            }}>
                                                         <option value="">Choose SubChecklist Type</option>
                                                         {subTypesOptions}
                                                     </select>
@@ -251,7 +252,8 @@ function InspectionForm(props) {
                                             </Col>
                                             <Col md={12}>
                                                 <FormGroup>
-                                                    <Label for="Checklist Type">Checklist Points</Label>
+                                                    <Label for="Checklist Type" className="font-weight-bold">Checklist
+                                                        Points</Label> <br/>
                                                     {checklist.map((clist, index) => {
                                                         return (
                                                             <React.Fragment key={index}>
@@ -267,13 +269,13 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.InspectionProject && touched.InspectionProject && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.InspectionProject && touched.InspectionProject && 'has-error'}>
                                                     <Label for="Inspection Project">Project *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="InspectionProject"
                                                             onChange={handleChange}
-                                                            onBlur={handleBlur}
-                                                            required>
+                                                            onBlur={handleBlur}>
                                                         <option value="">Choose Project</option>
                                                         <option>Project-1</option>
                                                     </select>
@@ -283,13 +285,13 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.SubProject && touched.SubProject && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.SubProject && touched.SubProject && 'has-error'}>
                                                     <Label for="Sub Project">Sub Project *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="SubProject"
                                                             onChange={handleChange}
-                                                            onBlur={handleBlur}
-                                                            required>
+                                                            onBlur={handleBlur}>
                                                         <option value="">Choose SubProject</option>
                                                         <option>SubProject-1</option>
                                                     </select>
@@ -299,13 +301,13 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
-                                                <FormGroup className={errors.InspectionMember && touched.InspectionMember && 'has-error'}>
+                                                <FormGroup
+                                                    className={errors.InspectionMember && touched.InspectionMember && 'has-error'}>
                                                     <Label for="Inspection Member">Assigned To *</Label>
                                                     <select className="custom-select d-block w-100 form-control" id=""
                                                             name="InspectionMember"
                                                             onChange={handleChange}
-                                                            onBlur={handleBlur}
-                                                            required>
+                                                            onBlur={handleBlur}>
                                                         <option value="">Choose Member</option>
                                                         <option>Inspector</option>
                                                     </select>
@@ -315,12 +317,13 @@ function InspectionForm(props) {
                                                 </FormGroup>
                                             </Col>
                                             <Col md={12}>
-                                                <FormGroup>
+                                                <FormGroup
+                                                    className={errors.InspectionFile && touched.InspectionFile && 'has-error'}>
                                                     <Label for="Inspection file">Images</Label>
                                                     <input className="form-control" type="file" style={{
                                                         height: '60px'
                                                     }} id="" accept="image/*"
-                                                           name="Inspection file"
+                                                           name="InspectionFile"
                                                            onChange={(ev) => {
                                                                images = [];
                                                                if (ev.target.files) {
@@ -330,23 +333,14 @@ function InspectionForm(props) {
                                                                }
                                                            }}
                                                            multiple/>
-                                                    {errors.InspectionTag && touched.InspectionTag && (
+                                                    {errors.InspectionFile && touched.InspectionFile && (
                                                         <div
-                                                            className="block text-red-800">{errors.InspectionTag}</div>)}
+                                                            className="block text-red-800">{errors.InspectionFile}</div>)}
                                                 </FormGroup>
                                             </Col>
 
                                             <div className="col-12 text-right mt-4">
-                                                <Button type="submit" disabled={
-                                                    errors.InspectionTitle ||
-                                                    errors.InspectionTag ||
-                                                    errors.InspectionDescription ||
-                                                    errors.ChecklistType ||
-                                                    errors.ChecklistSubType ||
-                                                    errors.InspectionProject ||
-                                                    errors.SubProject ||
-                                                    errors.InspectionMember
-                                                } className="primary-btn form-btn">Submit</Button>
+                                                <Button type="submit" className="primary-btn form-btn">Submit</Button>
                                             </div>
                                         </Row>
                                     </FormikForm>

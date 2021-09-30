@@ -3,7 +3,7 @@ import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import initialData from './kanban/initial-data';
 import Column from './kanban/column';
 import Loader from "../../components/loader";
-import {Container} from "reactstrap";
+import {Button, Container} from "reactstrap";
 import {inspectionList} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
 
@@ -32,7 +32,7 @@ function InspectionKanban(props) {
         const mColumn = columns;
         const mTasks = {};
         mColumn['column-1']['taskIds'] = [];
-        const mInspectionList = (props.inspections || []).map((x,i) => {
+        const mInspectionList = (props.inspections || []).map((x, i) => {
             x.id = `ins-${i + 1}`
             mColumn['column-1']['taskIds'].push(x.id)
             mTasks[x.id] = x;
@@ -130,13 +130,16 @@ function InspectionKanban(props) {
     };
 
     const taskClick = (task) => {
-        props.history.push(`/inspector/inspection-kanban/details/${task.id}`);
+        props.history.push(`/${props.user?.role}/inspection-kanban/details/${task.id}`);
     }
 
     return (
         <React.Fragment>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h3 className="mb-0 font-weight-normal">Inspections</h3>
+                <Button className="add-button" color="default"
+                        onClick={() => props.history.push(`/${props.user?.role}/inspection/add`)}
+                        size="sm"><i className="fa fa-plus"/></Button>
             </div>
             <Container fluid className="m-0 p-0">
                 {props.loading && <Loader/>}

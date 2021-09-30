@@ -3,7 +3,6 @@ import {
     Card, CardBody, Row, Media
 } from 'reactstrap';
 import avatar from '../../assets/images/avatar.png';
-import demoImage from '../../assets/images/demo-image.jpg';
 import {Link} from "react-router-dom";
 import {inspectionList} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
@@ -92,17 +91,18 @@ function InspectionDetails(props) {
                             </ul>
 
                             {(inspectionDetail.sessions || []).map(session => (
-                               <>
-                                   <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Images Gallery</h5>
-                                   <div className="inspection-images-gallery">
-                                       {(session.images || []).map((img, imgKey) => (
-                                           <div key={`img-${imgKey}`} className="slide">
-                                               <div className="rounded border-bottom">
-                                                   <img src={img} alt="" className="embed-responsive"/>
-                                               </div>
-                                           </div>
-                                       ))}
-                                       {/*<div className="slide">
+                                <>
+                                    <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Images
+                                        Gallery</h5>
+                                    <div className="inspection-images-gallery">
+                                        {(session.images || []).map((img, imgKey) => (
+                                            <div key={`img-${imgKey}`} className="slide">
+                                                <div className="rounded border-bottom">
+                                                    <img src={img} alt="" className="embed-responsive"/>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {/*<div className="slide">
                                            <div className="rounded border-bottom">
                                                <img src={demoImage} alt="" className="embed-responsive"/>
                                            </div>
@@ -127,26 +127,30 @@ function InspectionDetails(props) {
                                                 <img src={demoImage} alt="" className="embed-responsive"/>
                                             </div>
                                         </div>*/}
-                                   </div>
+                                    </div>
 
-                                   <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Check list</h5>
-                                   <ul className="project-checklist p-0 m-0">
-                                       {(session.checklist || []).map((chk, chkKey) => (
-                                           <li key={`chklist-${chkKey}`} className="mt-2 p-3">
-                                               <div className="d-flex align-items-center justify-content-between">
-                                                   <div
-                                                       className="custom-checkbox custom-control custom-control-inline align-items-center">
-                                                       <input type="checkbox" className="custom-control-input" onChange={(ev) => {chk.checked = ev.target.checked}}
-                                                              id="customControlInline" checked={chk.checked}/>
-                                                       <label className="custom-control-label"
-                                                              htmlFor="customControlInline">{chk.item}</label>
-                                                   </div>
-                                                   <Link to="#" className="p-2 bg-gray-300 rounded ml-3"><i
-                                                       className="fa fa-ellipsis-v"/></Link>
-                                               </div>
-                                           </li>
-                                       ))}
-                                       {/*<li className="mt-2 p-3">
+                                    <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Check
+                                        list</h5>
+                                    <ul className="project-checklist p-0 m-0">
+                                        {(session.checklist || []).map((chk, chkKey) => (
+                                            <li key={`chklist-${chkKey}`} className="mt-2 p-3">
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <div
+                                                        className="custom-checkbox custom-control custom-control-inline align-items-center">
+                                                        <input type="checkbox" className="custom-control-input"
+                                                               onChange={(ev) => {
+                                                                   chk.checked = ev.target.checked
+                                                               }}
+                                                               id="customControlInline" checked={chk.checked}/>
+                                                        <label className="custom-control-label"
+                                                               htmlFor="customControlInline">{chk.item}</label>
+                                                    </div>
+                                                    <Link to="#" className="p-2 bg-gray-300 rounded ml-3"><i
+                                                        className="fa fa-ellipsis-v"/></Link>
+                                                </div>
+                                            </li>
+                                        ))}
+                                        {/*<li className="mt-2 p-3">
                                            <div className="d-flex align-items-center justify-content-between">
                                                <div
                                                    className="custom-checkbox custom-control custom-control-inline align-items-center">
@@ -178,8 +182,8 @@ function InspectionDetails(props) {
                                                    className="fa fa-ellipsis-v"/></Link>
                                            </div>
                                        </li>*/}
-                                   </ul>
-                               </>
+                                    </ul>
+                                </>
                             ))}
 
                             <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Activity</h5>

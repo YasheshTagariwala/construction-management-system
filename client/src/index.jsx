@@ -1,4 +1,4 @@
-import React, {Suspense, StrictMode, lazy} from 'react';
+import React, {Suspense, lazy} from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/scss/bootstrap.scss';
 import './assets/css/all.min.css';
@@ -11,11 +11,9 @@ const App = lazy(() => import(/* webpackChunkName: "App" */'./App' ));
 
 ReactDOM.render(
     <Provider store={configureStore({})}>
-        <StrictMode>
-            <Suspense fallback={<div className="loading"/>}>
-                <App/>
-            </Suspense>
-        </StrictMode>
+        <Suspense fallback={<div className="loading"/>}>
+            <App/>
+        </Suspense>
     </Provider>,
     document.getElementById('root')
 );
