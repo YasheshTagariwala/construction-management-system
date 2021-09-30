@@ -74,11 +74,7 @@ createInspectionSession = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            const pureData = data.body.hits.hits.map(hit => ({
-                ...hit._source,
-                id: hit._id
-            }))
-            return res.status(200).json({success: true, data: pureData})
+            return res.status(200).json({success: true, data: data})
         }
     )
 
