@@ -29,10 +29,17 @@ function InspectionKanban(props) {
 
     useEffect(() => {
         const mColumn = columns;
+        let columnsValues = Object.values(mColumn);
+        columnsValues.forEach(item => {
+            mColumn[item.id]['taskIds'] = [];
+        })
         const mTasks = {};
-        mColumn['column-1']['taskIds'] = [];
-        (props.inspections || []).forEach((x, i) => {
-            mColumn['column-1']['taskIds'].push(x.id)
+        (props.inspections || []).forEach(x => {
+            if (!x.status) {
+                x.status = 'To do';
+            }
+            let column = columnsValues.find(i => i.title === x.status);
+            mColumn[column.id]['taskIds'].push(x.id)
             mTasks[x.id] = x;
             return x;
         });
@@ -144,7 +151,7 @@ function InspectionKanban(props) {
             },
             ...(!hasStatus ? {
                 script: `ctx._source.status = '${columns[result.destination.droppableId].title}'`
-            }: {})
+            } : {})
         }
         props.inspectionUpdate(body, props.history);
     };
