@@ -164,7 +164,7 @@ function InspectionKanban(props) {
         <React.Fragment>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h3 className="mb-0 font-weight-normal">Inspections</h3>
-                <Button className="add-button" color="default"
+                <Button className="add-button" color="default" title="Add inspection"
                         onClick={() => props.history.push(`/${props.user?.role}/inspection/add`)}
                         size="sm"><i className="fa fa-plus"/></Button>
             </div>

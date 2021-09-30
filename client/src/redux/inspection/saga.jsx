@@ -43,7 +43,7 @@ function* getInspectionAdd({payload}) {
     try {
         yield call(getInspectionAddAsync, payload.body);
         yield put(inspectionAddSuccess());
-        history.push('/inspector');
+        history.push('/inspector/inspection');
     } catch (error) {
         let err = error.response ? error.response.data.message : error.message
         yield put(inspectionAddError(err));
