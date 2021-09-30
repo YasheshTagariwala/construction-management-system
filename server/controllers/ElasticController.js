@@ -47,7 +47,7 @@ createInspection = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true})
         }
@@ -76,7 +76,7 @@ createInspectionSession = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true, data: pureData})
         }
@@ -101,7 +101,7 @@ viewContractorsInspections = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true, data: pureData})
         }
@@ -128,7 +128,7 @@ viewInspectorsInspections = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true, data: pureData})
         }
@@ -155,7 +155,7 @@ viewInspectionById = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true, data: pureData})
         }
@@ -177,7 +177,7 @@ updateInspection = async (req, res) => {
             }
             const pureData = data.body.hits.hits.map(hit => ({
                 ...hit._source,
-                _id: hit._id
+                id: hit._id
             }))
             return res.status(200).json({success: true, data: pureData})
         }
