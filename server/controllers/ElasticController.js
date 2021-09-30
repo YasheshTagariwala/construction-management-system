@@ -45,7 +45,7 @@ createInspection = async (req, res) => {
             if (err) {
                 return res.status(400).json({success: false, message: err})
             }
-            return res.status(200).json({success: true})
+            return res.status(200).json({success: true, data})
         }
     )
 
