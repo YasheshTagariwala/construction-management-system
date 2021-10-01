@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Card, CardBody, Row, Media, Button, Collapse, CardFooter
+    Card, CardBody, Row, Media, Button, Collapse, CardFooter,
+    Modal, ModalHeader, ModalBody, ModalFooter, Col, Label
 } from 'reactstrap';
 import avatar from '../../assets/images/avatar.png';
 import {Link} from "react-router-dom";
 import {inspectionDetails, inspectionUpdate} from "../../redux/inspection/actions";
 import {connect} from "react-redux";
 import Loader from "../../components/loader";
+import {Field} from "formik";
 
 function InspectionDetailsPage(props) {
     const {inspectionDetails: getInspectionDetails} = props;
     const [inspectionDetail, setInspectionDetail] = useState({});
     const [inspectionSessions, setInspectionSessions] = useState([]);
+    const [modalDetails, setModalDetails] = useState(null);
+    const [issueText, setIssueText] = useState('');
 
     useEffect(() => {
         getInspectionDetails({text: props.match.params.id})
@@ -114,16 +118,18 @@ function InspectionDetailsPage(props) {
                                                 {item.images.length <= 0 && 'NO IMAGES'}
                                             </div>
 
-                                            <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Check
-                                                list</h5>
+                                            <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Check list</h5>
                                             <ul className="project-checklist p-0 m-0">
                                                 {(item.checklist || []).map((chk, chkKey) => (
-                                                    <li key={`chklist-${chkKey}`} className="mt-2 p-3">
+                                                    <li key={`chklist-${chkKey}`} className="mt-2 p-3" onClick={() => {setModalDetails({
+                                                        index,
+                                                        checkListIndex: chkKey
+                                                    })}}>
                                                         <div
                                                             className="d-flex align-items-center justify-content-between">
                                                             <div
-                                                                className="custom-checkbox custom-control custom-control-inline align-items-center">
-                                                                <input type="checkbox" className="custom-control-input"
+                                                                className="custom-checkbox custom-control custom-control-inline align-items-center pl-0">
+                                                                {/*<input type="checkbox" className="custom-control-input"
                                                                        onChange={(ev) => {
                                                                            setInspectionSessions(() => {
                                                                                let sessions = inspectionSessions;
@@ -136,11 +142,65 @@ function InspectionDetailsPage(props) {
                                                                        id={`customControlInline-${chkKey}`}
                                                                        checked={chk.checked}/>
                                                                 <label className="custom-control-label"
-                                                                       htmlFor={`customControlInline-${chkKey}`}>{chk.item}</label>
+                                                                       htmlFor={`customControlInline-${chkKey}`}>{chk.item}</label>*/}
+                                                                <label>{chk.item}</label>
                                                             </div>
                                                             <Link to="#"
                                                                   className="p-2 bg-gray-300 rounded ml-3 d-none"><i
                                                                 className="fa fa-ellipsis-v"/></Link>
+                                                        </div>
+                                                        <div className={'mt-1'}>
+                                                            <label className={'custom-checkbox custom-control custom-control-inline align-items-center'}>
+                                                                <input type="checkbox" className="custom-control-input"
+                                                                       onChange={(ev) => {
+                                                                           setInspectionSessions(() => {
+                                                                               let sessions = inspectionSessions;
+                                                                               let checkList = sessions[index].checklist;
+                                                                               checkList[chkKey].statusChecked = checkList[chkKey].statusChecked === 'yes' ? null : 'yes'
+                                                                               sessions[index].checklist = [...checkList];
+                                                                               return [...sessions];
+                                                                           })
+                                                                       }}
+                                                                       id={`customControlInline-yes-${chkKey}`}
+                                                                       checked={chk.statusChecked === 'yes'}/>
+                                                                <label className="custom-control-label"
+                                                                       htmlFor={`customControlInline-yes-${chkKey}`}>Yes</label>
+                                                                {/*<input type="radio" value="yes" name={`radio-${chkKey}`} /> Yes*/}
+                                                            </label>
+                                                            <label className={'custom-checkbox custom-control custom-control-inline align-items-center ml-4'}>
+                                                                <input type="checkbox" className="custom-control-input"
+                                                                       onChange={(ev) => {
+                                                                           setInspectionSessions(() => {
+                                                                               let sessions = inspectionSessions;
+                                                                               let checkList = sessions[index].checklist;
+                                                                               checkList[chkKey].statusChecked = checkList[chkKey].statusChecked === 'no' ? null : 'no'
+                                                                               sessions[index].checklist = [...checkList];
+                                                                               return [...sessions];
+                                                                           })
+                                                                       }}
+                                                                       id={`customControlInline-no-${chkKey}`}
+                                                                       checked={chk.statusChecked === 'no'}/>
+                                                                <label className="custom-control-label"
+                                                                       htmlFor={`customControlInline-no-${chkKey}`}>No</label>
+                                                                {/*<input type="radio" value="no" name={`radio-${chkKey}`} /> No*/}
+                                                            </label>
+                                                            <label className={'custom-checkbox custom-control custom-control-inline align-items-center ml-4'}>
+                                                                <input type="checkbox" className="custom-control-input"
+                                                                       onChange={(ev) => {
+                                                                           setInspectionSessions(() => {
+                                                                               let sessions = inspectionSessions;
+                                                                               let checkList = sessions[index].checklist;
+                                                                               checkList[chkKey].statusChecked = checkList[chkKey].statusChecked === 'not_applicable' ? null : 'not_applicable'
+                                                                               sessions[index].checklist = [...checkList];
+                                                                               return [...sessions];
+                                                                           })
+                                                                       }}
+                                                                       id={`customControlInline-na-${chkKey}`}
+                                                                       checked={chk.statusChecked === 'not_applicable'}/>
+                                                                <label className="custom-control-label"
+                                                                       htmlFor={`customControlInline-na-${chkKey}`}>Not Applicable</label>
+                                                                {/*<input type="radio" value="NA" name={`radio-${chkKey}`} /> N/A*/}
+                                                            </label>
                                                         </div>
                                                     </li>
                                                 ))}
@@ -188,6 +248,36 @@ function InspectionDetailsPage(props) {
                     ))}
                 </div>
             </Row>
+
+            <Modal isOpen={modalDetails} toggle={() => {setModalDetails(null)}}>
+                <ModalHeader toggle={() => {setModalDetails(null)}}>Add Issue</ModalHeader>
+                <ModalBody>
+                    <Row>
+                        <Col md={12}>
+                            <Label for="Issue">Issue *</Label>
+                            <textarea placeholder={'Issue'} onChange={(ev) => setIssueText(ev.target.value)} value={issueText} className={'form-control'}/>
+                        </Col>
+                    </Row>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={() => {
+                        if (issueText && issueText.trim()) {
+                            setInspectionSessions(() => {
+                                let sessions = inspectionSessions;
+                                let checkList = sessions[modalDetails.index].checklist;
+                                if (!checkList[modalDetails.checkListIndex].issues || checkList[modalDetails.checkListIndex].issues.length === 0) {
+                                    checkList[modalDetails.checkListIndex].issues = [];
+                                }
+                                checkList[modalDetails.checkListIndex].issues.push(issueText);
+                                sessions[modalDetails.index].checklist = [...checkList];
+                                return [...sessions];
+                            })
+                            setModalDetails(null)
+                        }
+                    }}>Save</Button>{' '}
+                    <Button color="secondary" onClick={() => {setModalDetails(null)}}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
         </React.Fragment>
     )
 }

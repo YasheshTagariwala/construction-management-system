@@ -61,23 +61,23 @@ function InspectionForm(props) {
         "Concrete (RCC)"
     ];
     const StructurePlasteringChecklist = [
-        {item: "Check for completeness of all hidden jobs like piping, conduiting, etc.", checked: false},
-        {item: "Check for grading of sand, Mix proportion.", checked: false},
-        {item: "Sample preparation for finish and its approval.", checked: false},
-        {item: "Hacking and cleaning the surface, removing loose particles, wetting the surface.", checked: false},
-        {item: "Checking of plaster thickness, plumb & even surface.", checked: false},
-        {item: "Check for grooves, openings, rounding off the corners, hollowness in plaster.", checked: false},
-        {item: "Checking for use of waterproofing compound , mix proportion(as applicable).", checked: false}
+        {item: "Check for completeness of all hidden jobs like piping, conduiting, etc.", checked: false, statusChecked: ''},
+        {item: "Check for grading of sand, Mix proportion.", checked: false, statusChecked: ''},
+        {item: "Sample preparation for finish and its approval.", checked: false, statusChecked: ''},
+        {item: "Hacking and cleaning the surface, removing loose particles, wetting the surface.", checked: false, statusChecked: ''},
+        {item: "Checking of plaster thickness, plumb & even surface.", checked: false, statusChecked: ''},
+        {item: "Check for grooves, openings, rounding off the corners, hollowness in plaster.", checked: false, statusChecked: ''},
+        {item: "Checking for use of waterproofing compound , mix proportion(as applicable).", checked: false, statusChecked: ''}
     ]
     const StructureConcreteChecklist = [
-        {item: "Check for concrete slump as IS requirement.", checked: false},
-        {item: "Check for grade of concrete as per GFC drawing.", checked: false},
-        {item: "Check for levels and top finishes.", checked: false},
-        {item: "Check for material quality as per IS standards.", checked: false},
-        {item: "Check for presence of required dimensions of cubes for curing.", checked: false},
-        {item: "Check for formwork and dimensions are as per drawing.", checked: false},
-        {item: "Check for reinforcement as per GFC drawing and alignment.", checked: false},
-        {item: "Check for appropriate concrete mix and proportion of ingredients.", checked: false}
+        {item: "Check for concrete slump as IS requirement.", checked: false, statusChecked: ''},
+        {item: "Check for grade of concrete as per GFC drawing.", checked: false, statusChecked: ''},
+        {item: "Check for levels and top finishes.", checked: false, statusChecked: ''},
+        {item: "Check for material quality as per IS standards.", checked: false, statusChecked: ''},
+        {item: "Check for presence of required dimensions of cubes for curing.", checked: false, statusChecked: ''},
+        {item: "Check for formwork and dimensions are as per drawing.", checked: false, statusChecked: ''},
+        {item: "Check for reinforcement as per GFC drawing and alignment.", checked: false, statusChecked: ''},
+        {item: "Check for appropriate concrete mix and proportion of ingredients.", checked: false, statusChecked: ''}
     ]
 
     const ServicesSubTypes = [
@@ -85,36 +85,40 @@ function InspectionForm(props) {
         "Electrical"
     ];
     const ServicesSanFixturesChecklist = [
-        {item: "Check for material inspection and make.", checked: false},
-        {item: "Check completeness of finishing works w.r.t. line, WC level & position.", checked: false},
-        {item: "Check for leakage.", checked: false},
-        {item: "Check for pressure testing if applicable.", checked: false},
-        {item: "Check proper fixing of the sanitary fittings to give aesthetic appeal.", checked: false},
-        {item: "Check for dye test if applicable.", checked: false},
-        {item: "Check for mounting height as per GFC drawing.", checked: false}
+        {item: "Check for material inspection and make.", checked: false, statusChecked: ''},
+        {item: "Check completeness of finishing works w.r.t. line, WC level & position.", checked: false, statusChecked: ''},
+        {item: "Check for leakage.", checked: false, statusChecked: ''},
+        {item: "Check for pressure testing if applicable.", checked: false, statusChecked: ''},
+        {item: "Check proper fixing of the sanitary fittings to give aesthetic appeal.", checked: false, statusChecked: ''},
+        {item: "Check for dye test if applicable.", checked: false, statusChecked: ''},
+        {item: "Check for mounting height as per GFC drawing.", checked: false, statusChecked: ''}
     ];
     const ServicesElectricalChecklist = [
-        {item: "Check for location of fan junction box and light points as per GDC drawing.", checked: false},
-        {item: "Check for cleanliness once the conduiting work is over.", checked: false},
-        {item: "Check for if the Shaft is provided for Maintenance.", checked: false},
-        {item: "Check the mounting heights of DBs and switches are as per standards.", checked: false},
-        {item: "Check for separate circuits for lighting and power connections.", checked: false},
-        {item: "Check the makelist list of specified materials for junction boxes, lights, switches.", checked: false},
+        {item: "Check for location of fan junction box and light points as per GDC drawing.", checked: false, statusChecked: ''},
+        {item: "Check for cleanliness once the conduiting work is over.", checked: false, statusChecked: ''},
+        {item: "Check for if the Shaft is provided for Maintenance.", checked: false, statusChecked: ''},
+        {item: "Check the mounting heights of DBs and switches are as per standards.", checked: false, statusChecked: ''},
+        {item: "Check for separate circuits for lighting and power connections.", checked: false, statusChecked: ''},
+        {item: "Check the makelist list of specified materials for junction boxes, lights, switches.", checked: false, statusChecked: ''},
         {
             item: "Check for different circuits for various purposes such as TV, refrigerator, internet connection etc.",
-            checked: false
+            checked: false,
+            statusChecked: ''
         },
         {
             item: "Check if the location of distribution board and switches is as per approved GFC drawing.",
-            checked: false
+            checked: false,
+            statusChecked: ''
         },
         {
             item: "Ensure correctness of lighting wire size and no. of wires as per the drawing in each conduit portion.",
-            checked: false
+            checked: false,
+            statusChecked: ''
         },
         {
             item: "Ensure conduits are properly tied to reinforcement bars to prevent floating during concrete.",
-            checked: false
+            checked: false,
+            statusChecked: ''
         }
     ];
 
@@ -122,15 +126,15 @@ function InspectionForm(props) {
         "Tile"
     ];
     const FinishesTileChecklist = [
-        {item: "Check whether relevant drawings are available.", checked: false},
-        {item: "Check whether the quality, tile pattern and design as per the client requirement.", checked: false},
-        {item: "Check the border tile.", checked: false},
-        {item: "Check for corner beading.", checked: false},
-        {item: "Check for spacer / paper joint.", checked: false},
-        {item: "Check for tile drop.", checked: false},
-        {item: "Check for tile grout.", checked: false},
-        {item: "Check if the tile is soaked before laying.", checked: false},
-        {item: "Check for slope.", checked: false}
+        {item: "Check whether relevant drawings are available.", checked: false, statusChecked: ''},
+        {item: "Check whether the quality, tile pattern and design as per the client requirement.", checked: false, statusChecked: ''},
+        {item: "Check the border tile.", checked: false, statusChecked: ''},
+        {item: "Check for corner beading.", checked: false, statusChecked: ''},
+        {item: "Check for spacer / paper joint.", checked: false, statusChecked: ''},
+        {item: "Check for tile drop.", checked: false, statusChecked: ''},
+        {item: "Check for tile grout.", checked: false, statusChecked: ''},
+        {item: "Check if the tile is soaked before laying.", checked: false, statusChecked: ''},
+        {item: "Check for slope.", checked: false, statusChecked: ''}
     ];
 
     let type = null;
