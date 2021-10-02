@@ -105,8 +105,7 @@ function InspectionDetailsPage(props) {
                                         </ul>
 
                                         <React.Fragment>
-                                            <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Images
-                                                Gallery</h5>
+                                            <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Images Gallery</h5>
                                             <div className="inspection-images-gallery">
                                                 {(item.images || []).map((img, imgKey) => (
                                                     <div key={`img-${imgKey}`} className="slide">
@@ -121,11 +120,11 @@ function InspectionDetailsPage(props) {
                                             <h5 className="py-2 mt-4 font-weight-bold primary-color border-bottom">Check list</h5>
                                             <ul className="project-checklist p-0 m-0">
                                                 {(item.checklist || []).map((chk, chkKey) => (
-                                                    <li key={`chklist-${chkKey}`} className="mt-2 p-3" onClick={() => {setModalDetails({
-                                                        index,
-                                                        checkListIndex: chkKey
-                                                    })}}>
-                                                        <div
+                                                    <li key={`chklist-${chkKey}`} className="mt-2 p-3">
+                                                        <div onClick={() => {setModalDetails({
+                                                            index,
+                                                            checkListIndex: chkKey
+                                                        })}}
                                                             className="d-flex align-items-center justify-content-between">
                                                             <div
                                                                 className="custom-checkbox custom-control custom-control-inline align-items-center pl-0">
@@ -202,6 +201,16 @@ function InspectionDetailsPage(props) {
                                                                 {/*<input type="radio" value="NA" name={`radio-${chkKey}`} /> N/A*/}
                                                             </label>
                                                         </div>
+                                                        {chk.issues && chk.issues.length > 0 && <div className={'ml-4'}>
+                                                            <h5 className="py-1 mt-3 font-weight-bold primary-color">Issue</h5>
+                                                            <ul className="project-checklist p-0 m-0">
+                                                                {chk.issues.map((issue, issueInx) => (
+                                                                    <li key={`issue-${chkKey}-${issueInx}`} className="mt-2 p-2">
+                                                                        <label className={'mb-0'}>{issue}</label>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>}
                                                     </li>
                                                 ))}
                                             </ul>
@@ -249,8 +258,8 @@ function InspectionDetailsPage(props) {
                 </div>
             </Row>
 
-            <Modal isOpen={modalDetails} toggle={() => {setModalDetails(null)}}>
-                <ModalHeader toggle={() => {setModalDetails(null)}}>Add Issue</ModalHeader>
+            <Modal isOpen={modalDetails} toggle={() => {setModalDetails(null); setIssueText('');}}>
+                <ModalHeader toggle={() => {setModalDetails(null); setIssueText('');}}>Add Issue</ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col md={12}>
@@ -273,9 +282,10 @@ function InspectionDetailsPage(props) {
                                 return [...sessions];
                             })
                             setModalDetails(null)
+                            setIssueText('');
                         }
                     }}>Save</Button>{' '}
-                    <Button color="secondary" onClick={() => {setModalDetails(null)}}>Cancel</Button>
+                    <Button color="secondary" onClick={() => {setModalDetails(null); setIssueText('');}}>Cancel</Button>
                 </ModalFooter>
             </Modal>
         </React.Fragment>
