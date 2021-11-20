@@ -4,8 +4,8 @@ const fs = require("fs");
 const axios = require("axios");
 
 const awsOptions = {
-    accessKeyId: 'AKIAZRIIQEOJE5FKJFEB',
-    secretAccessKey: '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',
+    accessKeyId: '',
+    secretAccessKey: '',
     // useAccelerateEndpoint: true,
     region: "ap-south-1",
     apiVersion: '2010-12-01'
